@@ -143,6 +143,20 @@
   height: 3px;
   background: var(--c-accent);
 }
+/* Amber dot of the "i": a dotless i (ı) with the brand dot drawn above it.
+   Part of the logo, so it sits outside the 10% accent rule. */
+.logo__i { position: relative; }
+.logo__i::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0.09em;
+  width: 0.21em;
+  height: 0.21em;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: var(--c-accent);
+}
 
 .nav { display: flex; align-items: center; gap: var(--space-4); }
 

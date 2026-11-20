@@ -159,3 +159,13 @@ if (banner) {
     });
   });
 }
+
+/* --------------------------------------------------------------------------
+   Logo: the dot of the "i" is amber, as in the brand wordmark (brand §2).
+   The text stays "Zi Cloud" for screen readers (the wordmark is aria-hidden,
+   the link carries the label). Without JS the plain wordmark is shown.
+   -------------------------------------------------------------------------- */
+document.querySelectorAll('.logo__word').forEach((el) => {
+  if (el.textContent.trim() !== 'Zi Cloud') return;
+  el.innerHTML = 'Z<span class="logo__i">ı</span> Cloud';
+});
