@@ -1,0 +1,105 @@
+/* ==========================================================================
+   01 · Tokens
+   The ONLY place colours, fonts, sizes and timings are defined.
+   Pages must use these variables. Never type a hex value into a page.
+   ========================================================================== */
+
+:root {
+  /* ---- Colour (brand §3) ---------------------------------------------- */
+  --c-primary:   #000000;  /* ~60%  backgrounds, main surfaces           */
+  --c-secondary: #1B2129;  /* ~30%  cards, navigation, dividers          */
+  --c-accent:    #FFAD00;  /* ~10%  CTAs, active nav, key figures ONLY   */
+  --c-signal:    #2EE6D6;  /* motion ONLY: progress, pinned step, glow   */
+  --c-text:      #FFFFFF;  /* headings and body on dark                  */
+  --c-on-accent: #000000;  /* text on amber buttons                      */
+
+  /* Derived tints (built from the brand colours above, not new hues) */
+  --c-text-muted:   rgba(255, 255, 255, 0.72);  /* still > 4.5:1 on black */
+  --c-line:         rgba(255, 255, 255, 0.12);  /* hairlines on black      */
+  --c-line-strong:  rgba(255, 255, 255, 0.30);  /* diagram rules           */
+  --c-signal-glow:  rgba(46, 230, 214, 0.22);   /* hover shadow / spotlight */
+  --c-signal-soft:  rgba(46, 230, 214, 0.10);
+  --c-secondary-half: rgba(27, 33, 41, 0.5);   /* glow falloff           */
+  --c-dot:          rgba(255, 255, 255, 0.22);  /* dot-field pattern      */
+  --c-accent-light: #FFCB5C;                    /* amber, lightened: button shine only */
+  --c-text-sheen:   rgba(255, 255, 255, 0.16);  /* outline button shine   */
+
+  /* ---- Typography (brand §4) ----------------------------------------- */
+  --font-head: "Clash Display", "IBM Plex Mono", monospace;
+  --font-body: "IBM Plex Mono", monospace;
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semi:    600;
+  --fw-head:    700;  /* open issue: brief asks 800–900; keep 700 for now */
+
+  --fs-h1: clamp(64px, 8vw, 104px);   --lh-h1: 1.02;  /* never below 64px */
+  --fs-h2: clamp(48px, 5.5vw, 64px);  --lh-h2: 1.06;
+  --fs-h3: 48px;                      --lh-h3: 1.04;
+  --fs-body: 16px;
+  --fs-lead: 18px;
+  --lh-body: 1.75;
+  --fs-small: 14px;
+  --fs-eyebrow: 13px;  --ls-eyebrow: 0.14em;
+  --fs-button: 15px;   --ls-button: 0.02em;
+  --fs-metric: clamp(48px, 4.5vw, 56px);
+  --ls-head: 0.02em;
+
+  /* ---- Space and layout (brand §5) ----------------------------------- */
+  --section-pad: 120px;   /* top + bottom, minimum                  */
+  --block-gap:   80px;    /* between content blocks in a section    */
+  --para-gap:    40px;    /* between paragraphs                     */
+  --card-pad:    48px;
+  --bento-gap:   80px;    /* open question: may become 48px         */
+  --tile-gap:    48px;    /* gap between card tiles (the 48px option from the open question) */
+  --max-width:   1280px;
+  --gutter:      24px;
+  --header-h:    80px;
+  --radius:      4px;
+  --icon-size:   56px;
+  --tap-min:     44px;
+  --menu-btn:    48px;
+
+  /* Small spacing scale for inner details */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+
+  /* ---- Motion (brand §6) --------------------------------------------- */
+  --dur-fast: 0.6s;
+  --dur:      0.8s;
+  --dur-slow: 1.1s;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.45, 0, 0.2, 1);  /* ease-in-out for the stage loop */
+  --progress-h: 3px;
+  --lift: -2px;
+
+  /* ---- Elevation ------------------------------------------------------ */
+  --shadow-header: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-hover:  0 10px 30px var(--c-signal-glow);
+
+  /* ---- Stacking ------------------------------------------------------- */
+  --z-progress: 300;
+  --z-header:   200;
+  --z-banner:   250;
+  --z-skip:     400;
+}
+
+/* Breakpoints (CSS variables can't be used in media queries, so for reference):
+   ≤ 960px  bento grids collapse to one column
+   ≤ 720px  fully single-column layout                                      */
+
+@media (max-width: 720px) {
+  :root {
+    --section-pad: 96px;
+    --block-gap:   56px;
+    --card-pad:    32px;
+    --bento-gap:   24px;
+    --tile-gap:    24px;
+    --gutter:      16px;
+    --fs-h3:       clamp(32px, 8vw, 48px);
+  }
+}

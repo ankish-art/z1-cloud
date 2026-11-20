@@ -1,0 +1,90 @@
+/* ==========================================================================
+   03 · Typography
+   Headings: Clash Display 700, 0.02em. Body: IBM Plex Mono 16/1.75.
+   Use the element (h1/h2/h3) for structure; use .h1/.h2/.h3 to change look.
+   ========================================================================== */
+
+h1, h2, h3, h4,
+.h1, .h2, .h3 {
+  font-family: var(--font-head);
+  font-weight: var(--fw-head);
+  letter-spacing: var(--ls-head);
+  color: var(--c-text);
+  text-wrap: balance;
+}
+
+h1, .h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); }
+h2, .h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); }
+h3, .h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); }
+
+/* h4 is a small label-style heading (inside lists, footers) */
+h4, .h4 {
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semi);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+p { max-width: 68ch; text-wrap: pretty; }
+
+/* Paragraph rhythm: 40px between paragraphs */
+p + p { margin-top: var(--para-gap); }
+
+/* Eyebrow: small uppercase label above a heading */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--c-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+/* Lead: intro paragraph under a heading */
+.lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  color: var(--c-text);
+  max-width: 60ch;
+}
+
+.text-muted { color: var(--c-text-muted); }
+.text-small { font-size: var(--fs-small); }
+
+/* Text link: white with amber underline (brand §7) */
+.text-link {
+  color: var(--c-text);
+  text-decoration: underline;
+  text-decoration-color: var(--c-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-underline-offset var(--dur-fast) var(--ease-out);
+}
+.text-link:hover { text-underline-offset: 7px; }
+
+/* Arrow variant for "learn more" links */
+.text-link--arrow::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 0.5em;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.text-link--arrow:hover::after { transform: translateX(4px); }
+
+/* Body-copy lists */
+.list {
+  padding-left: 1.2em;
+}
+.list li + li { margin-top: var(--space-1); }
+.list li::marker { color: var(--c-text-muted); }
+
+/* Long-form article text */
+.prose > * + * { margin-top: var(--space-3); }
+.prose > p + p { margin-top: var(--para-gap); }
+.prose h2, .prose h3 { margin-top: var(--block-gap); }
+.prose a { text-decoration: underline; text-decoration-color: var(--c-accent); text-underline-offset: 4px; }

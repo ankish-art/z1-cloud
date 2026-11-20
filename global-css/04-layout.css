@@ -1,0 +1,115 @@
+/* ==========================================================================
+   04 · Layout
+   Container, sections, stacks and the 12-column bento grid.
+   ========================================================================== */
+
+/* Content width: 1280px max, 24px gutter */
+.container {
+  width: 100%;
+  max-width: calc(var(--max-width) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.container--narrow { max-width: calc(880px + var(--gutter) * 2); }
+
+/* Sections: 120px top and bottom minimum */
+.section {
+  padding-block: var(--section-pad);
+}
+.section--alt { background: var(--c-secondary); }       /* slate band */
+.section--divided { border-top: 1px solid var(--c-line); }
+.section--tight-top { padding-top: calc(var(--section-pad) / 2); }
+
+/* Section heading block: eyebrow + H2 + lead */
+.section-head {
+  max-width: 880px;
+  margin-bottom: var(--block-gap);
+}
+.section-head > .lead { margin-top: var(--space-4); }
+.section-head--center { margin-inline: auto; text-align: center; }
+.section-head--center .lead { margin-inline: auto; }
+
+/* Vertical stacks */
+.stack       { display: flex; flex-direction: column; gap: var(--space-3); }
+.stack--para { gap: var(--para-gap); }
+.stack--block{ gap: var(--block-gap); }
+
+/* Horizontal cluster (buttons, chips) */
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Bento: 12-column grid. Tiles span 4, 6, 8 or 12. */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--bento-gap);
+}
+.span-4  { grid-column: span 4; }
+.span-6  { grid-column: span 6; }
+.span-8  { grid-column: span 8; }
+.span-12 { grid-column: span 12; }
+
+/* Tile grid: slate cards (.card) in a grid, --tile-gap apart.
+   Use .tile-grid--2 / --3. 3 columns drop to 2 at 960px, all go to 1 at 720px. */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+  gap: var(--tile-gap);
+  list-style: none;
+  padding: 0;
+}
+.tile-grid--2 { --cols: 2; }
+.tile-grid--3 { --cols: 3; }
+.tile-grid--4 { --cols: 4; }
+.tile-grid > li { display: flex; }
+.tile-grid > li > .card { flex: 1; }
+
+/* Simple equal grids */
+.grid   { display: grid; gap: var(--bento-gap); }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid--tight { gap: var(--space-3); }
+
+/* Split: text + media / two-column content */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--block-gap);
+  align-items: start;
+}
+.split--even    { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.split--reverse { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+.split--center  { align-items: center; }
+
+/* Sticky side column (e.g. a pinned section title) */
+.sticky {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-5));
+}
+
+/* ≤ 960px: bento and multi-column grids collapse */
+@media (max-width: 960px) {
+  .bento,
+  .grid-3,
+  .grid-4 { grid-template-columns: minmax(0, 1fr); }
+  .span-4, .span-6, .span-8, .span-12 { grid-column: 1 / -1; }
+  .grid-4.grid--keep-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile-grid--3,
+  .tile-grid--4 { --cols: 2; }
+  .split,
+  .split--reverse { grid-template-columns: minmax(0, 1fr); }
+  .sticky { position: static; }
+}
+
+/* ≤ 720px: fully single-column */
+@media (max-width: 720px) {
+  .grid-2,
+  .split--even,
+  .grid-4.grid--keep-2 { grid-template-columns: minmax(0, 1fr); }
+  .tile-grid { --cols: 1; }
+}

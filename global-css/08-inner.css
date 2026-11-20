@@ -1,0 +1,92 @@
+/* ==========================================================================
+   08 · Inner pages (services, solutions, AI governance, case studies,
+   insights, about). Shared parts only. Each page's own motion lives in its
+   own stylesheet.
+   ========================================================================== */
+
+/* Page hero: eyebrow, H1, lead, calls to action over a dot field */
+.page-hero { padding-block: var(--block-gap) var(--section-pad); }
+.page-hero.glow { --gx: 76%; --gy: 30%; --gs: 64vw; }
+.page-hero .hero__inner { max-width: calc(var(--max-width) + var(--gutter) * 2); }
+.page-hero .lead { max-width: 52ch; }
+.page-hero__title {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-5);
+  font-size: clamp(64px, 7.2vw, 100px);
+  line-height: var(--lh-h1);
+  max-width: 13em;
+}
+.page-hero .lead { margin-bottom: var(--space-5); }
+@media (max-width: 720px) {
+  /* BRAND CONFLICT: the 64px H1 minimum cannot fit long words on a 390px phone.
+     Scaled with the viewport here; needs sign-off (same as the home page). */
+  .page-hero__title { font-size: clamp(40px, 11vw, 64px); overflow-wrap: anywhere; }
+}
+
+/* Pills: jump links and filters */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 10px 18px;
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--radius);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+  transition: background-color var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft);
+}
+.pill:hover, .pill.is-on { background: var(--c-text); color: var(--c-primary); border-color: var(--c-text); }
+
+/* Check list: short pixel dash instead of a bullet */
+.check-list { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+.check-list li { position: relative; padding-left: var(--space-4); color: var(--c-text-muted); }
+.check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 14px;
+  height: 1px;
+  background: var(--c-text);
+}
+
+/* Animated accordion (details/summary + js/inner.js) */
+.acc { border-bottom: 1px solid var(--c-line); }
+.acc:first-of-type { border-top: 1px solid var(--c-line); }
+.acc > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--tap-min);
+  padding-block: var(--space-3);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-head);
+  font-weight: var(--fw-semi);
+  font-size: clamp(20px, 2vw, 26px);
+  letter-spacing: var(--ls-head);
+  line-height: 1.25;
+}
+.acc > summary::-webkit-details-marker { display: none; }
+.acc > summary::after {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-right: 1.5px solid var(--c-text-muted);
+  border-bottom: 1.5px solid var(--c-text-muted);
+  transform: rotate(45deg);
+  transition: transform var(--dur-fast) var(--ease-soft);
+}
+.acc[open] > summary::after { transform: rotate(225deg); }
+.acc__body { overflow: hidden; padding-bottom: var(--space-4); color: var(--c-text-muted); }
+.acc__body p { max-width: 70ch; }
+
+/* Section heading helper used on inner pages */
+.sec-label { margin-bottom: var(--space-4); }
+.sub-label { margin: var(--block-gap) 0 var(--space-3); }
+
+/* Count-free progress hairline for the page (used by sticky navs) */
+.hairline { height: 1px; background: var(--c-line); }
