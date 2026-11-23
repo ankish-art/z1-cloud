@@ -1,1 +1,264 @@
-/* Case Studies | Zi Cloud: page-specific styles only. Use tokens from global-css/01-tokens.css. */
+/* ==========================================================================
+   Case studies: scroll-driven examples.
+   Each example is a tall scroll track with one pinned stage. As you scroll,
+   the six parts rise in and out of the stage, a teal line fills down the
+   rail, and a workflow drawing is traced node by node. Scroll position drives
+   the motion, so it moves exactly as fast as you do.
+
+   Colour: amber is reserved for the headline figures and the one button.
+   Teal is motion only: progress line, current step, drawn path.
+   Without JavaScript, or with reduced motion, nothing is pinned and the six
+   parts simply read one after another.
+   ========================================================================== */
+
+/* ---- Hero ----------------------------------------------------------------- */
+.cs-hero { position: relative; isolation: isolate; padding-block: var(--space-6) var(--section-pad); overflow: hidden; }
+.cs-hero__bg { position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at 78% 30%, var(--c-secondary-half), transparent 60%), radial-gradient(circle at 7px 7px, var(--c-dot) 1px, transparent 1.6px) 0 0 / 22px 22px; mask-image: radial-gradient(ellipse 70% 70% at 70% 35%, #000, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 70% 70% at 70% 35%, #000, transparent 80%); }
+.cs-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--block-gap); align-items: center; }
+.cs-hero__title { margin: var(--space-2) 0 var(--space-3); font-size: clamp(64px, 6.4vw, 92px); line-height: var(--lh-h1); max-width: 10em; text-wrap: balance; overflow-wrap: break-word; }
+.cs-hero .lead { max-width: 36ch; margin-bottom: var(--space-4); text-wrap: pretty; }
+
+/* the six examples as an index */
+.cs-ledger { border-top: 1px solid var(--c-line-strong); }
+.cs-ledger__k { padding-block: var(--space-2); font-size: 12px; color: var(--c-text-muted); }
+.cs-ledger ol { list-style: none; padding: 0; }
+.cs-led { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); grid-template-areas: "n s" "n t"; column-gap: var(--space-1); min-height: var(--tap-min); padding: 12px 0; border-top: 1px solid var(--c-line); transition: background-color var(--dur-fast) var(--ease-soft), padding var(--dur-fast) var(--ease-out); }
+.cs-led__n { grid-area: n; font-size: 13px; color: var(--c-text-muted); padding-top: 2px; transition: color var(--dur-fast) var(--ease-soft); }
+.cs-led__s { grid-area: s; font-size: 12px; color: var(--c-text-muted); }
+.cs-led__t { grid-area: t; font-size: 15px; line-height: 1.35; }
+.cs-led:hover { padding-left: var(--space-1); background: linear-gradient(90deg, var(--c-signal-soft), transparent 80%); }
+.cs-led:hover .cs-led__n { color: var(--c-text); }
+
+/* ---- List header ------------------------------------------------------------ */
+.cs-list { padding-bottom: var(--section-pad); }
+.cs-note { display: flex; align-items: center; gap: var(--space-2); max-width: none; padding: var(--space-2) var(--space-3); margin-bottom: var(--space-3); background: var(--c-secondary); border-radius: var(--radius); font-size: 14px; color: var(--c-text); }
+.cs-note span { flex: none; width: 10px; height: 10px; border: 1px solid var(--c-text); }
+.cs-hint { display: none; max-width: none; margin-bottom: var(--space-4); font-size: 13px; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--c-text-muted); }
+.cs-pinned .cs-hint { display: block; }
+.cs-filter { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); }
+.cs-chip { background: none; border: 0; border-bottom: 1px solid transparent; padding: 6px 0; min-height: var(--tap-min); font: inherit; font-size: 14px; color: var(--c-text-muted); cursor: pointer; transition: color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft); }
+.cs-chip:hover { color: var(--c-text); }
+.cs-chip.is-on { color: var(--c-text); border-bottom-color: var(--c-text); }
+.cs-chip:focus-visible, .cs-step:focus-visible, .cs__links a:focus-visible { outline: 2px solid var(--c-signal); outline-offset: 3px; }
+.cs-count { margin: var(--space-2) 0 var(--space-4); font-size: 12px; color: var(--c-text-muted); }
+
+/* ---- One example ------------------------------------------------------------ */
+.cs { --stage-h: max(560px, calc(100svh - var(--header-h) - var(--space-6))); margin-top: var(--block-gap); border-top: 1px solid var(--c-line-strong); scroll-margin-top: calc(var(--header-h) + var(--space-3)); transition: opacity 0.35s var(--ease-soft), transform 0.35s var(--ease-soft); }
+.cs.is-out { opacity: 0; transform: translateY(8px); }
+.cs[hidden] { display: none; }
+
+.cs__head { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 10fr); gap: var(--space-5); padding-block: var(--block-gap) var(--space-5); }
+.cs__n { font-family: var(--font-head); font-weight: var(--fw-head); font-size: clamp(56px, 6vw, 96px); line-height: 0.9; color: transparent; -webkit-text-stroke: 1px var(--c-text-muted); }
+.cs__sector { margin-top: var(--space-2); font-size: 13px; color: var(--c-text-muted); max-width: 14ch; }
+.cs__t { font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: var(--ls-head); max-width: 18ch; text-wrap: balance; overflow-wrap: break-word; }
+
+.cs__metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin: var(--block-gap) 0 var(--space-4); }
+.cs-m { margin: 0; padding-top: var(--space-2); border-top: 1px solid var(--c-line); }
+.cs-m__v { margin: 0; font-family: var(--font-head); font-weight: var(--fw-head); font-size: var(--fs-metric); line-height: 1; letter-spacing: var(--ls-head); color: var(--c-accent); font-variant-numeric: tabular-nums; }
+.cs-m__l { margin-top: var(--space-1); font-size: 13px; line-height: 1.5; color: var(--c-text-muted); max-width: 26ch; }
+.cs__links { max-width: none; }
+.cs__links a { display: inline-block; padding-block: 12px; font-size: 14px; color: var(--c-text); border-bottom: 1px solid var(--c-text); }
+.cs__links a:hover { color: var(--c-text-muted); }
+
+/* ---- Track and stage: the stage is a card that pins while the track scrolls --- */
+.cs__stage { position: relative; display: grid; gap: var(--space-4); padding: var(--card-pad); background: var(--c-secondary); border-radius: var(--radius); }
+
+.cs__rail, .cs__flow { display: none; }
+
+.cs-pinned .cs__track { height: calc(var(--stage-h) + var(--steps) * 78svh); }
+.cs-pinned .cs__stage {
+  position: sticky; top: calc(var(--header-h) + var(--space-3));
+  height: var(--stage-h);
+  grid-template-columns: minmax(180px, 2.4fr) minmax(0, 6fr) minmax(0, 3.6fr);
+  gap: var(--space-5);
+  align-items: stretch;
+}
+.cs-pinned .cs__rail, .cs-pinned .cs__flow { display: block; }
+
+/* rail: vertical steps with a teal line that fills as you scroll */
+.cs__rail { position: relative; --f: 0; }
+.cs__steps { list-style: none; padding: 0; height: 100%; max-height: 460px; display: flex; flex-direction: column; justify-content: space-between; align-self: center; }
+.cs__line { position: absolute; left: 14px; top: 22px; bottom: 22px; width: 1px; background: var(--c-line-strong); pointer-events: none; }
+.cs__line i { position: absolute; inset: 0; background: var(--c-signal); transform-origin: 0 0; transform: scaleY(var(--f)); }
+.cs-step { position: relative; display: flex; align-items: center; gap: var(--space-2); width: 100%; min-height: var(--tap-min); padding: 0; background: none; border: 0; font: inherit; font-size: 14px; text-align: left; color: var(--c-text-muted); cursor: pointer; transition: color var(--dur-fast) var(--ease-soft); }
+.cs-step__n { position: relative; z-index: 1; flex: none; display: grid; place-items: center; width: 29px; height: 29px; background: var(--c-primary); border: 1px solid var(--c-line-strong); border-radius: var(--radius); font-size: 12px; transition: background-color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft); }
+.cs-step:hover { color: var(--c-text); }
+.cs-step.is-done, .cs-step.is-on { color: var(--c-text); }
+.cs-step.is-done .cs-step__n { border-color: var(--c-signal); }
+.cs-step.is-on .cs-step__n { background: var(--c-signal); border-color: var(--c-signal); color: var(--c-primary); }
+.cs-pinned .cs__rail { align-self: stretch; display: grid; }
+
+/* parts: stacked in one cell; scroll position sets each part's opacity and offset */
+.cs__panel { display: grid; gap: var(--para-gap); align-content: start; }
+.cs-part__idx { margin-bottom: var(--space-2); font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--c-text-muted); max-width: none; }
+.cs-part__k { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--ls-head); margin-bottom: var(--space-3); overflow-wrap: break-word; }
+.cs-part__p { max-width: 54ch; font-size: var(--fs-lead); line-height: var(--lh-body); color: var(--c-text-muted); text-wrap: pretty; }
+.cs-part:last-child .cs-part__p { color: var(--c-text); }
+
+.cs-pinned .cs__panel { align-content: center; grid-template-columns: minmax(0, 1fr); gap: 0; }
+.cs-pinned .cs-part { grid-area: 1 / 1; align-self: center; opacity: 0; will-change: transform, opacity; }
+.cs-pinned .cs-part:first-child { opacity: 1; }
+
+/* workflow drawing: traced as the stage advances */
+.cs__flow { align-self: center; justify-self: center; width: 100%; max-width: 340px; height: auto; max-height: 100%; overflow: visible; }
+.cs-path { fill: none; stroke-width: 1.5; stroke-linecap: round; }
+.cs-path--base { stroke: var(--c-line-strong); stroke-dasharray: 3 7; }
+.cs-path--draw { stroke: var(--c-signal); }
+.cs-node rect { fill: var(--c-primary); stroke: var(--c-line-strong); stroke-width: 1; transition: fill var(--dur-fast) var(--ease-soft), stroke var(--dur-fast) var(--ease-soft); }
+.cs-node text { font-family: var(--font-body); font-size: 13px; fill: var(--c-text-muted); transition: fill var(--dur-fast) var(--ease-soft); }
+.cs-node.is-lit rect { stroke: var(--c-signal); }
+.cs-node.is-lit text { fill: var(--c-text); }
+.cs-node.is-on rect { fill: var(--c-signal); }
+.cs-node.is-on text { fill: var(--c-primary); }
+.cs-marker { fill: var(--c-signal); filter: drop-shadow(0 0 8px var(--c-signal-glow)); }
+
+/* ---- Tablet and phone: rail becomes a row of numbered steps, drawing is dropped -- */
+@media (max-width: 960px) {
+  .cs-hero__grid { grid-template-columns: minmax(0, 1fr); }
+  .cs__head { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); padding-block: var(--space-5); }
+  .cs__lead { display: flex; align-items: baseline; gap: var(--space-3); }
+  .cs__n { font-size: 56px; }
+  .cs__sector { margin-top: 0; max-width: none; }
+  .cs__metrics { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); margin-top: var(--space-5); }
+  .cs-pinned .cs__track { height: calc(var(--stage-h) + var(--steps) * 70svh); }
+  .cs-pinned .cs__stage { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: var(--space-4); }
+  .cs-pinned .cs__flow { display: none; }
+  .cs__steps { flex-direction: row; max-height: none; height: auto; }
+  .cs__line { left: 22px; right: 22px; top: 22px; bottom: auto; width: auto; height: 1px; }
+  .cs__line i { transform-origin: 0 0; transform: scaleX(var(--f)); }
+  .cs-step { width: var(--tap-min); justify-content: center; }
+  .cs-step__t { display: none; }
+  .cs-step__n { width: 32px; height: 32px; }
+}
+@media (max-width: 720px) {
+  .cs-hero__title { font-size: 64px; }
+  .cs__t { font-size: clamp(32px, 9vw, 48px); }
+  .cs-part__k { font-size: var(--fs-h3); }
+  .cs-part__p { font-size: 16px; }
+}
+
+/* ---- Reduced motion: nothing pins, nothing scrubs (also stripped in JS) ------- */
+@media (prefers-reduced-motion: reduce) {
+  .cs { transition: none; }
+  .cs-node rect, .cs-node text, .cs-step, .cs-step__n { transition: none; }
+}
+
+/* ==========================================================================
+   Interaction layer (added): word-by-word titles, drawn rules, labelled nodes,
+   pulse on the current step, cursor parallax, spotlight, staggered entrances.
+   All motion is 0.6-1.1s ease-out and is switched off by reduced motion.
+   ========================================================================== */
+
+/* titles: each word rises on its own, driven by scroll (--e is the part's entry progress) */
+.cs-w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+.cs-w > span { display: inline-block; }
+.cs-part { position: relative; }
+.cs-pinned .cs-part__k .cs-w > span { transform: translateY(calc((1 - clamp(0, calc(var(--e, 1) * 1.7 - var(--i, 0) * 0.2), 1)) * 112%)); }
+.cs-pinned .cs-part__idx { opacity: var(--e2, 1); transform: translateX(calc((1 - var(--e2, 1)) * -16px)); }
+.cs-pinned .cs-part__p { opacity: var(--e2, 1); transform: translateY(calc((1 - var(--e2, 1)) * 28px)); }
+/* a rule is drawn under each title as the part arrives */
+.cs-pinned .cs-part__k::after { content: ""; display: block; width: 96px; height: 2px; margin-top: var(--space-3); background: var(--c-signal); transform-origin: 0 50%; transform: scaleX(var(--e2, 1)); }
+.cs-pinned .cs-part__k { margin-bottom: var(--space-3); }
+
+/* stage: dot field drifts with scroll (--p), spotlight follows the cursor */
+.cs-pinned .cs__stage {
+  background:
+    radial-gradient(circle at 7px 7px, var(--c-line) 1px, transparent 1.6px) 0 calc(var(--p, 0) * -320px) / 22px 22px,
+    var(--c-secondary);
+}
+
+/* drawing: parallax with the cursor, labels slide in beside each node */
+.cs-pinned .cs__flow { transform: translate(calc(var(--px, 0) * 14px), calc(var(--py, 0) * 14px)); transition: transform var(--dur-slow) var(--ease-out); }
+.cs-node { cursor: default; }
+.cs-pinned .cs-node { cursor: pointer; }
+.cs-node rect { transform-box: fill-box; transform-origin: center; transition: fill var(--dur-fast) var(--ease-soft), stroke var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-out); }
+.cs-node:hover rect { transform: scale(1.14); stroke: var(--c-signal); }
+.cs-node__label { font-family: var(--font-body); font-size: 12px; letter-spacing: 0.02em; fill: var(--c-text-muted); opacity: 0; transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out), fill var(--dur-fast) var(--ease-soft); }
+.cs-node__label[data-side="r"] { transform: translateX(-10px); }
+.cs-node__label[data-side="l"] { transform: translateX(10px); }
+.cs-node.is-lit .cs-node__label { opacity: 1; transform: none; }
+.cs-node.is-on .cs-node__label { fill: var(--c-text); }
+/* one-shot ring when a step becomes current */
+.cs-ring { fill: none; stroke: var(--c-signal); stroke-width: 1.5; opacity: 0; transform-box: fill-box; transform-origin: center; pointer-events: none; }
+.cs-node.pulse .cs-ring { animation: cs-ring var(--dur-slow) var(--ease-out) both; }
+@keyframes cs-ring { from { opacity: 0.9; transform: scale(1); } to { opacity: 0; transform: scale(2.4); } }
+
+/* rail: current step nudges forward, number box lifts */
+.cs-step { transition: color var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-out); }
+.cs-step:hover { transform: translateX(4px); }
+.cs-step.is-on { transform: translateX(8px); }
+.cs-step.is-on .cs-step__n { box-shadow: var(--shadow-hover); }
+
+/* hero index: rows arrive one after another */
+.js .cs-ledger li { opacity: 0; transform: translateY(16px); animation: rise var(--dur-slow) var(--ease-out) forwards; }
+.js .cs-ledger li:nth-child(1) { animation-delay: 0.45s; }
+.js .cs-ledger li:nth-child(2) { animation-delay: 0.53s; }
+.js .cs-ledger li:nth-child(3) { animation-delay: 0.61s; }
+.js .cs-ledger li:nth-child(4) { animation-delay: 0.69s; }
+.js .cs-ledger li:nth-child(5) { animation-delay: 0.77s; }
+.js .cs-ledger li:nth-child(6) { animation-delay: 0.85s; }
+.cs-led { position: relative; isolation: isolate; }
+.cs-led::before { border-radius: 0; }
+
+/* headline figures rise in one by one (they never count; they are illustrative) */
+.js .cs-m { opacity: 0; transform: translateY(28px); transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out); }
+.js .cs-m:nth-child(1) { transition-delay: 0.3s; }
+.js .cs-m:nth-child(2) { transition-delay: 0.45s; }
+.js .cs-m:nth-child(3) { transition-delay: 0.6s; }
+.js .is-visible .cs-m { opacity: 1; transform: none; }
+.cs-m { position: relative; border-top-color: transparent; }
+.cs-m::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--c-line-strong); transform-origin: 0 50%; }
+.js .cs-m::before { transform: scaleX(0); transition: transform var(--dur-slow) var(--ease-out); transition-delay: inherit; }
+.js .is-visible .cs-m::before { transform: none; }
+/* the case number fills in outline when its example enters */
+.cs__n { transition: color var(--dur-slow) var(--ease-out), -webkit-text-stroke-color var(--dur-slow) var(--ease-out); }
+.cs__head.is-visible .cs__n { -webkit-text-stroke-color: var(--c-text); }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .cs-ledger li, .js .cs-m { opacity: 1 !important; transform: none !important; }
+  .js .cs-m::before { transform: none !important; }
+  .cs-pinned .cs-part__k .cs-w > span { transform: none !important; }
+  .cs-ring { display: none; }
+  .cs-node__label { opacity: 1; transform: none; }
+}
+@media (max-width: 960px) {
+  .cs-pinned .cs-part__k::after { width: 64px; }
+}
+
+/* ==========================================================================
+   Parallax (added): layers move at different speeds, so depth shows structure.
+   --hy is the hero's scroll offset, --hp is a case header's position in the
+   window (-1 below, 0 centred, 1 above), --p is progress through a pinned stage.
+   Only active while .cs-pinned is set, so reduced motion gets none of it.
+   ========================================================================== */
+
+/* hero: background drifts slowest, headline a little, index moves against it */
+.cs-pinned .cs-hero__bg { inset: -12% 0; transform: translateY(calc(var(--hy, 0) * 0.28px)); }
+.cs-pinned .cs-hero__copy { transform: translateY(calc(var(--hy, 0) * -0.1px)); }
+.cs-pinned .cs-ledger { transform: translateY(calc(var(--hy, 0) * 0.07px)); }
+
+/* case header: number, title and figures each travel at their own rate */
+.cs-pinned .cs__n { transform: translateY(calc(var(--hp, 0) * -70px)); }
+.cs-pinned .cs__sector { transform: translateY(calc(var(--hp, 0) * -34px)); }
+.cs-pinned .cs__t { transform: translateY(calc(var(--hp, 0) * -22px)); }
+.cs-pinned .cs__metrics { transform: translateY(calc(var(--hp, 0) * 18px)); }
+
+/* stage: two depth layers behind the content */
+.cs-pinned .cs__stage { overflow: hidden; }
+.cs__ghost { display: none; }
+.cs-pinned .cs__ghost {
+  display: block; position: absolute; right: -0.04em; bottom: -0.2em; z-index: 0; pointer-events: none;
+  font-family: var(--font-head); font-weight: var(--fw-head); font-size: clamp(220px, 26vw, 400px); line-height: 0.8; letter-spacing: var(--ls-head);
+  color: transparent; -webkit-text-stroke: 1px var(--c-line-strong);
+  transform: translateY(calc(70px - var(--p, 0) * 190px));            /* scroll: moves up through the card */
+  translate: calc(var(--px, 0) * -28px) calc(var(--py, 0) * -28px);   /* cursor: opposite the drawing, so it sits further back */
+  transition: translate var(--dur-slow) var(--ease-out);
+}
+.cs-pinned .cs__stage::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit;
+  background: radial-gradient(circle at 33px 33px, var(--c-line-strong) 1.4px, transparent 2px) 0 calc(var(--p, 0) * -720px) / 66px 66px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 40%, #000 100%); mask-image: linear-gradient(90deg, transparent 40%, #000 100%);
+  opacity: 0.6;
+}
+.cs-pinned .cs__rail, .cs-pinned .cs__panel, .cs-pinned .cs__flow { position: relative; z-index: 1; }
+@media (max-width: 960px) { .cs-pinned .cs__ghost { font-size: 200px; opacity: 0.7; } }

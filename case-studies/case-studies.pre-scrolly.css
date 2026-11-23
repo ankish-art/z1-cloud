@@ -1,0 +1,114 @@
+/* ==========================================================================
+   Case studies: a ledger of six examples.
+   Each example is an editorial row: number and sector on the left, title and
+   three headline figures on the right. "Read the full example" opens a reader
+   that walks the six parts one at a time. Amber is reserved for the figures
+   and the outcomes; teal marks the part you are on.
+   ========================================================================== */
+
+/* ---- Hero ----------------------------------------------------------------- */
+.cs-hero { position: relative; isolation: isolate; padding-block: var(--space-6) var(--section-pad); overflow: hidden; }
+.cs-hero__bg { position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at 78% 30%, var(--c-secondary-half), transparent 60%), radial-gradient(circle at 7px 7px, var(--c-dot) 1px, transparent 1.6px) 0 0 / 22px 22px; mask-image: radial-gradient(ellipse 70% 70% at 70% 35%, #000, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 70% 70% at 70% 35%, #000, transparent 80%); }
+.cs-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--block-gap); align-items: center; }
+.cs-hero__title { margin: var(--space-2) 0 var(--space-3); font-size: clamp(44px, 5.6vw, 84px); line-height: 1.02; max-width: 11em; text-wrap: balance; }
+.cs-hero .lead { max-width: 36ch; margin-bottom: var(--space-4); font-size: 20px; text-wrap: pretty; }
+
+/* the six examples as an index */
+.cs-ledger { border-top: 1px solid var(--c-line-strong); }
+.cs-ledger__k { padding-block: var(--space-2); font-size: 12px; color: var(--c-text-muted); }
+.cs-ledger ol { list-style: none; padding: 0; }
+.cs-led { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); grid-template-areas: "n s" "n t"; column-gap: var(--space-1); padding: 12px 0; border-top: 1px solid var(--c-line); transition: background-color var(--dur-fast) var(--ease-soft), padding var(--dur-fast) var(--ease-out); }
+.cs-led__n { grid-area: n; font-size: 13px; color: var(--c-text-muted); padding-top: 2px; transition: color var(--dur-fast) var(--ease-soft); }
+.cs-led__s { grid-area: s; font-size: 12px; color: var(--c-text-muted); }
+.cs-led__t { grid-area: t; font-size: 15px; line-height: 1.35; }
+.cs-led:hover { padding-left: var(--space-1); background: linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 80%); }
+.cs-led:hover .cs-led__n { color: var(--c-accent); }
+
+/* ---- List ----------------------------------------------------------------- */
+.cs-list { padding-bottom: 140px; }
+.cs-note { display: flex; align-items: center; gap: var(--space-2); max-width: none; padding: var(--space-2) var(--space-3); margin-bottom: var(--space-5); border: 1px solid var(--c-line-strong); border-radius: var(--radius); font-size: 14px; color: var(--c-text); }
+.cs-note span { flex: none; width: 10px; height: 10px; background: var(--c-accent); }
+.cs-filter { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); }
+.cs-chip { background: none; border: 0; border-bottom: 1px solid transparent; padding: 6px 0; min-height: 36px; font: inherit; font-size: 14px; color: var(--c-text-muted); cursor: pointer; transition: color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft); }
+.cs-chip:hover { color: var(--c-text); }
+.cs-chip.is-on { color: var(--c-text); border-bottom-color: var(--c-accent); }
+.cs-chip:focus-visible, .cs__btn:focus-visible, .cs-step:focus-visible, .cs__prev:focus-visible, .cs__next:focus-visible { outline: 2px solid var(--c-signal); outline-offset: 3px; }
+.cs-count { margin: var(--space-2) 0 var(--space-4); font-size: 12px; color: var(--c-text-muted); }
+
+/* ---- One example ------------------------------------------------------------ */
+.cs { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 10fr); gap: var(--space-5); padding-block: var(--space-6); border-top: 1px solid var(--c-line-strong); scroll-margin-top: calc(var(--header-h) + var(--space-3)); transition: opacity 0.35s var(--ease-soft), transform 0.35s var(--ease-soft); }
+.cs.is-out { opacity: 0; transform: translateY(8px); }
+.cs[hidden] { display: none; }
+.cs__n { font-family: var(--font-head); font-weight: var(--fw-head); font-size: clamp(56px, 6vw, 96px); line-height: 0.9; color: transparent; -webkit-text-stroke: 1px var(--c-text-muted); transition: color 0.5s var(--ease-soft), -webkit-text-stroke-color 0.5s var(--ease-soft); }
+.cs.is-open .cs__n { color: var(--c-accent); -webkit-text-stroke-color: var(--c-accent); }
+.cs__sector { margin-top: var(--space-2); font-size: 13px; color: var(--c-text-muted); max-width: 14ch; }
+.cs__t { font-size: clamp(26px, 2.8vw, 40px); line-height: 1.12; max-width: 24ch; text-wrap: balance; }
+
+.cs__metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin: var(--space-4) 0 var(--space-4); }
+.cs-m { margin: 0; padding-top: var(--space-2); border-top: 1px solid var(--c-line); }
+.cs-m__v { margin: 0; font-family: var(--font-head); font-weight: var(--fw-head); font-size: clamp(36px, 4vw, 56px); line-height: 1; letter-spacing: var(--ls-head); color: var(--c-accent); font-variant-numeric: tabular-nums; }
+.cs-m__l { margin-top: var(--space-1); font-size: 13px; line-height: 1.5; color: var(--c-text-muted); max-width: 26ch; }
+
+.cs__bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); }
+.cs__btn { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--tap-min); padding: 0; background: none; border: 0; border-bottom: 1px solid var(--c-accent); font: inherit; font-size: 15px; color: var(--c-text); cursor: pointer; }
+.cs__btn:hover { color: var(--c-accent); }
+.cs__btn-i { position: relative; width: 12px; height: 12px; }
+.cs__btn-i::before, .cs__btn-i::after { content: ""; position: absolute; left: 0; right: 0; top: 5px; height: 1px; background: currentColor; transition: transform 0.4s var(--ease-out); }
+.cs__btn-i::after { transform: rotate(90deg); }
+.cs.is-open .cs__btn-i::after { transform: rotate(0); }
+.cs__rel { font-size: 13px; color: var(--c-text-muted); border-bottom: 1px solid var(--c-line-strong); }
+.cs__rel:hover { color: var(--c-text); }
+
+/* ---- Reader ------------------------------------------------------------------ */
+.cs__body { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows 0.7s var(--ease-soft), visibility 0s linear 0.7s; }
+.cs.is-open .cs__body { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows 0.7s var(--ease-soft), visibility 0s; }
+.cs__clip { min-height: 0; overflow: hidden; }
+.cs__reader { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 8fr); gap: var(--space-5); margin-top: var(--space-5); padding: var(--space-4); border: 1px solid var(--c-line); border-radius: var(--radius); background: rgba(27, 33, 41, 0.45); }
+.cs__steps { list-style: none; padding: 0; position: relative; display: grid; gap: 2px; align-content: start; }
+.cs__steps::before { content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 1px; background: var(--c-line-strong); }
+.cs-step { position: relative; display: flex; align-items: center; gap: var(--space-2); width: 100%; min-height: 40px; padding: 4px 0; background: none; border: 0; font: inherit; font-size: 14px; text-align: left; color: var(--c-text-muted); cursor: pointer; transition: color var(--dur-fast) var(--ease-soft); }
+.cs-step__n { position: relative; z-index: 1; flex: none; display: grid; place-items: center; width: 23px; height: 23px; background: var(--c-primary); border: 1px solid var(--c-line-strong); font-size: 11px; transition: background-color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft); }
+.cs-step:hover { color: var(--c-text); }
+.cs-step.is-done { color: var(--c-text); }
+.cs-step.is-done .cs-step__n { border-color: var(--c-signal); }
+.cs-step.is-on { color: var(--c-text); }
+.cs-step.is-on .cs-step__n { background: var(--c-signal); border-color: var(--c-signal); color: var(--c-primary); }
+
+.cs__panel { display: grid; align-content: start; min-height: 260px; }
+.cs-part { display: none; }
+.cs-part.is-on { display: block; animation: cs-in 0.55s var(--ease-out) both; }
+@keyframes cs-in { from { opacity: 0; transform: translateY(10px); } }
+.cs-part__k { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.15; margin-bottom: var(--space-2); }
+.cs-part__p { max-width: 62ch; font-size: 17px; line-height: 1.75; color: var(--c-text-muted); text-wrap: pretty; }
+.cs-part--out .cs-part__k { color: var(--c-accent); }
+.cs-part--out .cs-part__p { color: var(--c-text); border-left: 2px solid var(--c-accent); padding-left: var(--space-3); }
+.cs__nav { display: flex; gap: var(--space-3); margin-top: var(--space-4); }
+.cs__prev, .cs__next { min-height: var(--tap-min); padding: 0; background: none; border: 0; border-bottom: 1px solid var(--c-line-strong); font: inherit; font-size: 14px; color: var(--c-text-muted); cursor: pointer; transition: color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft); }
+.cs__next { color: var(--c-text); border-color: var(--c-accent); }
+.cs__prev:hover, .cs__next:hover { color: var(--c-accent); }
+.cs__prev:disabled { opacity: 0.35; cursor: default; }
+.cs__prev:disabled:hover { color: var(--c-text-muted); }
+
+/* ---- Without JavaScript: every part is simply readable ---------------------- */
+html:not(.js) .cs__body { grid-template-rows: 1fr; visibility: visible; }
+html:not(.js) .cs-part { display: block; margin-bottom: var(--space-4); }
+html:not(.js) .cs__steps, html:not(.js) .cs__nav, html:not(.js) .cs__btn { display: none; }
+html:not(.js) .cs__reader { grid-template-columns: minmax(0, 1fr); }
+
+/* ---- Small screens ------------------------------------------------------------ */
+@media (max-width: 960px) {
+  .cs-hero__grid { grid-template-columns: minmax(0, 1fr); }
+  .cs { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); padding-block: var(--space-5); }
+  .cs__lead { display: flex; align-items: baseline; gap: var(--space-3); }
+  .cs__n { font-size: 48px; }
+  .cs__sector { margin-top: 0; max-width: none; }
+  .cs__metrics { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+  .cs__reader { grid-template-columns: minmax(0, 1fr); padding: var(--space-3); gap: var(--space-3); }
+  .cs__steps { grid-auto-flow: column; overflow-x: auto; grid-auto-columns: max-content; gap: var(--space-3); padding-bottom: var(--space-1); }
+  .cs__steps::before { display: none; }
+  .cs-step__n { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs, .cs__body, .cs-part.is-on { transition: none; animation: none; }
+  .cs__btn-i::after { transition: none; }
+}
