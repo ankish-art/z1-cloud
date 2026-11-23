@@ -129,7 +129,6 @@
     const $ = (k) => section.querySelector(`[data-${k}]`);
     const head = $('head');
     const marksGroup = $('marks');
-    const ledger = $('ledger');
     const laps = $('laps');
     const total = stages.length;
     const pad = (n) => String(n).padStart(2, '0');
@@ -212,7 +211,6 @@
       $('owner').textContent = s.owner;
       $('control').textContent = s.control;
       $('evidence').textContent = s.evidence;
-      renderLedger(i);
     }
 
     function show(i) {
@@ -225,41 +223,63 @@
         marks[k].classList.toggle('is-on', k === i);
         marks[k].classList.toggle('is-done', k < i);
       });
-      progress.style.strokeDasharray = `${i * 100} 600`;
-      head.style.transform = `rotate(${(lap - 3) * 360 + i * 60}deg)`;
-      // Detail text fades out, swaps, then fades back in (soft, not a cut)
       if (first || reduce) { fill(i); return; }
       detail.classList.add('is-swapping');
       clearTimeout(swapTimer);
-      swapTimer = setTimeout(() => { fill(current); detail.classList.remove('is-swapping'); }, 320);
-    }
-    function select(i) {
-      if (i === 0 && current === total - 1) advanceLap();
-      show(i);
+      swapTimer = setTimeout(() => { fill(current); detail.classList.remove('is-swapping'); }, 260);
     }
 
-    // Large screens: pinned, scroll position picks the stage and it stays on
-    // the last stage once the scroll is through
+    // The loop: one continuous lap, token travelling the ring, progress arc
+    // filling behind it. Each mark lights as the token reaches it; at the
+    // top the lap completes, the arc resets and a new block lands on the stack.
+    const LAP_MS = 18000;          // 3s per stage
+    const HOLD_MS = 9000;          // pause after a visitor picks a stage
+    let t = 0;                     // 0..1 position in the lap
+    let holdUntil = 0;
+    let raf = 0;
+    let last = 0;
+
+    function setT(next) {
+      t = next;
+      progress.style.strokeDasharray = `${t * 600} 600`;
+      head.style.transform = `rotate(${t * 360}deg)`;
+      const i = Math.min(total - 1, Math.floor(t * total));
+      if (i !== current) {
+        if (i === 0 && current === total - 1 && !pinned) { advanceLap(); ring.classList.remove('is-lapped'); void ring.offsetWidth; ring.classList.add('is-lapped'); }
+        show(i);
+      }
+    }
+    // Large screens: pinned, scroll position drives the token round the ring
     const track = section.querySelector('.model-scroll');
     const pinQuery = window.matchMedia('(min-width: 1081px) and (min-height: 700px)');
     let pinned = false;
-    let timer = null;
-    const stopAuto = () => { clearInterval(timer); timer = null; };
-
+    let target = 0;
     const span = () => track.getBoundingClientRect().height - (window.innerHeight - HEADER);
     function onScroll() {
-      const p = Math.min(Math.max((HEADER - track.getBoundingClientRect().top) / span(), 0), 0.9999);
-      show(Math.floor(p * total));
+      target = Math.min(Math.max((HEADER - track.getBoundingClientRect().top) / span(), 0), 0.9999);
+      if (reduce) setT(target);
     }
     function scrollToStage(step) {
       const top = window.scrollY + track.getBoundingClientRect().top - HEADER + (span() * (step + 0.5)) / total;
       window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
     }
-    function go(i) {
-      if (pinned) scrollToStage(i);
-      else { stopAuto(); select(i); }
+    function frame(now) {
+      const dt = Math.min(now - last, 100);
+      last = now;
+      if (pinned) {
+        const d = target - t;
+        setT(Math.abs(d) < 0.0004 ? target : t + d * Math.min(1, dt / 120));
+      } else if (now >= holdUntil) setT((t + dt / LAP_MS) % 1);
+      raf = requestAnimationFrame(frame);
     }
+    function run() { if (raf || reduce) return; last = performance.now(); raf = requestAnimationFrame(frame); }
+    function halt() { cancelAnimationFrame(raf); raf = 0; }
 
+    function go(i) {
+      if (pinned) { scrollToStage(i); return; }
+      setT(i / total + 0.0001);
+      holdUntil = performance.now() + HOLD_MS;
+    }
     nodes.forEach((n, i) => n.addEventListener('click', () => go(i)));
     ring.addEventListener('keydown', (e) => {
       if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'].includes(e.key)) return;
@@ -273,31 +293,21 @@
     function setMode() {
       pinned = pinQuery.matches && !reduce;
       section.classList.toggle('is-pinned', pinned);
-      if (pinned) { stopAuto(); onScroll(); }
+      onScroll();
+      if (pinned) setT(target);
     }
-    show(0);
+    setT(0);
     setMode();
     pinQuery.addEventListener('change', setMode);
-    window.addEventListener('scroll', () => { if (pinned) requestAnimationFrame(onScroll); }, { passive: true });
-
-    // Smaller screens: run the loop while it is in view, until the visitor takes over
-    if (!reduce) {
-      new IntersectionObserver(([e]) => {
-        if (e.isIntersecting && !pinned && timer === null && !ring.dataset.touched) {
-          timer = setInterval(() => select((current + 1) % total), 4500);
-        } else if (!e.isIntersecting) stopAuto();
-      }, { threshold: 0.4 }).observe(ring);
-      const takeOver = () => { ring.dataset.touched = '1'; stopAuto(); };
-      ring.addEventListener('pointerdown', takeOver);
-      ring.addEventListener('focusin', takeOver);
-    }
+    window.addEventListener('scroll', () => { if (pinned || reduce) onScroll(); }, { passive: true });
+    new IntersectionObserver(([e]) => (e.isIntersecting ? run() : halt()), { threshold: 0.25 }).observe(ring);
   }
 
   /* ------------------------------------------------------------------------
-     2b. The cost of operational friction: a 3D dice (seven-sided drum).
-     On large screens the section pins and scroll turns it, one item per face.
-     Pointer movement tilts it a little. Elsewhere (phones, short screens,
-     reduced motion) the cards stay a plain grid.
+     2b. The cost of operational friction: a scroll-driven stepper.
+     On large screens the section pins; scrolling advances one step at a time
+     (diagram + copy swap, the timeline fills). Elsewhere (phones, short
+     screens, reduced motion) the cards stay a plain grid.
      ------------------------------------------------------------------------ */
   const fr = document.getElementById('friction');
   const frTrack = fr && fr.querySelector('.fr-scroll');
@@ -306,21 +316,19 @@
   if (drum && frTrack) {
     const faces = [...drum.querySelectorAll(':scope > li.card')];
     const N = faces.length;
-    const STEP = 360 / N;
     const rail = fr.querySelector('.fr-rail');
-    const stage = fr.querySelector('.fr-stage');
     const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
-    const smooth = (t) => t * t * (3 - 2 * t);
 
     const railBtns = faces.map((li, i) => {
       const item = document.createElement('li');
       const b = document.createElement('button');
       b.type = 'button';
+      b.setAttribute('aria-label', li.querySelector('.friction__title').textContent);
       const n = document.createElement('span');
       n.className = 'fr-rail__n';
       n.textContent = String(i + 1).padStart(2, '0');
       const t = document.createElement('span');
-      t.textContent = li.querySelector('.friction__title').textContent;
+      t.textContent = li.dataset.short || li.querySelector('.friction__title').textContent;
       b.append(n, t);
       b.addEventListener('click', () => scrollToFace(i));
       item.append(b);
@@ -328,75 +336,52 @@
       return b;
     });
 
-    let active = false, ang = 0, tgt = 0, px = 0, py = 0, tpx = 0, tpy = 0, raf = 0, front = -1;
+    let active = false, raf = 0, front = -1;
 
     const span = () => frTrack.getBoundingClientRect().height - (window.innerHeight - HEADER);
-    function targetAngle() {
-      const p = clamp((HEADER - frTrack.getBoundingClientRect().top) / span(), 0, 0.9999);
-      const s = p * N, k = Math.floor(s), f = s - k;
-      // hold each face for a quarter of its step, turn through the middle half
-      const t = clamp((f - 0.25) / 0.5, 0, 1);
-      return -STEP * Math.min(k + smooth(t), N - 1);
+    function progress() {
+      return clamp((HEADER - frTrack.getBoundingClientRect().top) / span(), 0, 0.9999);
     }
     function scrollToFace(i) {
-      // land inside this face's holding zone (the first quarter of its step), not mid-turn
-      const top = window.scrollY + frTrack.getBoundingClientRect().top - HEADER + (span() * (i + 0.1)) / N;
+      // land in the middle of this step's zone
+      const top = window.scrollY + frTrack.getBoundingClientRect().top - HEADER + (span() * (i + 0.5)) / N;
       window.scrollTo({ top, behavior: 'smooth' });
     }
-
     function paint() {
-      drum.style.setProperty('--ry', `${(ang + px).toFixed(2)}deg`);
-      drum.style.setProperty('--rx', `${(-6 + py).toFixed(2)}deg`);
-      faces.forEach((li, i) => {
-        const rel = ((((i * STEP + ang) % 360) + 540) % 360) - 180;      // 0 = facing the viewer
-        li.style.setProperty('--shade', (clamp(Math.abs(rel) / 110, 0, 1) * 0.65).toFixed(2));
-      });
-      const f = clamp(Math.round(-ang / STEP), 0, N - 1);
-      if (f !== front) {
-        front = f;
-        railBtns.forEach((b, i) => b.classList.toggle('is-on', i === f));
-        faces.forEach((li, i) => li.classList.toggle('is-front', active && i === f));
+      raf = 0;
+      const s = progress() * N, k = Math.floor(s), f = s - k;
+      // the timeline fills toward the next dot through the last 40% of each step
+      const fill = Math.min(k + clamp((f - 0.6) / 0.4, 0, 1), N - 1) / (N - 1);
+      rail.style.setProperty('--p', fill.toFixed(4));
+      if (k !== front) {
+        front = k;
+        faces.forEach((li, i) => {
+          li.classList.toggle('is-front', active && i === k);
+          li.classList.toggle('is-past', i < k);
+        });
+        railBtns.forEach((b, i) => { b.classList.toggle('is-on', i === k); b.classList.toggle('is-done', i < k); });
       }
     }
-    function frame() {
-      raf = 0;
-      tgt = targetAngle();
-      ang += (tgt - ang) * 0.12;
-      px += (tpx - px) * 0.1;
-      py += (tpy - py) * 0.1;
-      paint();
-      if (Math.abs(tgt - ang) > 0.05 || Math.abs(tpx - px) > 0.05 || Math.abs(tpy - py) > 0.05) raf = requestAnimationFrame(frame);
-    }
-    const kick = () => { if (active && !raf) raf = requestAnimationFrame(frame); };
-
+    const kick = () => { if (active && !raf) raf = requestAnimationFrame(paint); };
     window.addEventListener('scroll', kick, { passive: true });
     window.addEventListener('resize', kick);
-    if (window.matchMedia('(pointer: fine)').matches) {
-      stage.addEventListener('pointermove', (e) => {
-        const r = stage.getBoundingClientRect();
-        tpx = ((e.clientX - r.left) / r.width - 0.5) * 8;
-        tpy = ((e.clientY - r.top) / r.height - 0.5) * -5;
-        kick();
-      });
-      stage.addEventListener('pointerleave', () => { tpx = 0; tpy = 0; kick(); });
-    }
 
-    // needs room for the heading and the drum together
+    // needs room for the heading, the step and the timeline together
     const mode = window.matchMedia('(min-width: 1081px) and (min-height: 640px)');
-    function setDrum() {
+    function setSteps() {
       const on = mode.matches && !reduce;
       if (on === active) return;
       active = on;
-      fr.classList.toggle('is-drum', on);
-      if (on) { front = -1; ang = targetAngle(); paint(); kick(); }
+      fr.classList.toggle('is-steps', on);
+      front = -1;
+      if (on) paint();
       else {
-        drum.style.removeProperty('--rx');
-        drum.style.removeProperty('--ry');
-        faces.forEach((li) => { li.style.removeProperty('--shade'); li.classList.remove('is-front'); });
+        faces.forEach((li) => li.classList.remove('is-front', 'is-past'));
+        rail.style.removeProperty('--p');
       }
     }
-    setDrum();
-    mode.addEventListener('change', setDrum);
+    setSteps();
+    mode.addEventListener('change', setSteps);
 
     // Plain-grid fallback: each card tilts toward the pointer (fine pointers only)
     if (!reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
@@ -425,5 +410,17 @@
     };
     window.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
     update();
+  }
+  /* ------------------------------------------------------------------------
+     4. Difference: the Zi Cloud chain draws itself once, on arrival
+     ------------------------------------------------------------------------ */
+  const diff = document.querySelector('[data-diff]');
+  if (diff) {
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) { diff.classList.add('is-drawn'); io.disconnect(); }
+      }, { threshold: 0.35 });
+      io.observe(diff);
+    } else diff.classList.add('is-drawn');
   }
 })();

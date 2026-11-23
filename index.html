@@ -99,7 +99,7 @@
 
               <!-- 01 Who is involved -->
               <div class="bp-actors">
-                <p class="kicker col-label">01 / Who is involved</p>
+                <p class="kicker col-label">Who is involved</p>
                 <ul class="actors" role="list">
                   <li>
                     <p class="kicker">Zi Cloud</p>
@@ -127,14 +127,14 @@
 
               <!-- 02 Controlled loop -->
               <div class="bp-loop">
-                <p class="kicker col-label">02 / Controlled loop</p>
+                <p class="kicker col-label">Controlled loop</p>
                 <div class="ring" role="group" aria-label="Six stages of the controlled workflow model">
                   <svg class="ring__svg" viewBox="0 0 100 100" aria-hidden="true">
                     <circle class="ring__outer" cx="50" cy="50" r="30"/>
                     <circle class="ring__inner" cx="50" cy="50" r="27"/>
                     <circle class="ring__progress" cx="50" cy="50" r="30" pathLength="600" transform="rotate(-90 50 50)"/>
                     <g data-marks></g>
-                    <g class="ring__head" data-head><circle cx="50" cy="23" r="1"/></g>
+                    <g class="ring__head" data-head><circle class="ring__halo" cx="50" cy="20" r="2.6"/><circle cx="50" cy="20" r="1.2"/></g>
                   </svg>
 
                   <span class="flow flow-in" aria-hidden="true"><span>cases in</span></span>
@@ -144,12 +144,10 @@
                     <div class="core__ai">
                       <span data-sprite="bot" data-px="3"></span>
                       <p><span class="core__k">Governed</span><strong>AI partner</strong></p>
-                      <p class="core__sub">Drafts, summaries, document extraction</p>
                     </div>
                     <div class="core__reg">
                       <span class="core__k">Control register</span>
                       <strong>Codified controls</strong>
-                      <p class="core__sub">Owners, thresholds, history</p>
                     </div>
                   </div>
 
@@ -164,9 +162,8 @@
 
               <!-- 03 What builds up -->
               <div class="bp-stack">
-                <p class="kicker col-label">03 / What builds up</p>
+                <p class="kicker col-label">What builds up</p>
                 <p class="stack-title">It compounds every lap</p>
-                <p class="stack-desc">Each lap adds evidence to the record, so the next audit request is already answered.</p>
                 <div class="laps-wrap">
                   <span class="stack-arrow" aria-hidden="true"></span>
                   <ol class="laps" data-laps role="list" aria-label="Laps completed (illustrative)"></ol>
@@ -186,10 +183,6 @@
                 <div><dt>Control</dt><dd data-control>Variants, hand-offs and data classifications signed off</dd></div>
                 <div><dt>Leaves on record</dt><dd data-evidence>Process map, signed</dd></div>
               </dl>
-              <div class="ledger">
-                <p class="ledger-title">Evidence ledger (illustrative)</p>
-                <ol class="ledger-list" data-ledger role="list"></ol>
-              </div>
             </div>
 
           </div>
@@ -260,21 +253,42 @@
               <h2 class="split-heading" id="friction-title">Regulatory risk usually starts in ordinary operations</h2>
             </div>
 
-            <!-- Filled by js/home.js on large screens: one button per item -->
-            <ol class="fr-rail" role="list" aria-label="The cost of operational friction"></ol>
             <div class="fr-stage">
             <ul class="tile-grid tile-grid--3 friction-grid friction-drum" role="list">
-              <li class="card spotlight reveal"><span class="card__icon"><span data-sprite="sheet" data-px="3" aria-hidden="true"></span></span><span class="card__meta">01</span><p class="friction__title">Critical processes in spreadsheets</p></li>
-              <li class="card spotlight reveal" style="--delay:.06s"><span class="card__icon"><span data-sprite="mail" data-px="3" aria-hidden="true"></span></span><span class="card__meta">02</span><p class="friction__title">Investigations run through email</p></li>
-              <li class="card spotlight reveal" style="--delay:.12s"><span class="card__icon"><span data-sprite="clip" data-px="3" aria-hidden="true"></span></span><span class="card__meta">03</span><p class="friction__title">Evidence collected by hand</p></li>
-              <li class="card spotlight reveal" style="--delay:.18s"><span class="card__icon"><span data-sprite="clock" data-px="3" aria-hidden="true"></span></span><span class="card__meta">04</span><p class="friction__title">Reporting built at the last minute</p></li>
-              <li class="card spotlight reveal"><span class="card__icon"><span data-sprite="split" data-px="3" aria-hidden="true"></span></span><span class="card__meta">05</span><p class="friction__title">Disconnected systems</p></li>
-              <li class="card spotlight reveal" style="--delay:.06s"><span class="card__icon"><span data-sprite="trail" data-px="3" aria-hidden="true"></span></span><span class="card__meta">06</span><p class="friction__title">No audit trail</p></li>
-              <li class="card spotlight reveal" style="--delay:.12s"><span class="card__icon"><span data-sprite="bot" data-px="2" aria-hidden="true"></span></span><span class="card__meta">07</span><p class="friction__title">AI with no governance</p></li>
+              <li class="card spotlight reveal" data-short="Spreadsheets">
+                <div class="fr-visual"><svg class="fr-flow" viewBox="0 0 260 120" role="img" aria-label="Process runs through a spreadsheet owned by one person"><defs><marker id="frar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="currentColor"/></marker></defs><g class="mn"><rect x="6" y="40" width="52" height="30" rx="7"/><text x="32.0" y="59">Input</text></g><path class="ml" d="M58 55L86 55" marker-end="url(#frar)"/><g class="mn warn"><rect x="86" y="40" width="64" height="30" rx="7"/><text x="118.0" y="59">Sheet.xlsx</text><circle class="mb" cx="148" cy="40" r="7"/><text class="mbt" x="148" y="43">1</text></g><path class="ml bad" d="M150 55L178 55" marker-end="url(#frar)"/><g class="mn"><rect x="178" y="40" width="76" height="30" rx="7"/><text x="216.0" y="59">One person</text></g></svg><span class="fr-chip fr-chip--top"><i aria-hidden="true"></i>Single point of failure</span><span class="fr-chip fr-chip--bottom">1 file · 1 person</span></div>
+                <div class="fr-copy"><span class="card__icon"><span data-sprite="sheet" data-px="3" aria-hidden="true"></span></span><span class="card__meta">01 / 07</span><p class="friction__title">Critical processes in spreadsheets</p><p class="friction__desc">The control exists, but only in a file one person knows how to update.</p></div>
+              </li>
+              <li class="card spotlight reveal" style="--delay:0.06s" data-short="Email">
+                <div class="fr-visual"><svg class="fr-flow" viewBox="0 0 260 120" role="img" aria-label="Investigation decisions scattered across inboxes"><g class="mn"><rect x="6" y="45" width="52" height="30" rx="7"/><text x="32.0" y="64">Alert</text></g><path class="ml" d="M58 60L84 60" marker-end="url(#frar)"/><g class="mn warn"><rect x="84" y="45" width="52" height="30" rx="7"/><text x="110.0" y="64">Email</text><circle class="mb" cx="134" cy="45" r="7"/><text class="mbt" x="134" y="48">3</text></g><path class="ml bad" d="M136 52C156 30 168 26 186 26" marker-end="url(#frar)"/><path class="ml bad" d="M136 68C156 90 168 94 186 94" marker-end="url(#frar)"/><g class="mn"><rect x="186" y="11" width="60" height="30" rx="7"/><text x="216.0" y="30">Inbox A</text></g><g class="mn"><rect x="186" y="79" width="60" height="30" rx="7"/><text x="216.0" y="98">Inbox B</text></g></svg><span class="fr-chip fr-chip--top"><i aria-hidden="true"></i>Rationale scattered</span><span class="fr-chip fr-chip--bottom">Decisions live in threads</span></div>
+                <div class="fr-copy"><span class="card__icon"><span data-sprite="mail" data-px="3" aria-hidden="true"></span></span><span class="card__meta">02 / 07</span><p class="friction__title">Investigations run through email</p><p class="friction__desc">Decisions are made in threads, so the rationale is scattered across inboxes.</p></div>
+              </li>
+              <li class="card spotlight reveal" style="--delay:0.12s" data-short="By hand">
+                <div class="fr-visual"><svg class="fr-flow" viewBox="0 0 260 120" role="img" aria-label="Evidence collected by hand"><g class="mn"><rect x="6" y="40" width="52" height="30" rx="7"/><text x="32.0" y="59">Audit ask</text></g><path class="ml" d="M58 55L82 55" marker-end="url(#frar)"/><g class="mn warn"><rect x="82" y="40" width="52" height="30" rx="7"/><text x="108.0" y="59">Screens</text><circle class="mb" cx="132" cy="40" r="7"/><text class="mbt" x="132" y="43">!</text></g><path class="ml" d="M134 55L156 55" marker-end="url(#frar)"/><g class="mn"><rect x="156" y="40" width="50" height="30" rx="7"/><text x="181.0" y="59">Exports</text></g><path class="ml" d="M206 55L222 55" marker-end="url(#frar)"/><g class="mn"><rect x="222" y="40" width="32" height="30" rx="7"/><text x="238.0" y="59">PDF</text></g></svg><span class="fr-chip fr-chip--top"><i aria-hidden="true"></i>Manual evidence</span><span class="fr-chip fr-chip--bottom">Screenshots and exports</span></div>
+                <div class="fr-copy"><span class="card__icon"><span data-sprite="clip" data-px="3" aria-hidden="true"></span></span><span class="card__meta">03 / 07</span><p class="friction__title">Evidence collected by hand</p><p class="friction__desc">Every audit request becomes a week of screenshots and exports.</p></div>
+              </li>
+              <li class="card spotlight reveal" style="--delay:0.18s" data-short="Last minute">
+                <div class="fr-visual"><svg class="fr-flow" viewBox="0 0 260 120" role="img" aria-label="Reporting reconciled at the last minute"><g class="mn"><rect x="6" y="40" width="52" height="30" rx="7"/><text x="32.0" y="59">Data</text></g><path class="ml" d="M58 55L82 55" marker-end="url(#frar)"/><g class="mn warn"><rect x="82" y="40" width="58" height="30" rx="7"/><text x="111.0" y="59">Reconcile</text><circle class="mb" cx="138" cy="40" r="7"/><text class="mbt" x="138" y="43">2</text></g><path class="ml bad" d="M140 55L164 55" marker-end="url(#frar)"/><g class="mn"><rect x="164" y="40" width="40" height="30" rx="7"/><text x="184.0" y="59">Due</text></g><path class="ml" d="M204 55L222 55" marker-end="url(#frar)"/><g class="mn"><rect x="222" y="40" width="32" height="30" rx="7"/><text x="238.0" y="59">Rpt</text></g></svg><span class="fr-chip fr-chip--top"><i aria-hidden="true"></i>Deadline-driven</span><span class="fr-chip fr-chip--bottom">Reconciled at the last minute</span></div>
+                <div class="fr-copy"><span class="card__icon"><span data-sprite="clock" data-px="3" aria-hidden="true"></span></span><span class="card__meta">04 / 07</span><p class="friction__title">Reporting built at the last minute</p><p class="friction__desc">Figures are reconciled under deadline pressure instead of produced by the work.</p></div>
+              </li>
+              <li class="card spotlight reveal" data-short="Disconnected">
+                <div class="fr-visual"><svg class="fr-flow" viewBox="0 0 260 120" role="img" aria-label="Same customer in four tools with different risk ratings"><g class="mn"><rect x="100" y="45" width="60" height="30" rx="7"/><text x="130.0" y="64">Customer</text></g><g class="mn"><rect x="6" y="8" width="44" height="30" rx="7"/><text x="28.0" y="27">CRM</text></g><g class="mn"><rect x="6" y="82" width="44" height="30" rx="7"/><text x="28.0" y="101">KYC</text></g><g class="mn warn"><rect x="210" y="8" width="44" height="30" rx="7"/><text x="232.0" y="27">Risk</text><circle class="mb" cx="252" cy="8" r="7"/><text class="mbt" x="252" y="11">4</text></g><g class="mn"><rect x="210" y="82" width="44" height="30" rx="7"/><text x="232.0" y="101">Case</text></g><path class="ml" d="M50 22C70 26 90 40 104 48" marker-end="url(#frar)"/><path class="ml" d="M50 96C70 92 90 78 104 72" marker-end="url(#frar)"/><path class="ml bad" d="M160 48C178 40 190 26 208 22" marker-end="url(#frar)"/><path class="ml bad" d="M160 72C178 78 190 92 208 96" marker-end="url(#frar)"/></svg><span class="fr-chip fr-chip--top"><i aria-hidden="true"></i>No single view</span><span class="fr-chip fr-chip--bottom">Four tools · four ratings</span></div>
+                <div class="fr-copy"><span class="card__icon"><span data-sprite="split" data-px="3" aria-hidden="true"></span></span><span class="card__meta">05 / 07</span><p class="friction__title">Disconnected systems</p><p class="friction__desc">The same customer sits in four tools with four different risk ratings.</p></div>
+              </li>
+              <li class="card spotlight reveal" style="--delay:0.06s" data-short="No audit trail">
+                <div class="fr-visual"><svg class="fr-flow" viewBox="0 0 260 120" role="img" aria-label="Actions leave no audit trail"><g class="mn"><rect x="6" y="40" width="52" height="30" rx="7"/><text x="32.0" y="59">Action</text></g><path class="ml" d="M58 55L82 55" marker-end="url(#frar)"/><g class="mn"><rect x="82" y="40" width="52" height="30" rx="7"/><text x="108.0" y="59">System</text></g><path class="ml bad" d="M134 55L156 55" marker-end="url(#frar)"/><g class="mn warn"><rect x="156" y="40" width="50" height="30" rx="7"/><text x="181.0" y="59">Record</text><circle class="mb" cx="204" cy="40" r="7"/><text class="mbt" x="204" y="43">!</text></g><path class="ml bad" d="M206 55L222 55" marker-end="url(#frar)"/><g class="mn"><rect x="222" y="40" width="32" height="30" rx="7"/><text x="238.0" y="59">Audit</text></g></svg><span class="fr-chip fr-chip--top"><i aria-hidden="true"></i>Nothing to evidence</span><span class="fr-chip fr-chip--bottom">No record of who did what</span></div>
+                <div class="fr-copy"><span class="card__icon"><span data-sprite="trail" data-px="3" aria-hidden="true"></span></span><span class="card__meta">06 / 07</span><p class="friction__title">No audit trail</p><p class="friction__desc">Actions happen across systems, but no record shows who did what, when and why.</p></div>
+              </li>
+              <li class="card spotlight reveal" style="--delay:0.12s" data-short="Ungoverned AI">
+                <div class="fr-visual"><svg class="fr-flow" viewBox="0 0 260 120" role="img" aria-label="AI output with no recorded approver"><g class="mn"><rect x="6" y="40" width="52" height="30" rx="7"/><text x="32.0" y="59">Case</text></g><path class="ml" d="M58 55L82 55" marker-end="url(#frar)"/><g class="mn"><rect x="82" y="40" width="52" height="30" rx="7"/><text x="108.0" y="59">AI pilot</text></g><path class="ml" d="M134 55L156 55" marker-end="url(#frar)"/><g class="mn"><rect x="156" y="40" width="50" height="30" rx="7"/><text x="181.0" y="59">Output</text></g><path class="ml bad" d="M206 55L222 55" marker-end="url(#frar)"/><g class="mn warn"><rect x="222" y="40" width="32" height="30" rx="7"/><text x="238.0" y="59">?</text><circle class="mb" cx="252" cy="40" r="7"/><text class="mbt" x="252" y="43">!</text></g></svg><span class="fr-chip fr-chip--top"><i aria-hidden="true"></i>Ungoverned AI</span><span class="fr-chip fr-chip--bottom">No named approver</span></div>
+                <div class="fr-copy"><span class="card__icon"><span data-sprite="bot" data-px="2" aria-hidden="true"></span></span><span class="card__meta">07 / 07</span><p class="friction__title">AI with no governance</p><p class="friction__desc">Pilots run on real cases, and nobody can say who approved the output.</p></div>
+              </li>
               <li class="friction-grid__fill" aria-hidden="true"><span class="dot-field"></span></li>
             </ul>
 
             </div>
+            <!-- Filled by js/home.js on large screens: one button per item -->
+            <ol class="fr-rail" role="list" aria-label="The cost of operational friction"></ol>
           </div>
         </div>
       </div>
@@ -288,18 +302,25 @@
           <h2 class="split-heading" id="diff-title">Judged on whether the control still works</h2>
         </div>
 
-        <table class="compare reveal">
-          <caption class="visually-hidden">How Zi Cloud differs from a typical automation firm</caption>
-          <thead>
-            <tr><th scope="col">Typical automation firm</th><th scope="col">Zi Cloud</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><span class="compare__mark" aria-hidden="true">✗</span>Automates tasks in isolation</td><td><span class="compare__mark" aria-hidden="true">✓</span>Designs controlled workflows end to end</td></tr>
-            <tr><td><span class="compare__mark" aria-hidden="true">✗</span>Leads with the technology</td><td><span class="compare__mark" aria-hidden="true">✓</span>Builds auditability into every process</td></tr>
-            <tr><td><span class="compare__mark" aria-hidden="true">✗</span>Limited focus on governance and control design</td><td><span class="compare__mark" aria-hidden="true">✓</span>Enables AI within defined risk boundaries</td></tr>
-            <tr><td></td><td><span class="compare__mark" aria-hidden="true">✓</span>Understands regulated environments and their supervisors</td></tr>
-          </tbody>
-        </table>
+        <div class="diff" data-diff>
+          <section class="diff__side diff__side--them" aria-labelledby="diff-them">
+            <h3 class="diff__label" id="diff-them">Typical automation firm</h3>
+            <ul class="diff__list" role="list">
+            <li style="--i:0"><span class="diff__node" aria-hidden="true">✗</span><p>Automates tasks in isolation</p></li>
+            <li style="--i:1"><span class="diff__node" aria-hidden="true">✗</span><p>Leads with the technology</p></li>
+            <li style="--i:2"><span class="diff__node" aria-hidden="true">✗</span><p>Limited focus on governance and control design</p></li>
+            </ul>
+          </section>
+          <section class="diff__side diff__side--us" aria-labelledby="diff-us">
+            <h3 class="diff__label" id="diff-us">Zi Cloud</h3>
+            <ul class="diff__list" role="list">
+            <li style="--i:0"><span class="diff__node" aria-hidden="true">✓</span><p>Designs controlled workflows end to end</p></li>
+            <li style="--i:1"><span class="diff__node" aria-hidden="true">✓</span><p>Builds auditability into every process</p></li>
+            <li style="--i:2"><span class="diff__node" aria-hidden="true">✓</span><p>Enables AI within defined risk boundaries</p></li>
+            <li style="--i:3"><span class="diff__node" aria-hidden="true">✓</span><p>Understands regulated environments and their supervisors</p></li>
+            </ul>
+          </section>
+        </div>
       </div>
     </section>
 
@@ -376,15 +397,15 @@
 
       <div class="marquee reveal">
         <ul class="marquee__track" role="list">
-          <li class="tech-chip"><span class="tech-chip__mono" aria-hidden="true">AI</span>Airtable</li>
-          <li class="tech-chip"><span class="tech-chip__mono" aria-hidden="true">MA</span>Make</li>
-          <li class="tech-chip"><span class="tech-chip__mono" aria-hidden="true">N8</span>n8n</li>
-          <li class="tech-chip"><span class="tech-chip__mono" aria-hidden="true">ZA</span>Zapier</li>
-          <li class="tech-chip"><span class="tech-chip__mono" aria-hidden="true">WO</span>Workato</li>
-          <li class="tech-chip"><span class="tech-chip__mono" aria-hidden="true">OP</span>OpenAI</li>
-          <li class="tech-chip"><span class="tech-chip__mono" aria-hidden="true">AN</span>Anthropic</li>
-          <li class="tech-chip"><span class="tech-chip__mono" aria-hidden="true">AP</span>APIs</li>
-          <li class="tech-chip"><span class="tech-chip__mono" aria-hidden="true">DA</span>Databases</li>
+          <li class="tech-chip"><span class="tech-chip__logo" aria-hidden="true"><img src="assets/logos/airtable.svg" alt="" width="20" height="20" loading="lazy"></span>Airtable</li>
+          <li class="tech-chip"><span class="tech-chip__logo" aria-hidden="true"><img src="assets/logos/make.svg" alt="" width="20" height="20" loading="lazy"></span>Make</li>
+          <li class="tech-chip"><span class="tech-chip__logo" aria-hidden="true"><img src="assets/logos/n8n.svg" alt="" width="20" height="20" loading="lazy"></span>n8n</li>
+          <li class="tech-chip"><span class="tech-chip__logo" aria-hidden="true"><img src="assets/logos/zapier.svg" alt="" width="20" height="20" loading="lazy"></span>Zapier</li>
+          <li class="tech-chip"><span class="tech-chip__logo tech-chip__logo--wide" aria-hidden="true"><img src="assets/logos/workato.svg" alt="" width="20" height="20" loading="lazy"></span>Workato</li>
+          <li class="tech-chip"><span class="tech-chip__logo" aria-hidden="true"><img src="assets/logos/openai.svg" alt="" width="20" height="20" loading="lazy"></span>OpenAI</li>
+          <li class="tech-chip"><span class="tech-chip__logo" aria-hidden="true"><img src="assets/logos/anthropic.svg" alt="" width="20" height="20" loading="lazy"></span>Anthropic</li>
+          <li class="tech-chip"><span class="tech-chip__logo" aria-hidden="true"><img src="assets/icons/tech/apis.svg" alt="" width="20" height="20" loading="lazy"></span>APIs</li>
+          <li class="tech-chip"><span class="tech-chip__logo" aria-hidden="true"><img src="assets/icons/tech/databases.svg" alt="" width="20" height="20" loading="lazy"></span>Databases</li>
         </ul>
       </div>
     </section>

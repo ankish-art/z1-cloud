@@ -403,6 +403,47 @@ html:not(.js) .model-scroll { display: none; }
   .bp-facts div { grid-template-columns: 1fr; gap: 2px; }
 }
 
+/* ---- Cleaner + live loop (overrides) ------------------------------------ */
+.model-pin { padding-block: var(--space-4); }
+.bp { border-color: var(--c-line); }
+.bp-actors { border-right-color: var(--c-line); }
+.actors li { border-bottom-color: var(--c-line); }
+.core { width: 30%; border-color: var(--c-line-strong); box-shadow: 0 0 0 0 var(--c-signal-glow); animation: core-breathe 4s ease-in-out infinite; }
+@keyframes core-breathe { 50% { box-shadow: 0 0 44px 2px var(--c-signal-glow); border-color: var(--c-signal); } }
+.core strong { font-size: 17px; }
+
+/* Ring: slow counter-rotating dashed track, glowing token and arc */
+.ring__inner { transform-box: view-box; transform-origin: 50% 50%; animation: ring-spin 60s linear infinite reverse; }
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+.ring__progress { transition: none; stroke-width: 0.7; stroke-linecap: round; filter: drop-shadow(0 0 1.2px var(--c-signal)); }
+.ring__head { transition: none; filter: drop-shadow(0 0 2px var(--c-signal)); }
+.ring__halo { opacity: 0.28; animation: halo 1.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes halo { 50% { transform: scale(1.5); opacity: 0.08; } }
+.ring__mark.is-on { animation: mark-pop 0.7s var(--ease-soft); filter: drop-shadow(0 0 1.5px var(--c-signal)); }
+@keyframes mark-pop { 0% { transform: scale(1); } 40% { transform: scale(1.9); } 100% { transform: scale(1); } }
+.ring__mark { transform-box: fill-box; transform-origin: center; }
+.ring.is-lapped .ring__outer { animation: lap-flash 0.9s ease-out; }
+@keyframes lap-flash { 0% { stroke: var(--c-signal); stroke-width: 0.9; } }
+
+/* Stage labels: name always, description only for the live stage */
+.ring__node b { font-size: 11px; transition: color var(--dur) var(--ease-soft), transform var(--dur) var(--ease-soft), text-shadow var(--dur) var(--ease-soft); transform-origin: center; }
+.ring__node span { opacity: 0; transform: translateY(2px); transition: opacity var(--dur) var(--ease-soft), transform var(--dur) var(--ease-soft); }
+.ring__node.is-on b { color: var(--c-signal); transform: scale(1.18); text-shadow: 0 0 18px var(--c-signal-glow); }
+.ring__node.is-on span { opacity: 1; transform: none; color: var(--c-text); }
+.ring__node[data-side="tl"] b, .ring__node[data-side="bl"] b { transform-origin: right center; }
+.ring__node[data-side="tr"] b, .ring__node[data-side="br"] b { transform-origin: left center; }
+
+/* Stack: the new lap drops in with a glow */
+.lap.is-live .lap-block { box-shadow: 0 0 24px var(--c-signal-glow); animation: live-pulse 2s ease-in-out infinite; }
+@keyframes live-pulse { 50% { box-shadow: 0 0 34px 4px var(--c-signal-glow); } }
+
+/* Detail row: two columns now the ledger is gone */
+.bp-detail { grid-template-columns: 1fr 1.4fr; }
+.bp-name { color: var(--c-text); }
+@media (prefers-reduced-motion: reduce) {
+  .core, .ring__inner, .ring__halo, .ring__mark.is-on, .lap.is-live .lap-block { animation: none; }
+}
+
 /* ==========================================================================
    2. WHO WE HELP: four compact slate cards in one row
    About half the size of the earlier 2 x 2 cards (client request, 20 Nov 2026):
@@ -455,113 +496,9 @@ html:not(.js) .model-scroll { display: none; }
 @media (max-width: 960px) { .tile-grid > .friction-grid__fill { display: none; } }
 
 /* ---- 3D dice (a seven-sided drum): scrolling turns it ---------------------
-   js/home.js adds .is-drum on large screens when motion is allowed.
+   js/home.js adds .is-steps on large screens when motion is allowed.
    Otherwise the cards above stay a plain grid.                              */
 .fr-rail { display: none; }
-
-#friction.is-drum { --W: 440px; --H: 420px; --R: 457px; }   /* R = W / (2 tan(180/7)) */
-#friction.is-drum .fr-scroll { height: calc(100svh - var(--header-h) + 7 * 45svh); }
-#friction.is-drum .fr-pin {
-  position: sticky;
-  top: var(--header-h);
-  height: calc(100svh - var(--header-h));
-  display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
-  grid-template-rows: auto minmax(0, 1fr);
-  column-gap: var(--space-5);
-  row-gap: var(--space-3);
-  align-items: center;
-  padding-top: var(--space-3);
-}
-/* The heading is part of the pinned stage, so it stays with the dice */
-#friction.is-drum .fr-pin > .section-head { grid-column: 1 / -1; align-self: start; max-width: 1100px; margin-bottom: 0; }
-#friction.is-drum .fr-pin > .section-head .eyebrow { margin-bottom: var(--space-2); }
-#friction.is-drum .fr-pin > .section-head h2 { font-size: var(--fs-h2-min, 48px); line-height: var(--lh-h2); }
-
-/* Index, left */
-#friction.is-drum .fr-rail { display: grid; list-style: none; padding: 0; }
-.fr-rail li { border-bottom: 1px solid var(--c-line); }
-.fr-rail li:first-child { border-top: 1px solid var(--c-line); }
-.fr-rail button {
-  position: relative;
-  display: grid;
-  grid-template-columns: 2.5rem 1fr;
-  align-items: baseline;
-  width: 100%;
-  min-height: var(--tap-min);
-  padding: 12px 0 12px var(--space-2);
-  text-align: left;
-  font-family: var(--font-head);
-  font-weight: var(--fw-semi);
-  font-size: 17px;
-  letter-spacing: var(--ls-head);
-  line-height: 1.25;
-  color: var(--c-text-muted);
-  transition: color var(--dur) var(--ease-soft), padding-left var(--dur) var(--ease-soft);
-}
-.fr-rail button::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--c-signal);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform var(--dur) var(--ease-soft);
-}
-.fr-rail button:hover { color: var(--c-text); }
-.fr-rail button.is-on { color: var(--c-text); padding-left: var(--space-3); }
-.fr-rail button.is-on::before { transform: scaleY(1); }
-.fr-rail__n { font-family: var(--font-body); font-weight: var(--fw-regular); font-size: 13px; letter-spacing: 0; }
-
-/* The drum, right */
-#friction.is-drum .fr-stage { perspective: 2000px; perspective-origin: 50% 35%; display: grid; place-items: center; height: 100%; }
-#friction.is-drum .friction-drum {
-  display: block;
-  position: relative;
-  width: var(--W);
-  height: var(--H);
-  transform-style: preserve-3d;
-  transform: translateZ(calc(var(--R) * -1)) rotateX(var(--rx, -6deg)) rotateY(var(--ry, 0deg));
-  will-change: transform;
-}
-#friction.is-drum .friction-drum > li.card {
-  position: absolute;
-  inset: 0;
-  min-height: 0;
-  opacity: 1;
-  transition: none;
-  overflow: visible;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
-#friction.is-drum .friction-drum > li:nth-child(1) { transform: rotateY(0deg)        translateZ(var(--R)); }
-#friction.is-drum .friction-drum > li:nth-child(2) { transform: rotateY(51.4286deg)  translateZ(var(--R)); }
-#friction.is-drum .friction-drum > li:nth-child(3) { transform: rotateY(102.8571deg) translateZ(var(--R)); }
-#friction.is-drum .friction-drum > li:nth-child(4) { transform: rotateY(154.2857deg) translateZ(var(--R)); }
-#friction.is-drum .friction-drum > li:nth-child(5) { transform: rotateY(205.7143deg) translateZ(var(--R)); }
-#friction.is-drum .friction-drum > li:nth-child(6) { transform: rotateY(257.1429deg) translateZ(var(--R)); }
-#friction.is-drum .friction-drum > li:nth-child(7) { transform: rotateY(308.5714deg) translateZ(var(--R)); }
-#friction.is-drum .friction-drum > li.friction-grid__fill { display: none; }
-
-/* Layers at different depths slide against each other as it turns */
-#friction.is-drum .friction-drum .card__icon  { transform: translateZ(46px); backface-visibility: hidden; }
-#friction.is-drum .friction-drum .card__meta  { transform: translateZ(24px); backface-visibility: hidden; }
-#friction.is-drum .friction-drum .friction__title { transform: translateZ(34px); backface-visibility: hidden; font-size: 36px; min-height: 0; }
-
-/* Faces darken as they turn away */
-#friction.is-drum .friction-drum > li.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius);
-  background: var(--c-primary);
-  opacity: var(--shade, 0);
-  transform: translateZ(60px);
-  pointer-events: none;
-}
 
 /* ==========================================================================
    5. USE CASES: two-column index of linked rows
@@ -746,14 +683,8 @@ main h3,
 /* ---- 3. Friction ---------------------------------------------------------- */
 .friction-grid .card { min-height: 240px; }
 .friction__title { font-size: 26px; min-height: 2.5em; }
-#friction.is-drum .fr-scroll { height: calc(100svh - var(--header-h) + 7 * 30svh); }
-#friction.is-drum .fr-pin > .section-head h2 { font-size: clamp(40px, 4vw, 48px); }
-#friction.is-drum .friction-drum .friction__title { font-size: 32px; }
-.fr-rail button { font-size: 16px; font-weight: var(--fw-medium); padding-block: 14px; }
 
 /* ---- 4. Difference -------------------------------------------------------- */
-.compare td { padding-block: var(--space-4); font-size: 17px; }
-.compare th { padding-bottom: var(--space-3); }
 
 /* ---- 5. Use cases --------------------------------------------------------- */
 .uc-row { padding-block: var(--space-4); }
@@ -816,74 +747,26 @@ main h3,
 #friction .friction-grid .card__icon { box-shadow: 0 0 0 4px var(--c-secondary); }
 
 /* ---- Grid fallback (phones, short or reduced-motion): 3D entrance + tilt --- */
-#friction:not(.is-drum) .friction-grid > li.card {
+#friction:not(.is-steps) .friction-grid > li.card {
   transition:
     opacity var(--dur) var(--ease-out),
     transform 0.35s var(--ease-out),
     box-shadow var(--dur-fast) var(--ease-out);
 }
-.js #friction:not(.is-drum) .friction-grid > li.card:not(.is-visible) {
+.js #friction:not(.is-steps) .friction-grid > li.card:not(.is-visible) {
   transform: perspective(900px) rotateX(14deg) translateY(28px);
 }
-#friction:not(.is-drum) .friction-grid > li.card.is-visible {
+#friction:not(.is-steps) .friction-grid > li.card.is-visible {
   transform: perspective(900px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg));
 }
 @media (hover: hover) and (pointer: fine) {
-  #friction:not(.is-drum) .friction-grid > li.card.is-visible:hover {
+  #friction:not(.is-steps) .friction-grid > li.card.is-visible:hover {
     transform: perspective(900px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg)) translateZ(14px);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.12),
       inset 0 0 0 1px rgba(255, 255, 255, 0.08),
       var(--shadow-hover);
   }
-}
-
-/* ---- Dice: sizing (restored) and tiers so it runs on laptops too ------------ */
-#friction.is-drum { --W: 520px; --H: 430px; --R: 540px; }   /* R = W / (2 tan(180/7)) */
-#friction.is-drum .fr-pin {
-  grid-template-rows: auto auto;
-  align-content: center;
-  row-gap: var(--space-4);
-}
-#friction.is-drum .fr-stage { position: relative; height: calc(var(--H) + 40px); }
-@media (max-height: 880px) {
-  #friction.is-drum { --W: 440px; --H: 350px; --R: 457px; }
-  #friction.is-drum .fr-pin { row-gap: var(--space-3); }
-  #friction.is-drum .fr-pin > .section-head h2 { font-size: clamp(34px, 3.4vw, 42px); }
-  #friction.is-drum .friction-drum .friction__title { font-size: 28px; }
-}
-@media (max-height: 740px) {
-  #friction.is-drum { --W: 370px; --H: 290px; --R: 384px; }
-  #friction.is-drum .fr-pin { row-gap: var(--space-2); }
-  #friction.is-drum .fr-pin > .section-head .eyebrow { margin-bottom: var(--space-1); }
-  #friction.is-drum .fr-pin > .section-head h2 { font-size: 32px; }
-  #friction.is-drum .friction-drum .friction__title { font-size: 24px; }
-  #friction.is-drum .fr-rail button { padding-block: 8px; font-size: 15px; }
-}
-
-/* Dice faces: the front face glows teal (motion feedback), a soft floor glow
-   sits beneath, and edges catch light as it turns. */
-#friction.is-drum .friction-drum > li.card {
-  border-radius: var(--radius);
-  transition: box-shadow var(--dur) var(--ease-out);
-}
-#friction.is-drum .friction-drum > li.card.is-front {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 0 0 1px var(--c-signal-glow),
-    0 0 70px -14px var(--c-signal-glow);
-}
-#friction.is-drum .fr-stage::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 6px;
-  width: calc(var(--W) * 0.9);
-  height: 46px;
-  translate: -50% 0;
-  background: radial-gradient(ellipse closest-side, var(--c-signal-soft), transparent);
-  filter: blur(6px);
-  pointer-events: none;
 }
 
 /* ==========================================================================
@@ -898,14 +781,10 @@ main h3,
 .section--alt { border-top-color: transparent; }
 .section--alt .who-cell,
 .section--alt .founder-card { background: var(--c-primary); }
-.section--alt .compare td { border-top-color: var(--c-line-strong); }
-.section--alt .compare th:last-child { color: var(--c-text); }
 
 /* Amber: key outcomes and active cues (never body text or large areas) */
-.compare td:last-child .compare__mark { color: var(--c-accent); }
 .uc-row:hover .uc-row__arrow,
 .who-cell:hover .who-cell__arrow { color: var(--c-accent); }
-.fr-rail button.is-on .fr-rail__n { color: var(--c-accent); }
 .bp-step { color: var(--c-accent); }
 .lap-block { color: var(--c-text); }
 
@@ -937,3 +816,263 @@ main h3,
 
 /* Technology pills: hover picks up the amber edge */
 .tech-chip:hover { border-color: var(--c-accent); }
+
+/* ==========================================================================
+   Friction: scroll-driven stepper (section pins; scrolling advances one step)
+   js/home.js adds .is-steps on large screens when motion is allowed.
+   Otherwise the cards stay a plain grid, each with its diagram.
+   ========================================================================== */
+#friction .fr-flow { display: block; width: 100%; height: auto; color: var(--c-text-muted); }
+#friction .fr-flow .mn rect { fill: var(--c-secondary); stroke: var(--c-line-strong); stroke-width: 1; }
+#friction .fr-flow .mn text { fill: var(--c-text); font: 500 9px var(--font-body); text-anchor: middle; }
+#friction .fr-flow .mn.warn rect { stroke: var(--c-accent); }
+#friction .fr-flow .mb { fill: var(--c-accent); }
+#friction .fr-flow .mn .mbt { fill: var(--c-on-accent); font-size: 8px; font-weight: 700; }
+#friction .fr-flow .ml { fill: none; stroke: currentColor; stroke-width: 1.2; stroke-dasharray: 3 3; }
+#friction .fr-flow .ml.bad { color: var(--c-accent); }
+#friction .fr-flow .ml:not(.bad) { color: var(--c-signal); animation: fr-dash 1.2s linear infinite; }
+@keyframes fr-dash { to { stroke-dashoffset: -12; } }
+
+.fr-visual { position: relative; padding: var(--space-3); border: 1px solid var(--c-line); border-radius: var(--radius);
+  background-color: rgba(0,0,0,.35); background-image: radial-gradient(var(--c-dot) 1px, transparent 1px); background-size: 16px 16px; }
+.fr-chip { position: absolute; display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px; border: 1px solid var(--c-line-strong); border-radius: 999px;
+  background: var(--c-secondary); color: var(--c-text); font-family: var(--font-body); font-size: 13px; line-height: 1.4; box-shadow: 0 14px 30px -12px rgba(0,0,0,.8); }
+.fr-chip i { width: 9px; height: 9px; border-radius: 50%; background: var(--c-accent); }
+.fr-chip--top { top: -16px; left: var(--space-3); }
+.fr-chip--bottom { bottom: -16px; right: var(--space-3); }
+#friction:not(.is-steps) .fr-copy { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-4); }
+#friction:not(.is-steps) .friction-grid > li.card { display: block; }
+#friction:not(.is-steps) .fr-copy .card__meta { position: static; }
+.friction__desc { font-size: 16px; line-height: 1.6; color: var(--c-text-muted); }
+
+#friction.is-steps .fr-scroll { height: calc(100svh - var(--header-h) + 7 * 55svh); }
+#friction.is-steps .fr-pin { position: sticky; top: var(--header-h); height: calc(100svh - var(--header-h)); display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto; row-gap: var(--space-3); padding: var(--space-3) 0 var(--space-3); }
+#friction.is-steps .fr-pin > .section-head { margin-bottom: 0; }
+#friction.is-steps .fr-pin > .section-head h2 { font-size: clamp(36px, 3.6vw, 48px); line-height: var(--lh-h2); }
+#friction.is-steps .fr-stage { position: relative; min-height: 0; }
+#friction.is-steps .friction-drum { position: relative; display: block; height: 100%; }
+#friction.is-steps .friction-drum > li.card { position: absolute; inset: 0; min-height: 0; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  column-gap: var(--space-6); align-items: center; padding: var(--space-3) 0; background: none; box-shadow: none; border-radius: 0; overflow: visible;
+  opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(40px);
+  transition: opacity .5s var(--ease-out), transform .6s var(--ease-out), visibility 0s linear .5s; }
+#friction.is-steps .friction-drum > li.card.is-front { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition-delay: 0s; }
+#friction.is-steps .friction-drum > li.card.is-past { transform: translateY(-40px); }
+#friction.is-steps .fr-visual { align-self: center; justify-self: start; width: 100%; max-height: 100%; display: grid; place-items: center; aspect-ratio: 16 / 10;
+  transform: scale(.96); transition: transform .7s var(--ease-out); }
+#friction.is-steps li.is-front .fr-visual { transform: none; }
+#friction.is-steps .fr-visual .fr-flow { max-height: 100%; }
+#friction.is-steps .fr-copy { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+#friction.is-steps .fr-copy > * { opacity: 0; transform: translateY(18px); transition: opacity .5s var(--ease-out), transform .6s var(--ease-out); }
+#friction.is-steps li.is-front .fr-copy > * { opacity: 1; transform: none; }
+#friction.is-steps li.is-front .fr-copy > :nth-child(2) { transition-delay: .08s; }
+#friction.is-steps li.is-front .fr-copy > :nth-child(3) { transition-delay: .14s; }
+#friction.is-steps li.is-front .fr-copy > :nth-child(4) { transition-delay: .22s; }
+#friction.is-steps .fr-copy .card__meta { color: var(--c-accent); font-size: 18px; letter-spacing: .2em; position: static; margin: 0; }
+#friction.is-steps .fr-copy .card__icon { box-shadow: none; }
+#friction.is-steps .fr-copy .friction__title { font-size: clamp(32px, 3.2vw, 44px); line-height: 1.1; min-height: 0; margin: 0; padding: 0; }
+#friction.is-steps .friction__desc { font-size: clamp(16px, 1.45vw, 20px); }
+#friction.is-steps .fr-visual { overflow: visible; }
+
+/* Timeline */
+#friction.is-steps .fr-rail { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); list-style: none; padding: 0; --p: 0; }
+#friction.is-steps .fr-rail::before, #friction.is-steps .fr-rail::after { content: ""; position: absolute; top: 11px; left: calc(100% / 14); width: calc(100% * 6 / 7); height: 2px; background: var(--c-line); }
+#friction.is-steps .fr-rail::after { background: var(--c-signal); transform-origin: left; transform: scaleX(var(--p)); box-shadow: 0 0 12px var(--c-signal-glow); }
+.fr-rail li { border: 0 !important; }
+#friction.is-steps .fr-rail button { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; padding: 0 4px; font-size: 15px; font-weight: var(--fw-medium); text-align: center; color: var(--c-text-muted); }
+#friction.is-steps .fr-rail button::before { position: static; display: block; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--c-line-strong); background: var(--c-primary); transform: none; transition: all .4s var(--ease-out); z-index: 1; }
+#friction.is-steps .fr-rail button.is-done::before { border-color: var(--c-signal); background: var(--c-signal); }
+#friction.is-steps .fr-rail button.is-on::before { border-color: var(--c-signal); background: var(--c-signal); box-shadow: 0 0 0 6px var(--c-signal-soft), 0 0 18px var(--c-signal-glow); }
+#friction.is-steps .fr-rail button.is-on { color: var(--c-text); padding-left: 4px; }
+#friction.is-steps .fr-rail__n { display: none; }
+@media (max-height: 800px) { #friction.is-steps .fr-pin { row-gap: var(--space-2); } #friction.is-steps .fr-pin > .section-head .eyebrow { margin-bottom: 4px; } #friction.is-steps .fr-pin > .section-head h2 { font-size: 34px; } #friction.is-steps .fr-rail button { gap: 8px; font-size: 14px; } }
+@media (prefers-reduced-motion: reduce) { #friction .fr-flow .ml { animation: none !important; } }
+
+/* Stepper fixes: the dot-field filler tile must not take space; panel reads like an app window */
+#friction.is-steps .friction-drum > li.friction-grid__fill { display: none; }
+#friction.is-steps .fr-visual { padding-top: calc(var(--space-3) + 22px); background-color: var(--c-secondary); box-shadow: 0 40px 80px -40px rgba(0,0,0,.9), 0 0 90px -30px var(--c-signal-glow); }
+#friction.is-steps .fr-visual::before { content: ""; position: absolute; top: 10px; left: 14px; width: 44px; height: 8px;
+  background: radial-gradient(circle at 4px 4px, var(--c-line-strong) 3.5px, transparent 4px) 0 0 / 16px 8px repeat-x; }
+
+/* ==========================================================================
+   Friction stepper: polish
+   One moment carries the section: when a step lands, its diagram builds
+   left to right and the failure point pulses amber. Everything else is still.
+   ========================================================================== */
+#friction.is-steps .fr-pin > .section-head h2 { font-size: clamp(34px, 3.2vw, 44px); max-width: 18ch; }
+#friction.is-steps .friction-drum > li.card { column-gap: clamp(40px, 6vw, 96px); grid-template-columns: minmax(0, 7fr) minmax(0, 4.6fr); }
+
+/* Panel: a lit slate window with a faint grid, glow arrives with the step */
+#friction.is-steps .fr-visual { border-color: var(--c-line-strong); border-radius: 10px; overflow: visible; padding: calc(var(--space-4) + 14px) var(--space-4) var(--space-4);
+  background-image: radial-gradient(var(--c-dot) 1px, transparent 1.4px), linear-gradient(160deg, color-mix(in srgb, var(--c-secondary) 88%, var(--c-text)) 0%, var(--c-secondary) 60%);
+  background-size: 18px 18px, auto; }
+#friction.is-steps .fr-visual::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
+  background: radial-gradient(70% 60% at 50% 55%, var(--c-signal-soft), transparent 70%); transition: opacity .9s var(--ease-out); }
+#friction.is-steps li.is-front .fr-visual::after { opacity: 1; }
+#friction.is-steps .fr-flow { filter: drop-shadow(0 10px 18px rgba(0,0,0,.45)); }
+#friction .fr-flow .mn text { font-size: 10px; }
+#friction .fr-flow .mn rect { rx: 8px; }
+
+/* Chips arrive from opposite sides */
+#friction.is-steps .fr-chip { opacity: 0; transition: opacity .5s var(--ease-out) .5s, transform .7s var(--ease-out) .5s; font-size: 14px; padding: 10px 18px; }
+#friction.is-steps .fr-chip--top { transform: translateX(-24px); }
+#friction.is-steps .fr-chip--bottom { transform: translateX(24px); transition-delay: .75s; }
+#friction.is-steps li.is-front .fr-chip { opacity: 1; transform: none; }
+#friction.is-steps .fr-chip i { box-shadow: 0 0 0 0 rgba(255,173,0,.55); }
+#friction.is-steps li.is-front .fr-chip i { animation: fr-ping 2.4s var(--ease-out) 1.2s infinite; }
+@keyframes fr-ping { 0% { box-shadow: 0 0 0 0 rgba(255,173,0,.5); } 70%, 100% { box-shadow: 0 0 0 10px rgba(255,173,0,0); } }
+
+/* Diagram builds in order: nodes rise, connectors follow */
+@keyframes fr-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes fr-warn { 0%, 100% { stroke-width: 1; } 50% { stroke-width: 2.6; } }
+#friction.is-steps .fr-flow > g, #friction.is-steps .fr-flow > path { opacity: 0; }
+#friction.is-steps li.is-front .fr-flow > g,
+#friction.is-steps li.is-front .fr-flow > path { opacity: 1; animation: fr-in .55s var(--ease-out) both; }
+#friction.is-steps li.is-front .fr-flow > path.ml:not(.bad) { animation: fr-in .55s var(--ease-out) both, fr-dash 1.2s linear infinite; }
+#friction.is-steps li.is-front .fr-flow > :nth-child(2)  { animation-delay: .25s; }
+#friction.is-steps li.is-front .fr-flow > :nth-child(3)  { animation-delay: .40s; }
+#friction.is-steps li.is-front .fr-flow > :nth-child(4)  { animation-delay: .55s; }
+#friction.is-steps li.is-front .fr-flow > :nth-child(5)  { animation-delay: .70s; }
+#friction.is-steps li.is-front .fr-flow > :nth-child(6)  { animation-delay: .85s; }
+#friction.is-steps li.is-front .fr-flow > :nth-child(7)  { animation-delay: 1.00s; }
+#friction.is-steps li.is-front .fr-flow > :nth-child(8)  { animation-delay: 1.15s; }
+#friction.is-steps li.is-front .fr-flow > :nth-child(9)  { animation-delay: 1.30s; }
+#friction.is-steps li.is-front .fr-flow > :nth-child(n+10) { animation-delay: 1.45s; }
+#friction.is-steps li.is-front .fr-flow .mn.warn rect { animation: fr-warn 2.4s ease-in-out 1.4s infinite; }
+
+/* Copy column: bigger, calmer, amber only on the counter */
+#friction.is-steps .fr-copy { gap: var(--space-3); }
+#friction.is-steps .fr-copy .card__icon { width: 56px; height: 56px; }
+#friction.is-steps .fr-copy .card__meta { font-size: 15px; letter-spacing: .24em; }
+#friction.is-steps .fr-copy .friction__title { font-size: clamp(34px, 3.4vw, 50px); max-width: 14ch; }
+#friction.is-steps .friction__desc { font-size: clamp(17px, 1.5vw, 21px); line-height: 1.65; max-width: 34ch; }
+
+/* Timeline: heavier line, labels carry state */
+#friction.is-steps .fr-rail::before, #friction.is-steps .fr-rail::after { top: 11px; height: 3px; border-radius: 2px; }
+#friction.is-steps .fr-rail button { font-size: 14px; letter-spacing: .02em; }
+#friction.is-steps .fr-rail button.is-on { color: var(--c-accent); }
+#friction.is-steps .fr-rail button:hover:not(.is-on) { color: var(--c-text); }
+#friction.is-steps .fr-rail button:hover::before { border-color: var(--c-signal); }
+@media (prefers-reduced-motion: reduce) {
+  #friction.is-steps li.is-front .fr-flow > *, #friction.is-steps li.is-front .fr-flow .mn.warn rect, #friction.is-steps li.is-front .fr-chip i { animation: none !important; opacity: 1; }
+}
+
+/* ---- Stepper: fit fixes (overlap, compact heading, timeline dots) -------- */
+/* the dots had no content, so the pseudo-element never rendered */
+#friction.is-steps .fr-rail button::before { content: ""; }
+#friction.is-steps .fr-rail { margin-top: var(--space-1); }
+
+/* compact heading: one eyebrow line, two heading lines, less height */
+#friction.is-steps .fr-pin { row-gap: var(--space-2); padding-top: var(--space-2); }
+#friction.is-steps .fr-pin > .section-head .eyebrow { font-size: 12px; margin-bottom: 6px; }
+#friction.is-steps .fr-pin > .section-head h2 { max-width: none; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.12; }
+
+/* keep the panel and both overlapping chips inside the stage */
+#friction.is-steps .friction-drum > li.card { padding: 0; }
+#friction.is-steps .fr-visual { margin-block: 22px; max-height: calc(100% - 44px); }
+#friction.is-steps .fr-chip--top { top: -18px; }
+#friction.is-steps .fr-chip--bottom { bottom: -18px; }
+#friction.is-steps .fr-copy { padding-block: 22px; }
+@media (max-height: 820px) {
+  #friction.is-steps .fr-pin > .section-head .eyebrow { display: none; }
+  #friction.is-steps .fr-copy .friction__title { font-size: clamp(28px, 2.8vw, 38px); }
+  #friction.is-steps .friction__desc { font-size: 16px; line-height: 1.55; }
+  #friction.is-steps .fr-copy .card__icon { width: 48px; height: 48px; }
+  #friction.is-steps .fr-copy { gap: var(--space-2); }
+}
+
+/* ---- Stepper: roomier middle + refined timeline -------------------------- */
+#friction.is-steps .fr-pin { row-gap: clamp(16px, 3.4svh, 40px); padding-bottom: clamp(16px, 2.6svh, 32px); }
+#friction.is-steps .fr-stage { padding-inline: clamp(8px, 1.5vw, 24px); }
+#friction.is-steps .friction-drum > li.card { column-gap: clamp(56px, 7vw, 120px); }
+#friction.is-steps .fr-visual { margin-block: clamp(26px, 4svh, 44px); max-height: calc(100% - clamp(52px, 8svh, 88px)); padding: calc(var(--space-4) + 16px) clamp(32px, 4vw, 56px) clamp(32px, 4vw, 56px); }
+#friction.is-steps .fr-copy { padding-block: clamp(26px, 4svh, 44px); gap: clamp(14px, 2.4svh, 28px); }
+
+/* timeline: numbered dots on a hairline track, ticks done, current glows */
+#friction.is-steps .fr-rail { counter-reset: st; padding-top: clamp(14px, 2.2svh, 24px); border-top: 1px solid var(--c-line); }
+#friction.is-steps .fr-rail li { counter-increment: st; }
+#friction.is-steps .fr-rail::before, #friction.is-steps .fr-rail::after { top: calc(clamp(14px, 2.2svh, 24px) + 13px); height: 2px; }
+#friction.is-steps .fr-rail::before { background: var(--c-line-strong); opacity: .6; }
+#friction.is-steps .fr-rail button { gap: 14px; font-size: 14px; }
+#friction.is-steps .fr-rail button::before {
+  content: counter(st); display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid var(--c-line-strong); background: var(--c-primary); color: var(--c-text-muted);
+  font: 500 12px/1 var(--font-body); transition: background .4s var(--ease-out), border-color .4s var(--ease-out), color .4s var(--ease-out), box-shadow .5s var(--ease-out), transform .4s var(--ease-out);
+}
+#friction.is-steps .fr-rail button.is-done::before { content: "\2713"; background: var(--c-signal-soft); border-color: var(--c-signal); color: var(--c-signal); }
+#friction.is-steps .fr-rail button.is-on::before { content: counter(st); background: var(--c-signal); border-color: var(--c-signal); color: var(--c-primary); font-weight: 700; transform: scale(1.18);
+  box-shadow: 0 0 0 6px var(--c-signal-soft), 0 0 22px var(--c-signal-glow); }
+#friction.is-steps .fr-rail button.is-done { color: var(--c-text); }
+#friction.is-steps .fr-rail button.is-on { color: var(--c-accent); font-weight: var(--fw-semi); }
+@media (max-height: 820px) { #friction.is-steps .fr-rail button { gap: 10px; } #friction.is-steps .fr-rail button::before { width: 24px; height: 24px; font-size: 11px; } #friction.is-steps .fr-rail::before, #friction.is-steps .fr-rail::after { top: calc(clamp(14px, 2.2svh, 24px) + 11px); } }
+
+/* ---- Stepper: smaller step titles ---------------------------------------- */
+#friction.is-steps .fr-copy .friction__title { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.15; max-width: 18ch; }
+#friction.is-steps .friction__desc { font-size: clamp(15px, 1.2vw, 17px); }
+@media (max-height: 820px) { #friction.is-steps .fr-copy .friction__title { font-size: clamp(22px, 2.1vw, 28px); } }
+
+/* ---- Stepper: icon, number and title share one line ---------------------- */
+#friction.is-steps .fr-copy { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; column-gap: clamp(12px, 1.2vw, 20px); row-gap: clamp(14px, 2.4svh, 24px); }
+#friction.is-steps .fr-copy .card__icon { width: 44px; height: 44px; }
+#friction.is-steps .fr-copy .card__meta { font-size: 13px; letter-spacing: .14em; white-space: nowrap; }
+#friction.is-steps .fr-copy .friction__title { max-width: none; font-size: clamp(20px, 1.9vw, 26px); }
+#friction.is-steps .fr-copy .friction__desc { grid-column: 1 / -1; max-width: 38ch; }
+
+/* ---- Stepper copy column: icon + counter row, then title, then description ---- */
+#friction.is-steps .fr-copy { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 18px; row-gap: 0; align-content: center; }
+#friction.is-steps .fr-copy .card__icon { width: 46px; height: 46px; }
+#friction.is-steps .fr-copy .card__meta { display: flex; align-items: center; gap: 16px; font-size: 13px; letter-spacing: .16em; white-space: nowrap; color: var(--c-accent); }
+#friction.is-steps .fr-copy .card__meta::after { content: ""; flex: 1; height: 1px; background: var(--c-line-strong); }
+#friction.is-steps .fr-copy .friction__title { grid-column: 1 / -1; margin: clamp(20px, 3.2svh, 32px) 0 0; font-size: clamp(28px, 2.7vw, 40px); line-height: 1.12; max-width: 15ch; }
+#friction.is-steps .fr-copy .friction__desc { grid-column: 1 / -1; margin: clamp(14px, 2.2svh, 22px) 0 0; padding-left: 18px; border-left: 2px solid var(--c-line-strong); font-size: clamp(16px, 1.3vw, 18px); line-height: 1.65; max-width: 36ch; }
+@media (max-height: 820px) {
+  #friction.is-steps .fr-copy .friction__title { font-size: clamp(24px, 2.3vw, 32px); }
+  #friction.is-steps .fr-copy .friction__desc { font-size: 15px; line-height: 1.55; }
+}
+
+/* ---- Stepper: smaller diagram panel ------------------------------------- */
+#friction.is-steps .friction-drum > li.card { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
+#friction.is-steps .fr-visual { width: 84%; aspect-ratio: 16 / 9; margin-block: clamp(34px, 5.5svh, 60px); max-height: calc(100% - clamp(68px, 11svh, 120px)); padding: calc(var(--space-3) + 12px) clamp(20px, 2.6vw, 36px) clamp(20px, 2.6vw, 36px); justify-self: center; }
+
+/* ==========================================================================
+   4. DIFFERENCE: a broken chain beside an unbroken one
+   Left: isolated tasks, a dashed chain with a gap. Right: one controlled
+   workflow, a solid line that draws itself once when the section arrives.
+   ========================================================================== */
+.diff { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); align-items: stretch; }
+.diff__side { position: relative; padding: clamp(28px, 3.4vw, 52px); border-radius: 10px; }
+.diff__label { margin-bottom: clamp(28px, 4vw, 48px); font-family: var(--font-head); font-weight: var(--fw-semi); font-size: clamp(20px, 1.8vw, 26px); letter-spacing: var(--ls-head); }
+.diff__list { position: relative; display: grid; gap: clamp(26px, 3.4vw, 40px); }
+.diff__list li { position: relative; display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: 20px; align-items: center; min-height: 36px; }
+.diff__list p { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.45; max-width: 34ch; }
+.diff__node { position: relative; z-index: 1; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; font-size: 15px; line-height: 1; }
+/* the chain between nodes */
+.diff__list::before { content: ""; position: absolute; left: 17px; top: 18px; bottom: 18px; width: 2px; }
+
+.diff__side--them { border: 1px dashed var(--c-line-strong); background: transparent; }
+.diff__side--them .diff__label, .diff__side--them p { color: var(--c-text-muted); }
+.diff__side--them .diff__node { background: var(--c-secondary); border: 1.5px solid var(--c-line-strong); color: var(--c-text-muted); }
+.diff__side--them .diff__list::before { background: repeating-linear-gradient(to bottom, var(--c-line-strong) 0 6px, transparent 6px 14px); -webkit-mask: linear-gradient(to bottom, #000 0 42%, transparent 42% 52%, #000 52%); mask: linear-gradient(to bottom, #000 0 42%, transparent 42% 52%, #000 52%); }
+
+.diff__side--us { background: var(--c-primary); border: 1px solid color-mix(in srgb, var(--c-signal) 38%, var(--c-line)); box-shadow: 0 0 0 1px var(--c-signal-soft), 0 30px 80px -40px var(--c-signal-glow); }
+.diff__side--us .diff__label { color: var(--c-text); }
+.diff__side--us .diff__node { background: var(--c-primary); border: 2px solid var(--c-accent); color: var(--c-accent); font-weight: 700; }
+.diff__side--us .diff__list::before { background: var(--c-signal); box-shadow: 0 0 14px var(--c-signal-glow); transform-origin: top; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .diff:not(.is-drawn) .diff__side--us .diff__list::before { transform: scaleY(0); }
+  .js .diff .diff__side--us .diff__list::before { transition: transform 1.6s var(--ease-out) .2s; }
+  .js .diff:not(.is-drawn) .diff__side--us li { opacity: 0; transform: translateX(-12px); }
+  .js .diff .diff__side--us li { transition: opacity .6s var(--ease-out), transform .7s var(--ease-out); transition-delay: calc(.25s + var(--i) * .35s); }
+  .js .diff:not(.is-drawn) .diff__side--them li { opacity: .4; }
+  .js .diff .diff__side--them li { transition: opacity .8s var(--ease-out); }
+}
+@media (max-width: 860px) { .diff { grid-template-columns: 1fr; } }
+
+/* ---- Technology: original brand logos on light tiles -------------------- */
+.tech-chip { display: inline-flex; align-items: center; gap: 14px; padding: 10px var(--space-4) 10px 10px; }
+.tech-chip__logo { display: grid; place-items: center; flex: none; height: 40px; min-width: 40px; padding: 8px; border-radius: 10px; background: #fff; }
+.tech-chip__logo img { display: block; width: 24px; height: 24px; object-fit: contain; }
+.tech-chip__logo--wide { padding-inline: 12px; }
+.tech-chip__logo--wide img { width: 64px; height: 14px; }
+.tech-chip:hover .tech-chip__logo { box-shadow: 0 0 0 2px var(--c-accent); }
