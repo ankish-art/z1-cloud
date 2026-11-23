@@ -51,126 +51,89 @@
   </header>
 
   <main id="main">
-    <section class="hero page-hero glow" aria-labelledby="page-title" style="--gx:75%;--gy:20%;--gs:60vw">
-      <div class="dot-field" aria-hidden="true"></div>
-      <div class="container hero__inner hero-enter">
+    <section class="aig-hero" aria-labelledby="page-title" data-hero>
+      <div class="aig-hero__bg" aria-hidden="true">
+        <span class="plx plx--dots" data-plx="0.25"></span>
+        <span class="plx plx--ring plx--r1" data-plx="0.55"></span>
+        <span class="plx plx--ring plx--r2" data-plx="0.9"></span>
+        <span class="plx plx--sq plx--s1" data-plx="1.3"></span>
+        <span class="plx plx--sq plx--s2" data-plx="1.8"></span>
+      </div>
+      <div class="container aig-hero__in">
         <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><span aria-current="page">AI Governance</span></li></ol></nav>
         <p class="eyebrow">Pillar</p>
-        <h1 class="page-hero__title" id="page-title">AI is Easy. <span class="h1-alt">Governance is Hard.</span></h1>
+        <h1 class="aig-h1" id="page-title"><span class="aig-h1__a">AI is easy.</span><span class="aig-h1__b" data-spot><span class="aig-h1__dim">Governance is hard.</span><span class="aig-h1__lit" aria-hidden="true">Governance is hard.</span></span></h1>
         <p class="lead text-muted">Getting a model to produce a useful output takes an afternoon.</p>
         <div class="cluster"><a class="btn btn--primary btn--lg" href="../contact/index.html#discovery">Book Discovery Call</a><a class="btn btn--outline btn--lg" href="#ai-loop">See the loop</a></div>
-      </div>
-      <div class="container">
-        <div class="mini" data-mini style="--n:3">
-          <span class="mini__line" aria-hidden="true"><span class="mini__fill"></span></span>
-          <ol class="mini__list" role="list" aria-label="The first three steps of the loop"><li class="mini__step" data-i="0"><span class="mini__n">01</span><p class="mini__t">Propose</p><p class="mini__d">The model drafts an output within a defined task scope.</p></li><li class="mini__step" data-i="1"><span class="mini__n">02</span><p class="mini__t">Gate</p><p class="mini__d">Rules check confidence, risk tier and data restrictions.</p><ul class="mini__checks" role="list"><li>Confidence</li><li>Risk tier</li><li>Data restrictions</li></ul></li><li class="mini__step" data-i="2"><span class="mini__n">03</span><p class="mini__t">Review</p><p class="mini__d">A named person accepts, edits or rejects the output.</p></li></ol>
-          <span class="mini__token" aria-hidden="true"></span>
-          <button class="btn btn--outline" type="button" data-run>Run an output</button>
-        </div>
+        <p class="aig-hint">Move your pointer. Governance shows up where you look.</p>
       </div>
     </section>
 
-    <section class="section section--divided" id="ai-topics" aria-labelledby="ai-topics-title">
+    <section class="aig-manifesto" aria-label="Why governance">
       <div class="container">
-        <h2 class="eyebrow reveal" id="ai-topics-title">What we design</h2>
-        <ul class="topics" role="list"><li class="topic reveal" style="--delay:0.00s"><div class="topic__in spotlight"><span class="topic__n">01</span><p class="topic__t">Human-in-the-loop workflows</p></div></li><li class="topic reveal" style="--delay:0.08s"><div class="topic__in spotlight"><span class="topic__n">02</span><p class="topic__t">AI controls</p></div></li><li class="topic reveal" style="--delay:0.16s"><div class="topic__in spotlight"><span class="topic__n">03</span><p class="topic__t">Auditability</p></div></li><li class="topic reveal" style="--delay:0.00s"><div class="topic__in spotlight"><span class="topic__n">04</span><p class="topic__t">Explainability</p></div></li><li class="topic reveal" style="--delay:0.08s"><div class="topic__in spotlight"><span class="topic__n">05</span><p class="topic__t">Approval models</p></div></li><li class="topic reveal" style="--delay:0.16s"><div class="topic__in spotlight"><span class="topic__n">06</span><p class="topic__t">Escalation workflows</p></div></li><li class="topic reveal" style="--delay:0.00s"><div class="topic__in spotlight"><span class="topic__n">07</span><p class="topic__t">Controlled AI adoption</p></div></li><li class="topic reveal" style="--delay:0.08s"><div class="topic__in spotlight"><span class="topic__n">08</span><p class="topic__t">Evidence generation</p></div></li><li class="topic reveal" style="--delay:0.16s"><div class="topic__in spotlight"><span class="topic__n">09</span><p class="topic__t">Decision traceability</p></div></li></ul>
+        <p class="aig-scrub" data-scrub>Getting a model to produce a useful output takes an afternoon. Deciding who answers for it, how it is checked and how it is proved is the real work.</p>
       </div>
     </section>
 
-    <section class="section section--divided" id="ai-loop" aria-labelledby="ai-loop-title">
+    <section class="aig-sec" id="ai-topics" aria-labelledby="ai-topics-title">
+      <span class="aig-bgword" data-plx="-0.35" aria-hidden="true">Design</span>
       <div class="container">
-        <div class="section-head reveal ">
+        <h2 class="aig-h2" id="ai-topics-title">What we design</h2>
+        <p class="aig-sub">One plan, three phases, nine things.</p>
+        <ol class="aig-plan" role="list" data-plan aria-label="A three-phase plan"><li class="aig-phase" style="--i:0"><span class="aig-phase__node" aria-hidden="true"></span><p class="aig-phase__n">Phase 1</p><h3 class="aig-phase__t">Set the rules</h3><ul class="aig-items" role="list"><li class="aig-item" style="--k:0"><span class="aig-item__box" aria-hidden="true"></span>Controlled AI adoption</li><li class="aig-item" style="--k:1"><span class="aig-item__box" aria-hidden="true"></span>Approval models</li><li class="aig-item" style="--k:2"><span class="aig-item__box" aria-hidden="true"></span>AI controls</li></ul></li><li class="aig-phase" style="--i:1"><span class="aig-phase__node" aria-hidden="true"></span><p class="aig-phase__n">Phase 2</p><h3 class="aig-phase__t">Put people in charge</h3><ul class="aig-items" role="list"><li class="aig-item" style="--k:3"><span class="aig-item__box" aria-hidden="true"></span>Human-in-the-loop workflows</li><li class="aig-item" style="--k:4"><span class="aig-item__box" aria-hidden="true"></span>Escalation workflows</li><li class="aig-item" style="--k:5"><span class="aig-item__box" aria-hidden="true"></span>Explainability</li></ul></li><li class="aig-phase" style="--i:2"><span class="aig-phase__node" aria-hidden="true"></span><p class="aig-phase__n">Phase 3</p><h3 class="aig-phase__t">Prove it</h3><ul class="aig-items" role="list"><li class="aig-item" style="--k:6"><span class="aig-item__box" aria-hidden="true"></span>Auditability</li><li class="aig-item" style="--k:7"><span class="aig-item__box" aria-hidden="true"></span>Evidence generation</li><li class="aig-item" style="--k:8"><span class="aig-item__box" aria-hidden="true"></span>Decision traceability</li></ul></li></ol>
+      </div>
+    </section>
+
+    <section class="aig-loop" id="ai-loop" aria-labelledby="ai-loop-title" data-hscroll>
+      <div class="aig-loop__pin">
+        <div class="container aig-loop__head">
           <p class="eyebrow">Human-in-the-loop</p>
-          <h2 class="split-heading" id="ai-loop-title">The model proposes. A named person decides.</h2>
+          <h2 class="aig-h2" id="ai-loop-title">The model proposes. A named person decides.</h2>
         </div>
-        <div class="loop" data-loop>
-          <div class="loop__controls">
-            <span class="kicker">Reviewer decision</span>
-            <div class="loop__choices" role="group" aria-label="Reviewer decision">
-              <button type="button" class="pill is-on" data-choice="accept" aria-pressed="true">Accepts</button>
-              <button type="button" class="pill" data-choice="reject" aria-pressed="false">Rejects</button>
-            </div>
-            <button type="button" class="btn btn--primary" data-run>Run the loop</button>
-          </div>
-          <div class="loop__track">
-            <ol class="loop__list" role="list" aria-label="The five steps of the loop"><li class="loop__node" data-i="0"><span class="loop__n">01</span><p class="loop__t">Propose</p><p class="loop__d">The model drafts an output within a defined task scope.</p></li><li class="loop__node" data-i="1"><span class="loop__n">02</span><p class="loop__t">Gate</p><p class="loop__d">Rules check confidence, risk tier and data restrictions.</p></li><li class="loop__node" data-i="2"><span class="loop__n">03</span><p class="loop__t">Review</p><p class="loop__d">A named person accepts, edits or rejects the output.</p></li><li class="loop__node loop__node--low" data-i="3"><span class="loop__n">04</span><p class="loop__t">Escalate</p><p class="loop__d">Exceptions and disagreements route to the accountable owner.</p></li><li class="loop__node" data-i="4"><span class="loop__n">05</span><p class="loop__t">Record</p><p class="loop__d">Input, output, decision and rationale are stored immutably.</p></li></ol>
-            <span class="loop__token" aria-hidden="true"></span>
-          </div>
-          <p class="loop__status" aria-live="polite">Choose what the reviewer does, then run the loop.</p>
+        <div class="aig-loop__view"><ol class="aig-loop__track" role="list" aria-label="The five steps of the loop"><li class="aig-step"><span class="aig-step__n">01</span><h3 class="aig-step__t">Propose</h3><p class="aig-step__d">The model drafts an output within a defined task scope.</p></li><li class="aig-step"><span class="aig-step__n">02</span><h3 class="aig-step__t">Gate</h3><p class="aig-step__d">Rules check confidence, risk tier and data restrictions.</p></li><li class="aig-step"><span class="aig-step__n">03</span><h3 class="aig-step__t">Review</h3><p class="aig-step__d">A named person accepts, edits or rejects the output.</p></li><li class="aig-step"><span class="aig-step__n">04</span><h3 class="aig-step__t">Escalate</h3><p class="aig-step__d">Exceptions and disagreements route to the accountable owner.</p></li><li class="aig-step"><span class="aig-step__n">05</span><h3 class="aig-step__t">Record</h3><p class="aig-step__d">Input, output, decision and rationale are stored immutably.</p></li></ol></div>
+        <div class="container"><div class="aig-loop__rail" aria-hidden="true"><i></i><b></b></div></div>
+      </div>
+    </section>
+
+    <section class="aig-sec" id="ai-tiers" aria-labelledby="ai-tiers-title">
+      <span class="aig-bgword" data-plx="-0.5" aria-hidden="true">Risk</span>
+      <div class="container">
+        <p class="eyebrow">Approval and oversight</p>
+        <h2 class="aig-h2" id="ai-tiers-title">Oversight set by risk, not one rule for everything</h2>
+        <p class="aig-legend"><span class="d d--rev"></span>Reviewed by a person <span class="d d--go"></span>Proceeds <span class="d d--halt"></span>Halted automatically. An illustration: each square is one output.</p>
+        <div class="aig-stack">
+          <article class="aig-tier" style="--i:0">
+            <div class="aig-tier__txt"><p class="aig-tier__k">Tier 1</p><h3 class="aig-tier__t">Assistive</h3><p class="aig-tier__o">Human reviews every output before use.</p><p class="aig-tier__e"><span>Example</span>Drafting a case summary that an analyst edits and signs.</p></div>
+            <div class="aig-dots" aria-hidden="true"><i class="d d--rev" style="--j:0"></i><i class="d d--rev" style="--j:1"></i><i class="d d--rev" style="--j:2"></i><i class="d d--rev" style="--j:3"></i><i class="d d--rev" style="--j:4"></i><i class="d d--rev" style="--j:5"></i><i class="d d--rev" style="--j:6"></i><i class="d d--rev" style="--j:7"></i><i class="d d--rev" style="--j:8"></i><i class="d d--rev" style="--j:9"></i><i class="d d--rev" style="--j:10"></i><i class="d d--rev" style="--j:11"></i><i class="d d--rev" style="--j:12"></i><i class="d d--rev" style="--j:13"></i><i class="d d--rev" style="--j:14"></i><i class="d d--rev" style="--j:15"></i><i class="d d--rev" style="--j:16"></i><i class="d d--rev" style="--j:17"></i><i class="d d--rev" style="--j:18"></i><i class="d d--rev" style="--j:19"></i><i class="d d--rev" style="--j:20"></i><i class="d d--rev" style="--j:21"></i><i class="d d--rev" style="--j:22"></i><i class="d d--rev" style="--j:23"></i></div>
+          </article><article class="aig-tier" style="--i:1">
+            <div class="aig-tier__txt"><p class="aig-tier__k">Tier 2</p><h3 class="aig-tier__t">Supervised</h3><p class="aig-tier__o">Outputs above a defined confidence threshold proceed with sampling.</p><p class="aig-tier__e"><span>Example</span>Prioritising a review queue, with analysts reviewing the bottom of the ranking.</p></div>
+            <div class="aig-dots" aria-hidden="true"><i class="d d--go" style="--j:0"></i><i class="d d--go" style="--j:1"></i><i class="d d--go" style="--j:2"></i><i class="d d--go" style="--j:3"></i><i class="d d--go" style="--j:4"></i><i class="d d--go" style="--j:5"></i><i class="d d--go" style="--j:6"></i><i class="d d--go" style="--j:7"></i><i class="d d--go" style="--j:8"></i><i class="d d--go" style="--j:9"></i><i class="d d--go" style="--j:10"></i><i class="d d--go" style="--j:11"></i><i class="d d--go" style="--j:12"></i><i class="d d--go" style="--j:13"></i><i class="d d--go" style="--j:14"></i><i class="d d--go" style="--j:15"></i><i class="d d--go" style="--j:16"></i><i class="d d--go" style="--j:17"></i><i class="d d--rev" style="--j:18"></i><i class="d d--rev" style="--j:19"></i><i class="d d--rev" style="--j:20"></i><i class="d d--rev" style="--j:21"></i><i class="d d--rev" style="--j:22"></i><i class="d d--rev" style="--j:23"></i></div>
+          </article><article class="aig-tier" style="--i:2">
+            <div class="aig-tier__txt"><p class="aig-tier__k">Tier 3</p><h3 class="aig-tier__t">Constrained autonomy</h3><p class="aig-tier__o">Automated action within tight bounds, with real-time monitoring, automatic halt conditions and periodic independent testing.</p><p class="aig-tier__e"><span>Example</span>Routine document classification with defined error tolerance and a reversal path.</p></div>
+            <div class="aig-dots" aria-hidden="true"><i class="d d--go" style="--j:0"></i><i class="d d--go" style="--j:1"></i><i class="d d--go" style="--j:2"></i><i class="d d--go" style="--j:3"></i><i class="d d--go" style="--j:4"></i><i class="d d--go" style="--j:5"></i><i class="d d--go" style="--j:6"></i><i class="d d--go" style="--j:7"></i><i class="d d--go" style="--j:8"></i><i class="d d--go" style="--j:9"></i><i class="d d--halt" style="--j:10"></i><i class="d d--go" style="--j:11"></i><i class="d d--go" style="--j:12"></i><i class="d d--go" style="--j:13"></i><i class="d d--go" style="--j:14"></i><i class="d d--go" style="--j:15"></i><i class="d d--go" style="--j:16"></i><i class="d d--go" style="--j:17"></i><i class="d d--go" style="--j:18"></i><i class="d d--go" style="--j:19"></i><i class="d d--go" style="--j:20"></i><i class="d d--go" style="--j:21"></i><i class="d d--go" style="--j:22"></i><i class="d d--halt" style="--j:23"></i></div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section section--divided" id="ai-tiers" aria-labelledby="ai-tiers-title">
+    <section class="aig-sec aig-trace" id="ai-trace" aria-labelledby="ai-trace-title" data-trace>
+      <span class="aig-bgword" data-plx="-0.4" aria-hidden="true">Trace</span>
       <div class="container">
-        <div class="section-head reveal ">
-          <p class="eyebrow">Approval and oversight</p>
-          <h2 class="split-heading" id="ai-tiers-title">Oversight set by risk, not one rule for everything</h2>
+        <p class="eyebrow">Decision traceability</p>
+        <h2 class="aig-h2" id="ai-trace-title">Every AI-assisted decision can be rebuilt in minutes</h2>
+        <div class="aig-record">
+          <div class="aig-record__head"><p>Decision record</p><p class="aig-record__n" aria-live="polite"><span data-count>0</span> of 7 fields linked</p></div>
+          <ul class="aig-chips" role="list"><li class="aig-chip" style="--i:0"><span>01</span>Input snapshot</li><li class="aig-chip" style="--i:1"><span>02</span>Model and version</li><li class="aig-chip" style="--i:2"><span>03</span>Prompt or rule set</li><li class="aig-chip" style="--i:3"><span>04</span>Output</li><li class="aig-chip" style="--i:4"><span>05</span>Reviewer action</li><li class="aig-chip" style="--i:5"><span>06</span>Rationale</li><li class="aig-chip" style="--i:6"><span>07</span>Timestamps and approvals</li></ul>
         </div>
-        <div class="tiers" data-tiers>
-          <div class="tiers__ctrl">
-            <div class="tiers__tabs" role="radiogroup" aria-label="Risk tier"><button type="button" class="pill is-on" role="radio" aria-checked="true" data-tier="0">Tier 1: Assistive</button><button type="button" class="pill" role="radio" aria-checked="false" data-tier="1">Tier 2: Supervised</button><button type="button" class="pill" role="radio" aria-checked="false" data-tier="2">Tier 3: Constrained autonomy</button></div>
-            <label class="visually-hidden" for="tier-range">Risk tier</label>
-            <input class="tiers__range" id="tier-range" type="range" min="1" max="3" step="1" value="1">
-          </div>
-          <div class="tiers__body">
-            <div class="tiers__grid" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-            <div class="tiers__panel">
-              <p class="kicker">Oversight</p>
-              <p class="tiers__o" data-o>Human reviews every output before use.</p>
-              <p class="kicker">Example</p>
-              <p class="tiers__e" data-e>Drafting a case summary that an analyst edits and signs.</p>
-            </div>
-          </div>
-          <p class="tiers__legend text-muted"><span class="tiers__key tiers__key--on" aria-hidden="true"></span>Reviewed by a person <span class="tiers__key" aria-hidden="true"></span>Proceeds <span class="tiers__key tiers__key--halt" aria-hidden="true"></span>Halted automatically. An illustration: each square is one output.</p>
-          <table class="tiers__table">
-            <caption>Risk tiers and the oversight each requires</caption>
-            <thead><tr><th scope="col">Tier</th><th scope="col">Oversight</th><th scope="col">Example</th></tr></thead>
-            <tbody><tr><th scope="row">Tier 1: Assistive</th><td>Human reviews every output before use.</td><td>Drafting a case summary that an analyst edits and signs.</td></tr><tr><th scope="row">Tier 2: Supervised</th><td>Outputs above a defined confidence threshold proceed with sampling.</td><td>Prioritising a review queue, with analysts reviewing the bottom of the ranking.</td></tr><tr><th scope="row">Tier 3: Constrained autonomy</th><td>Automated action within tight bounds, with real-time monitoring, automatic halt conditions and periodic independent testing.</td><td>Routine document classification with defined error tolerance and a reversal path.</td></tr></tbody>
-          </table>
-        </div>
+        <p class="aig-test"><span>Test it</span>Pick five AI-assisted decisions at random and rebuild each one from the record. The time it takes tells you how well your governance works.</p>
       </div>
     </section>
 
-    <section class="section section--divided" id="ai-trace" aria-labelledby="ai-trace-title">
+    <section class="aig-sec aig-faq" id="ai-faq" aria-labelledby="ai-faq-title">
       <div class="container">
-        <div class="section-head reveal ">
-          <p class="eyebrow">Decision traceability</p>
-          <h2 class="split-heading" id="ai-trace-title">Every AI-assisted decision can be rebuilt in minutes</h2>
-        </div>
-        <div class="trace" data-trace>
-          <div class="trace__left">
-            <p class="kicker">The record has seven fields. Link them.</p>
-            <ul class="trace__fields" role="list"><li><button type="button" class="field" data-f="0" aria-pressed="false"><span class="field__n">01</span>Input snapshot</button></li><li><button type="button" class="field" data-f="1" aria-pressed="false"><span class="field__n">02</span>Model and version</button></li><li><button type="button" class="field" data-f="2" aria-pressed="false"><span class="field__n">03</span>Prompt or rule set</button></li><li><button type="button" class="field" data-f="3" aria-pressed="false"><span class="field__n">04</span>Output</button></li><li><button type="button" class="field" data-f="4" aria-pressed="false"><span class="field__n">05</span>Reviewer action</button></li><li><button type="button" class="field" data-f="5" aria-pressed="false"><span class="field__n">06</span>Rationale</button></li><li><button type="button" class="field" data-f="6" aria-pressed="false"><span class="field__n">07</span>Timestamps and approvals</button></li></ul>
-            <div class="cluster">
-              <button type="button" class="btn btn--primary" data-rebuild>Rebuild a decision</button>
-              <button type="button" class="btn btn--outline" data-reset>Reset</button>
-            </div>
-          </div>
-          <div class="trace__right">
-            <ol class="trace__slots" role="list" aria-label="Decision record"><li class="slot" data-f="0"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Input snapshot</span></li><li class="slot" data-f="1"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Model and version</span></li><li class="slot" data-f="2"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Prompt or rule set</span></li><li class="slot" data-f="3"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Output</span></li><li class="slot" data-f="4"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Reviewer action</span></li><li class="slot" data-f="5"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Rationale</span></li><li class="slot" data-f="6"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Timestamps and approvals</span></li></ol>
-            <p class="trace__status" aria-live="polite" data-status>0 of 7 fields linked.</p>
-          </div>
-        </div>
-        <aside class="callout reveal" aria-label="Test it">
-          <p class="kicker">Test it</p>
-          <p class="callout__t">Pick five AI-assisted decisions at random and rebuild each one from the record. The time it takes tells you how well your governance works.</p>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section section--divided" id="ai-faq" aria-labelledby="ai-faq-title">
-      <div class="container">
-        <h2 class="eyebrow reveal" id="ai-faq-title">Common questions</h2>
+        <h2 class="aig-h2" id="ai-faq-title">Common questions</h2>
         <div class="faq"><details class="acc" data-anim><summary>Do you help us write an AI policy?</summary><div class="acc__body"><p>We can, but our focus is on the operating model that gives the policy effect: the use-case register, approval routes, tiering, monitoring and evidence. A policy that cannot be operated is a liability, so we design the mechanisms first and align the wording to them.</p></div></details><details class="acc" data-anim><summary>How does this relate to model risk management?</summary><div class="acc__body"><p>Where you have a model risk framework, we align tiering and validation expectations to it and extend it to cover generative and workflow-embedded AI, which often falls outside traditional model inventories.</p></div></details><details class="acc" data-anim><summary>Is human-in-the-loop always the right answer?</summary><div class="acc__body"><p>No. Human review adds cost and can become a rubber stamp if the reviewer lacks time or information. We set oversight by risk tier, and we measure whether reviewers are genuinely catching errors.</p></div></details><details class="acc" data-anim><summary>Can you assess AI tools that our teams already use?</summary><div class="acc__body"><p>Yes. Shadow use is common, and it is usually the first thing we surface in discovery. We help you bring existing tools into the register, classify them and decide which should be governed, restricted or retired.</p></div></details></div>
-      </div>
-    </section>
-
-    <section class="cta-band glow" style="--gx:50%;--gy:96%;--gs:90vw">
-      <div class="dot-field" aria-hidden="true"></div>
-      <div class="container reveal">
-        <p class="cta-band__text">Start with a use-case register. Most organisations find more AI in use than expected.</p>
-        <div class="cluster"><a class="btn btn--primary btn--lg" href="../contact/index.html#discovery">Book Discovery Call</a><a class="btn btn--outline btn--lg" href="../insights/index.html">Read insights</a></div>
+      
       </div>
     </section>
   </main>

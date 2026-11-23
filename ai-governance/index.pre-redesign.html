@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Governance Consulting: Human-in-the-Loop, Auditability and Controls | Zi Cloud Ltd</title>
+  <meta name="description" content="AI governance design for regulated organisations: human-in-the-loop workflows, AI controls, approval models, escalation, auditability and decision traceability.">
+  <meta property="og:title" content="AI Governance Consulting: Human-in-the-Loop, Auditability and Controls | Zi Cloud Ltd">
+  <meta property="og:description" content="AI governance design for regulated organisations: human-in-the-loop workflows, AI controls, approval models, escalation, auditability and decision traceability.">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:type" content="website">
+
+  <!-- Fonts: Clash Display (headings) + IBM Plex Mono (body) -->
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+
+  <!-- Global styles, then page styles -->
+  <link rel="stylesheet" href="../global-css/main.css">
+  <link rel="stylesheet" href="ai-governance.css">
+
+  <!-- Marks the page as JS-enabled before paint, so motion start states never flash -->
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="logo" href="../index.html" aria-label="Zi Cloud, home">
+        <span class="logo__word" aria-hidden="true">Zi Cloud</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <ul class="nav__list" role="list">
+          <li><a class="nav__link" href="../services/index.html">Services</a></li>
+          <li><a class="nav__link" href="../solutions/index.html">Solutions</a></li>
+          <li><a class="nav__link" href="../ai-governance/index.html" aria-current="page">AI Governance</a></li>
+          <li><a class="nav__link" href="../case-studies/index.html">Case Studies</a></li>
+          <li><a class="nav__link" href="../insights/index.html">Insights</a></li>
+          <li><a class="nav__link" href="../about/index.html">About</a></li>
+        </ul>
+        <a class="btn btn--primary" href="../contact/index.html#discovery">Book Discovery Call</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero page-hero glow" aria-labelledby="page-title" style="--gx:75%;--gy:20%;--gs:60vw">
+      <div class="dot-field" aria-hidden="true"></div>
+      <div class="container hero__inner hero-enter">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><span aria-current="page">AI Governance</span></li></ol></nav>
+        <p class="eyebrow">Pillar</p>
+        <h1 class="page-hero__title" id="page-title">AI is Easy. <span class="h1-alt">Governance is Hard.</span></h1>
+        <p class="lead text-muted">Getting a model to produce a useful output takes an afternoon.</p>
+        <div class="cluster"><a class="btn btn--primary btn--lg" href="../contact/index.html#discovery">Book Discovery Call</a><a class="btn btn--outline btn--lg" href="#ai-loop">See the loop</a></div>
+      </div>
+      <div class="container">
+        <div class="mini" data-mini style="--n:3">
+          <span class="mini__line" aria-hidden="true"><span class="mini__fill"></span></span>
+          <ol class="mini__list" role="list" aria-label="The first three steps of the loop"><li class="mini__step" data-i="0"><span class="mini__n">01</span><p class="mini__t">Propose</p><p class="mini__d">The model drafts an output within a defined task scope.</p></li><li class="mini__step" data-i="1"><span class="mini__n">02</span><p class="mini__t">Gate</p><p class="mini__d">Rules check confidence, risk tier and data restrictions.</p><ul class="mini__checks" role="list"><li>Confidence</li><li>Risk tier</li><li>Data restrictions</li></ul></li><li class="mini__step" data-i="2"><span class="mini__n">03</span><p class="mini__t">Review</p><p class="mini__d">A named person accepts, edits or rejects the output.</p></li></ol>
+          <span class="mini__token" aria-hidden="true"></span>
+          <button class="btn btn--outline" type="button" data-run>Run an output</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--divided" id="ai-topics" aria-labelledby="ai-topics-title">
+      <div class="container">
+        <h2 class="eyebrow reveal" id="ai-topics-title">What we design</h2>
+        <ul class="topics" role="list"><li class="topic reveal" style="--delay:0.00s"><div class="topic__in spotlight"><span class="topic__n">01</span><p class="topic__t">Human-in-the-loop workflows</p></div></li><li class="topic reveal" style="--delay:0.08s"><div class="topic__in spotlight"><span class="topic__n">02</span><p class="topic__t">AI controls</p></div></li><li class="topic reveal" style="--delay:0.16s"><div class="topic__in spotlight"><span class="topic__n">03</span><p class="topic__t">Auditability</p></div></li><li class="topic reveal" style="--delay:0.00s"><div class="topic__in spotlight"><span class="topic__n">04</span><p class="topic__t">Explainability</p></div></li><li class="topic reveal" style="--delay:0.08s"><div class="topic__in spotlight"><span class="topic__n">05</span><p class="topic__t">Approval models</p></div></li><li class="topic reveal" style="--delay:0.16s"><div class="topic__in spotlight"><span class="topic__n">06</span><p class="topic__t">Escalation workflows</p></div></li><li class="topic reveal" style="--delay:0.00s"><div class="topic__in spotlight"><span class="topic__n">07</span><p class="topic__t">Controlled AI adoption</p></div></li><li class="topic reveal" style="--delay:0.08s"><div class="topic__in spotlight"><span class="topic__n">08</span><p class="topic__t">Evidence generation</p></div></li><li class="topic reveal" style="--delay:0.16s"><div class="topic__in spotlight"><span class="topic__n">09</span><p class="topic__t">Decision traceability</p></div></li></ul>
+      </div>
+    </section>
+
+    <section class="section section--divided" id="ai-loop" aria-labelledby="ai-loop-title">
+      <div class="container">
+        <div class="section-head reveal ">
+          <p class="eyebrow">Human-in-the-loop</p>
+          <h2 class="split-heading" id="ai-loop-title">The model proposes. A named person decides.</h2>
+        </div>
+        <div class="loop" data-loop>
+          <div class="loop__controls">
+            <span class="kicker">Reviewer decision</span>
+            <div class="loop__choices" role="group" aria-label="Reviewer decision">
+              <button type="button" class="pill is-on" data-choice="accept" aria-pressed="true">Accepts</button>
+              <button type="button" class="pill" data-choice="reject" aria-pressed="false">Rejects</button>
+            </div>
+            <button type="button" class="btn btn--primary" data-run>Run the loop</button>
+          </div>
+          <div class="loop__track">
+            <ol class="loop__list" role="list" aria-label="The five steps of the loop"><li class="loop__node" data-i="0"><span class="loop__n">01</span><p class="loop__t">Propose</p><p class="loop__d">The model drafts an output within a defined task scope.</p></li><li class="loop__node" data-i="1"><span class="loop__n">02</span><p class="loop__t">Gate</p><p class="loop__d">Rules check confidence, risk tier and data restrictions.</p></li><li class="loop__node" data-i="2"><span class="loop__n">03</span><p class="loop__t">Review</p><p class="loop__d">A named person accepts, edits or rejects the output.</p></li><li class="loop__node loop__node--low" data-i="3"><span class="loop__n">04</span><p class="loop__t">Escalate</p><p class="loop__d">Exceptions and disagreements route to the accountable owner.</p></li><li class="loop__node" data-i="4"><span class="loop__n">05</span><p class="loop__t">Record</p><p class="loop__d">Input, output, decision and rationale are stored immutably.</p></li></ol>
+            <span class="loop__token" aria-hidden="true"></span>
+          </div>
+          <p class="loop__status" aria-live="polite">Choose what the reviewer does, then run the loop.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--divided" id="ai-tiers" aria-labelledby="ai-tiers-title">
+      <div class="container">
+        <div class="section-head reveal ">
+          <p class="eyebrow">Approval and oversight</p>
+          <h2 class="split-heading" id="ai-tiers-title">Oversight set by risk, not one rule for everything</h2>
+        </div>
+        <div class="tiers" data-tiers>
+          <div class="tiers__ctrl">
+            <div class="tiers__tabs" role="radiogroup" aria-label="Risk tier"><button type="button" class="pill is-on" role="radio" aria-checked="true" data-tier="0">Tier 1: Assistive</button><button type="button" class="pill" role="radio" aria-checked="false" data-tier="1">Tier 2: Supervised</button><button type="button" class="pill" role="radio" aria-checked="false" data-tier="2">Tier 3: Constrained autonomy</button></div>
+            <label class="visually-hidden" for="tier-range">Risk tier</label>
+            <input class="tiers__range" id="tier-range" type="range" min="1" max="3" step="1" value="1">
+          </div>
+          <div class="tiers__body">
+            <div class="tiers__grid" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="tiers__panel">
+              <p class="kicker">Oversight</p>
+              <p class="tiers__o" data-o>Human reviews every output before use.</p>
+              <p class="kicker">Example</p>
+              <p class="tiers__e" data-e>Drafting a case summary that an analyst edits and signs.</p>
+            </div>
+          </div>
+          <p class="tiers__legend text-muted"><span class="tiers__key tiers__key--on" aria-hidden="true"></span>Reviewed by a person <span class="tiers__key" aria-hidden="true"></span>Proceeds <span class="tiers__key tiers__key--halt" aria-hidden="true"></span>Halted automatically. An illustration: each square is one output.</p>
+          <table class="tiers__table">
+            <caption>Risk tiers and the oversight each requires</caption>
+            <thead><tr><th scope="col">Tier</th><th scope="col">Oversight</th><th scope="col">Example</th></tr></thead>
+            <tbody><tr><th scope="row">Tier 1: Assistive</th><td>Human reviews every output before use.</td><td>Drafting a case summary that an analyst edits and signs.</td></tr><tr><th scope="row">Tier 2: Supervised</th><td>Outputs above a defined confidence threshold proceed with sampling.</td><td>Prioritising a review queue, with analysts reviewing the bottom of the ranking.</td></tr><tr><th scope="row">Tier 3: Constrained autonomy</th><td>Automated action within tight bounds, with real-time monitoring, automatic halt conditions and periodic independent testing.</td><td>Routine document classification with defined error tolerance and a reversal path.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--divided" id="ai-trace" aria-labelledby="ai-trace-title">
+      <div class="container">
+        <div class="section-head reveal ">
+          <p class="eyebrow">Decision traceability</p>
+          <h2 class="split-heading" id="ai-trace-title">Every AI-assisted decision can be rebuilt in minutes</h2>
+        </div>
+        <div class="trace" data-trace>
+          <div class="trace__left">
+            <p class="kicker">The record has seven fields. Link them.</p>
+            <ul class="trace__fields" role="list"><li><button type="button" class="field" data-f="0" aria-pressed="false"><span class="field__n">01</span>Input snapshot</button></li><li><button type="button" class="field" data-f="1" aria-pressed="false"><span class="field__n">02</span>Model and version</button></li><li><button type="button" class="field" data-f="2" aria-pressed="false"><span class="field__n">03</span>Prompt or rule set</button></li><li><button type="button" class="field" data-f="3" aria-pressed="false"><span class="field__n">04</span>Output</button></li><li><button type="button" class="field" data-f="4" aria-pressed="false"><span class="field__n">05</span>Reviewer action</button></li><li><button type="button" class="field" data-f="5" aria-pressed="false"><span class="field__n">06</span>Rationale</button></li><li><button type="button" class="field" data-f="6" aria-pressed="false"><span class="field__n">07</span>Timestamps and approvals</button></li></ul>
+            <div class="cluster">
+              <button type="button" class="btn btn--primary" data-rebuild>Rebuild a decision</button>
+              <button type="button" class="btn btn--outline" data-reset>Reset</button>
+            </div>
+          </div>
+          <div class="trace__right">
+            <ol class="trace__slots" role="list" aria-label="Decision record"><li class="slot" data-f="0"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Input snapshot</span></li><li class="slot" data-f="1"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Model and version</span></li><li class="slot" data-f="2"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Prompt or rule set</span></li><li class="slot" data-f="3"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Output</span></li><li class="slot" data-f="4"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Reviewer action</span></li><li class="slot" data-f="5"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Rationale</span></li><li class="slot" data-f="6"><span class="slot__pip" aria-hidden="true"></span><span class="slot__t">Timestamps and approvals</span></li></ol>
+            <p class="trace__status" aria-live="polite" data-status>0 of 7 fields linked.</p>
+          </div>
+        </div>
+        <aside class="callout reveal" aria-label="Test it">
+          <p class="kicker">Test it</p>
+          <p class="callout__t">Pick five AI-assisted decisions at random and rebuild each one from the record. The time it takes tells you how well your governance works.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--divided" id="ai-faq" aria-labelledby="ai-faq-title">
+      <div class="container">
+        <h2 class="eyebrow reveal" id="ai-faq-title">Common questions</h2>
+        <div class="faq"><details class="acc" data-anim><summary>Do you help us write an AI policy?</summary><div class="acc__body"><p>We can, but our focus is on the operating model that gives the policy effect: the use-case register, approval routes, tiering, monitoring and evidence. A policy that cannot be operated is a liability, so we design the mechanisms first and align the wording to them.</p></div></details><details class="acc" data-anim><summary>How does this relate to model risk management?</summary><div class="acc__body"><p>Where you have a model risk framework, we align tiering and validation expectations to it and extend it to cover generative and workflow-embedded AI, which often falls outside traditional model inventories.</p></div></details><details class="acc" data-anim><summary>Is human-in-the-loop always the right answer?</summary><div class="acc__body"><p>No. Human review adds cost and can become a rubber stamp if the reviewer lacks time or information. We set oversight by risk tier, and we measure whether reviewers are genuinely catching errors.</p></div></details><details class="acc" data-anim><summary>Can you assess AI tools that our teams already use?</summary><div class="acc__body"><p>Yes. Shadow use is common, and it is usually the first thing we surface in discovery. We help you bring existing tools into the register, classify them and decide which should be governed, restricted or retired.</p></div></details></div>
+      </div>
+    </section>
+
+    <section class="cta-band glow" style="--gx:50%;--gy:96%;--gs:90vw">
+      <div class="dot-field" aria-hidden="true"></div>
+      <div class="container reveal">
+        <p class="cta-band__text">Start with a use-case register. Most organisations find more AI in use than expected.</p>
+        <div class="cluster"><a class="btn btn--primary btn--lg" href="../contact/index.html#discovery">Book Discovery Call</a><a class="btn btn--outline btn--lg" href="../insights/index.html">Read insights</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="site-footer__about">
+          <a class="logo" href="../index.html" aria-label="Zi Cloud, home"><span class="logo__word" aria-hidden="true">Zi Cloud</span></a>
+          <p class="site-footer__line">We build controlled AI and workflow systems for regulated operations.</p>
+          <p>Zi Cloud Ltd is a UK-registered specialist consultancy for regulated operations.</p>
+        </div>
+
+        <nav aria-label="Footer">
+          <h4>Explore</h4>
+          <ul class="site-footer__list" role="list">
+            <li><a href="../services/index.html">Services</a></li>
+            <li><a href="../solutions/index.html">Solutions</a></li>
+            <li><a href="../ai-governance/index.html">AI Governance</a></li>
+            <li><a href="../case-studies/index.html">Case Studies</a></li>
+            <li><a href="../insights/index.html">Insights</a></li>
+            <li><a href="../about/index.html">About</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h4>Get in touch</h4>
+          <ul class="site-footer__list" role="list">
+            <li><a href="mailto:hello@zicloud.uk">hello@zicloud.uk</a></li>
+            <li><a href="../contact/index.html#discovery">Book a discovery call</a></li>
+            <li><a href="../contact/index.html#partner">Partner with us</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__legal">
+        <p>© 2026 Zi Cloud Ltd. All rights reserved.</p>
+        <p class="cluster"><a href="../privacy/index.html">Privacy notice</a> <a href="../cookies/index.html">Cookie policy</a> <a href="../contact/index.html">Contact</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie-banner" role="region" aria-label="Cookie consent" hidden>
+    <p>We use essential cookies to run this site. With your permission we also use analytics cookies to understand how the site is used. You can read more in our <a class="text-link" href="../cookies/index.html">cookie policy</a>.</p>
+    <div class="cluster">
+      <button class="btn btn--outline" type="button" data-cookie="essential">Essential only</button>
+      <button class="btn btn--primary" type="button" data-cookie="all">Accept all</button>
+    </div>
+  </div>
+
+  <script src="../js/main.js" defer></script>
+  <script src="../js/inner.js" defer></script>
+  <script src="../js/ai-governance.js" defer></script>
+</body>
+</html>

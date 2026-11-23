@@ -1,154 +1,172 @@
-/* AI governance: you run the control yourself.
-   1. Hero: "Run an output" sends an output through Propose, Gate and Review
-   2. Loop: choose what the reviewer does, then run the five steps
-   3. Tiers: a control changes how much a person reviews (illustrative)
-   4. Trace: link the seven record fields to rebuild a decision
-   5. Topic tiles tilt toward the pointer */
+/* AI governance: effects that follow you.
+   1. Hero: a spotlight that follows the pointer and lights "Governance is hard." (drifts by itself on touch)
+   2. Parallax: layers and big faint words move at different speeds as you scroll
+   3. Manifesto: words light up as you scroll
+   4. Plan: a line runs across three phases and the nine items tick off as you scroll
+   5. Loop: vertical scroll drives a horizontal track; the step in the middle lights up
+   6. Tiers: cards stack as they arrive; the output squares ripple in
+   7. Traceability: seven fields fly in from different depths and snap into one record
+   Reduced motion: the finished state, no movement. */
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = window.matchMedia('(pointer: fine)').matches;
-  const wait = (ms) => new Promise((r) => setTimeout(r, reduce ? 0 : ms));
+  const wide = window.matchMedia('(min-width: 961px)');
+  const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const vh = () => window.innerHeight;
+  if (reduce) document.documentElement.classList.add('aig-static');
 
-  /* ---- 1. Hero mini loop ----------------------------------------------- */
-  const mini = document.querySelector('[data-mini]');
-  if (mini) {
-    const steps = [...mini.querySelectorAll('.mini__step')];
-    const ticks = [...mini.querySelectorAll('.mini__checks li')];
-    const btn = mini.querySelector('[data-run]');
-    let running = false;
-    const at = (i) => {
-      mini.style.setProperty('--a', i);
-      steps.forEach((s, k) => { s.classList.toggle('is-on', k === i); s.classList.toggle('is-done', k < i); });
+  /* ---- 1. Hero spotlight ------------------------------------------------ */
+  const hero = document.querySelector('[data-hero]');
+  const spot = document.querySelector('[data-spot]');
+  if (hero && spot && !reduce) {
+    hero.classList.add('is-spot');
+    let lastMove = 0;
+    const place = (cx, cy) => {
+      const hr = hero.getBoundingClientRect(), sr = spot.getBoundingClientRect();
+      hero.style.setProperty('--hx', (cx - hr.left) + 'px');
+      hero.style.setProperty('--hy', (cy - hr.top) + 'px');
+      spot.style.setProperty('--sx', (cx - sr.left) + 'px');
+      spot.style.setProperty('--sy', (cy - sr.top) + 'px');
     };
-    async function run() {
-      if (running) return;
-      running = true; btn.disabled = true;
-      ticks.forEach((t) => t.classList.remove('is-ticked'));
-      at(0); await wait(900);
-      at(1); await wait(700);
-      for (const t of ticks) { t.classList.add('is-ticked'); await wait(450); }
-      await wait(400);
-      at(2); await wait(600);
-      running = false; btn.disabled = false;
-    }
-    btn.addEventListener('click', run);
-    at(0);
-    if (!reduce) setTimeout(run, 1600);               // once on arrival; after that, it is yours to run
-    else { at(2); ticks.forEach((t) => t.classList.add('is-ticked')); }
-  }
-
-  /* ---- 2. The loop ------------------------------------------------------ */
-  const loop = document.querySelector('[data-loop]');
-  if (loop) {
-    const nodes = [...loop.querySelectorAll('.loop__node')];
-    const token = loop.querySelector('.loop__token');
-    const status = loop.querySelector('.loop__status');
-    const track = loop.querySelector('.loop__track');
-    const choices = [...loop.querySelectorAll('[data-choice]')];
-    const btn = loop.querySelector('[data-run]');
-    let choice = 'accept', running = false;
-
-    const place = (i) => {
-      const n = nodes[i], t = track.getBoundingClientRect(), r = n.getBoundingClientRect();
-      token.style.setProperty('--x', `${r.left - t.left}px`);
-      token.style.setProperty('--y', `${r.top - t.top - (n.classList.contains('loop__node--low') ? 0 : 0)}px`);
+    if (fine) hero.addEventListener('pointermove', (e) => { lastMove = performance.now(); place(e.clientX, e.clientY); });
+    const drift = (t) => {
+      requestAnimationFrame(drift);
+      if (document.hidden) return;
+      if (fine && performance.now() - lastMove < 3500) return;       // the pointer is in charge
+      const sr = spot.getBoundingClientRect();
+      const x = sr.left + (0.5 + 0.5 * Math.sin(t / 1700)) * sr.width;
+      const y = sr.top + sr.height * (0.5 + 0.18 * Math.sin(t / 900));
+      place(x, y);
     };
-    const reset = () => { nodes.forEach((n) => n.classList.remove('is-on', 'is-done', 'is-skipped')); };
-    const desc = (i) => nodes[i].querySelector('.loop__d').textContent;
-
-    choices.forEach((c) => c.addEventListener('click', () => {
-      choice = c.dataset.choice;
-      choices.forEach((o) => { o.classList.toggle('is-on', o === c); o.setAttribute('aria-pressed', String(o === c)); });
-    }));
-
-    async function run() {
-      if (running) return;
-      running = true; btn.disabled = true;
-      reset();
-      const path = choice === 'reject' ? [0, 1, 2, 3, 4] : [0, 1, 2, 4];
-      if (choice === 'accept') nodes[3].classList.add('is-skipped');
-      for (let k = 0; k < path.length; k++) {
-        const i = path[k];
-        nodes.forEach((n, j) => { n.classList.toggle('is-on', j === i); if (path.indexOf(j) !== -1 && path.indexOf(j) < k) n.classList.add('is-done'); });
-        place(i);
-        let line = `${nodes[i].querySelector('.loop__t').textContent}. ${desc(i)}`;
-        if (i === 2) line = choice === 'reject' ? 'Review. The reviewer rejects the output.' : 'Review. The reviewer accepts the output.';
-        status.textContent = line;
-        await wait(1500);
-      }
-      nodes[path[path.length - 1]].classList.add('is-done');
-      status.textContent = choice === 'reject'
-        ? 'The rejection was escalated to the accountable owner, and input, output, decision and rationale are recorded.'
-        : 'The output was accepted by a named person, and input, output, decision and rationale are recorded.';
-      running = false; btn.disabled = false;
-    }
-    btn.addEventListener('click', run);
-    place(0);
-    nodes[0].classList.add('is-on');
-    window.addEventListener('resize', () => { if (!running) place(Math.max(0, nodes.findIndex((n) => n.classList.contains('is-on')))); });
+    requestAnimationFrame(drift);
   }
 
-  /* ---- 3. Tiers --------------------------------------------------------- */
-  const tiers = document.querySelector('[data-tiers]');
-  if (tiers) {
-    const data = [...tiers.querySelectorAll('.tiers__table tbody tr')].map((tr) => [tr.cells[1].textContent, tr.cells[2].textContent]);
-    const dots = [...tiers.querySelectorAll('.dot')];
-    const pills = [...tiers.querySelectorAll('[data-tier]')];
-    const range = tiers.querySelector('.tiers__range');
-    const o = tiers.querySelector('[data-o]'), e = tiers.querySelector('[data-e]');
-    dots.forEach((d, i) => d.style.setProperty('--k', i));
-    // which squares a person reviews at each tier (illustration only)
-    const reviewed = [
-      () => true,
-      (i) => i < 8 || i % 7 === 0,                 // the least confident outputs, plus a sample
-      () => false,
-    ];
-    function set(t) {
-      pills.forEach((p, k) => { p.classList.toggle('is-on', k === t); p.setAttribute('aria-checked', String(k === t)); });
-      range.value = String(t + 1);
-      dots.forEach((d, i) => {
-        d.classList.toggle('is-on', reviewed[t](i));
-        d.classList.toggle('is-halt', t === 2 && i === 23);          // an automatic halt condition
-      });
-      tiers.classList.add('is-swapping');
-      setTimeout(() => { o.textContent = data[t][0]; e.textContent = data[t][1]; tiers.classList.remove('is-swapping'); }, reduce ? 0 : 220);
-    }
-    pills.forEach((p, k) => p.addEventListener('click', () => set(k)));
-    range.addEventListener('input', () => set(Number(range.value) - 1));
-    set(0);
+  /* ---- 3. Manifesto words ----------------------------------------------- */
+  const scrub = document.querySelector('[data-scrub]');
+  let words = [];
+  if (scrub) {
+    const text = scrub.textContent.trim();
+    scrub.setAttribute('aria-label', text);
+    scrub.innerHTML = text.split(/\s+/).map((w) => `<span class="w" aria-hidden="true">${w}</span>`).join(' ');
+    words = $$('.w', scrub);
   }
 
-  /* ---- 4. Traceability -------------------------------------------------- */
+  /* ---- 2, 5, 6, 7: scroll-driven ---------------------------------------- */
+  const plx = $$('[data-plx]');
+  const loop = document.querySelector('[data-hscroll]');
+  const track = loop && loop.querySelector('.aig-loop__track');
+  const view = loop && loop.querySelector('.aig-loop__view');
+  const rail = loop && loop.querySelector('.aig-loop__rail');
+  const stepEls = loop ? $$('.aig-step', loop) : [];
+  const tiers = $$('.aig-tier');
+  const plan = document.querySelector('[data-plan]');
+  const phases = plan ? $$('.aig-phase', plan) : [];
+  const planItems = plan ? $$('.aig-item', plan) : [];
   const trace = document.querySelector('[data-trace]');
-  if (trace) {
-    const fields = [...trace.querySelectorAll('.field')];
-    const slots = [...trace.querySelectorAll('.slot')];
-    const status = trace.querySelector('[data-status]');
-    const total = fields.length;
-    const render = () => {
-      const on = fields.filter((f) => f.getAttribute('aria-pressed') === 'true').length;
-      fields.forEach((f, i) => slots[i].classList.toggle('is-linked', f.getAttribute('aria-pressed') === 'true'));
-      status.textContent = on === total ? 'Decision rebuilt from one record: all seven fields are linked.' : `${on} of ${total} fields linked.`;
-      status.classList.toggle('is-done', on === total);
-    };
-    fields.forEach((f) => f.addEventListener('click', () => { f.setAttribute('aria-pressed', String(f.getAttribute('aria-pressed') !== 'true')); render(); }));
-    trace.querySelector('[data-reset]').addEventListener('click', () => { fields.forEach((f) => f.setAttribute('aria-pressed', 'false')); render(); });
-    trace.querySelector('[data-rebuild]').addEventListener('click', async () => {
-      fields.forEach((f) => f.setAttribute('aria-pressed', 'false')); render();
-      for (const f of fields) { f.setAttribute('aria-pressed', 'true'); render(); await wait(380); }
-    });
-    render();
-  }
+  const chips = trace ? $$('.aig-chip', trace) : [];
+  const countEl = trace && trace.querySelector('[data-count]');
+  const SCATTER = [[-420, -180, -9], [-300, -250, 7], [360, -200, -6], [-250, -300, 10], [400, -240, 8], [-360, -210, -11], [320, -280, 5]];
 
-  /* ---- 5. Tilt ---------------------------------------------------------- */
-  if (fine && !reduce) {
-    document.querySelectorAll('.topic__in').forEach((el) => {
-      el.addEventListener('pointermove', (ev) => {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty('--ry', `${(((ev.clientX - r.left) / r.width) - 0.5) * 10}deg`);
-        el.style.setProperty('--rx', `${(((ev.clientY - r.top) / r.height) - 0.5) * -10}deg`);
+  let ticking = false;
+  function frame() {
+    ticking = false;
+    const H = vh();
+
+    if (!reduce) {
+      /* parallax */
+      plx.forEach((el) => {
+        const ref = el.closest('section') || el.parentElement;
+        const r = ref.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > H + 200) return;
+        const d = (r.top + r.height / 2) - H / 2;
+        el.style.transform = `translate3d(0, ${(-d * parseFloat(el.dataset.plx) * 0.12).toFixed(1)}px, 0)`;
       });
-      el.addEventListener('pointerleave', () => { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
-    });
+    }
+
+    /* manifesto */
+    if (scrub && words.length) {
+      const r = scrub.getBoundingClientRect();
+      const p = reduce ? 1 : clamp((H * 0.85 - r.top) / (H * 0.5), 0, 1);
+      const n = Math.round(p * words.length);
+      words.forEach((w, i) => w.classList.toggle('is-lit', i < n));
+    }
+
+    /* plan: the line draws across, items tick off */
+    if (plan) {
+      const r = plan.getBoundingClientRect();
+      const p = reduce ? 1 : clamp((H * 0.78 - r.top) / (H * 0.5), 0, 1);
+      plan.style.setProperty('--p', p.toFixed(3));
+      const done = Math.round(p * planItems.length);
+      planItems.forEach((it, i) => it.classList.toggle('is-done', i < done));
+      phases.forEach((ph, i) => {
+        const full = done >= (i + 1) * 3;
+        ph.classList.toggle('is-done', full);
+        ph.classList.toggle('is-on', !full && done > i * 3 - 1 && p > 0);
+      });
+    }
+
+    /* loop: horizontal track */
+    if (loop && track && view && wide.matches && !reduce) {
+      const pin = loop.querySelector('.aig-loop__pin');
+      const hdr = parseFloat(getComputedStyle(pin).top) || 0;
+      const r = loop.getBoundingClientRect();
+      const total = r.height - pin.getBoundingClientRect().height;
+      const p = clamp((hdr - r.top) / Math.max(total, 1), 0, 1);
+      const max = Math.max(track.scrollWidth - window.innerWidth + 80, 0);
+      track.style.transform = `translate3d(${(-p * max).toFixed(1)}px,0,0)`;
+      if (rail) rail.style.setProperty('--p', p.toFixed(3));
+      const mid = window.innerWidth * 0.42;
+      let best = 0, bd = 1e9;
+      stepEls.forEach((s, i) => { const sr = s.getBoundingClientRect(); const d = Math.abs(sr.left + sr.width / 2 - mid); if (d < bd) { bd = d; best = i; } });
+      stepEls.forEach((s, i) => { s.classList.toggle('is-on', i === best); s.classList.toggle('is-past', i < best); });
+    } else if (loop && track) {
+      track.style.transform = '';
+      stepEls.forEach((s) => { s.classList.remove('is-on', 'is-past'); });
+    }
+
+    /* tiers: stacked cards recede */
+    if (tiers.length && wide.matches && !reduce) {
+      tiers.forEach((t, i) => {
+        const next = tiers[i + 1];
+        let under = false, s = 1;
+        if (next) {
+          const a = t.getBoundingClientRect(), b = next.getBoundingClientRect();
+          under = b.top < a.top + a.height * 0.55;
+          s = 1 - Math.min(tiers.length - 1 - i, 2) * 0.035;
+        }
+        t.classList.toggle('is-under', under);
+        t.style.setProperty('--s', s.toFixed(3));
+      });
+    }
+
+    /* traceability: assemble */
+    if (trace && chips.length) {
+      const r = trace.getBoundingClientRect();
+      const p = reduce ? 1 : clamp(1 - (r.top - H * 0.05) / (H * 0.75), 0, 1);
+      const k = Math.min(1, window.innerWidth / 1000);
+      let linked = 0;
+      chips.forEach((c, i) => {
+        const q = clamp(p * 1.55 - i * 0.12, 0, 1);
+        const e = 1 - Math.pow(1 - q, 3);
+        const [dx, dy, rot] = SCATTER[i % SCATTER.length];
+        c.style.transform = reduce ? '' : `translate3d(${(dx * (1 - e) * k).toFixed(1)}px, ${(dy * (1 - e)).toFixed(1)}px, 0) rotate(${(rot * (1 - e)).toFixed(1)}deg)`;
+        c.style.opacity = reduce ? 1 : (0.2 + 0.8 * e).toFixed(2);
+        const on = q >= 0.985;
+        c.classList.toggle('is-linked', on);
+        if (on) linked++;
+      });
+      if (countEl) countEl.textContent = linked;
+    }
   }
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  frame();
+
+  /* tier squares ripple in once */
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: 0.35 });
+    tiers.forEach((t) => io.observe(t));
+  } else tiers.forEach((t) => t.classList.add('is-in'));
 })();
