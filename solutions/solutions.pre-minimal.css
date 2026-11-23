@@ -1,0 +1,169 @@
+/* ==========================================================================
+   Solutions: a case moves through the stages.
+   - Stage flows: a marker travels along the line as you scroll, or when you
+     click a stage
+   - Challenge / outcome rows pair up on hover
+   - Airtable architecture: an exploded stack of six layers
+   - Industries: tabs whose columns arrive one after another
+   ========================================================================== */
+
+/* ---- Stage flow ---------------------------------------------------------- */
+.flow { position: relative; --a: 0; margin-block: var(--space-5) var(--space-6); }
+.flow__line { position: absolute; left: calc(0.5 / var(--n) * 100%); right: calc(0.5 / var(--n) * 100%); top: 11px; height: 1px; background: var(--c-line-strong); }
+.flow__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--c-signal);
+  transform-origin: left;
+  transform: scaleX(calc(var(--a) / (var(--n) - 1)));
+  transition: transform var(--dur-slow) var(--ease-soft);
+}
+.flow__list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
+.flow__btn {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: 40px 8px 0;
+  text-align: center;
+  color: var(--c-text-muted);
+  transition: color var(--dur) var(--ease-soft);
+}
+.flow__btn::before {                /* stage node */
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  margin-left: -7px;
+  background: var(--c-primary);
+  border: 1px solid var(--c-text);
+  transition: background-color var(--dur) var(--ease-soft);
+}
+.flow__step.is-done .flow__btn::before { background: var(--c-text); }
+.flow__step.is-on .flow__btn { color: var(--c-text); }
+.flow__n { font-size: 13px; }
+.flow__t { font-family: var(--font-head); font-weight: var(--fw-semi); font-size: 17px; letter-spacing: var(--ls-head); line-height: 1.25; }
+.flow__btn:hover { color: var(--c-text); }
+.flow__token {                       /* the case itself */
+  position: absolute;
+  top: 4px;
+  left: calc((var(--a) + 0.5) / var(--n) * 100%);
+  width: 15px;
+  height: 15px;
+  margin-left: -7px;
+  background: var(--c-signal);
+  box-shadow: 0 0 0 6px var(--c-signal-soft);
+  transition: left var(--dur-slow) var(--ease-soft);
+  pointer-events: none;
+}
+.flow--hero { margin-top: var(--space-6); }
+.flow--hero .flow__t { font-size: clamp(20px, 2vw, 28px); }
+@media (max-width: 720px) {
+  .flow__line, .flow__token { display: none; }
+  .flow__list { grid-template-columns: minmax(0, 1fr); gap: 0; border-left: 1px solid var(--c-line-strong); margin-left: 7px; }
+  .flow__btn { grid-template-columns: 2rem 1fr; justify-items: start; padding: 12px 0 12px var(--space-3); text-align: left; }
+  .flow__btn::before { left: -8px; top: 50%; margin-top: -7px; margin-left: 0; }
+}
+
+/* ---- Capability chips ---------------------------------------------------- */
+.caps { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.cap {
+  position: relative;
+  padding: 14px 20px;
+  background: var(--c-secondary);
+  border-radius: var(--radius);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease-soft);
+}
+.cap:hover { transform: translateY(var(--lift)); }
+.caps--big .cap { padding: 28px 32px; font-family: var(--font-head); font-weight: var(--fw-semi); font-size: clamp(22px, 2.2vw, 30px); letter-spacing: var(--ls-head); }
+.at-intro { margin-bottom: var(--space-3); }
+
+/* ---- Challenges / outcomes ----------------------------------------------- */
+.pairs__head, .pair { display: grid; grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr); gap: var(--space-3); }
+.pairs__head { padding-bottom: var(--space-2); }
+.pairs__list { list-style: none; padding: 0; border-top: 1px solid var(--c-line); }
+.pair { padding-block: var(--space-4); border-bottom: 1px solid var(--c-line); transition: opacity var(--dur) var(--ease-soft); outline-offset: -2px; }
+.pair__c { color: var(--c-text-muted); transition: color var(--dur) var(--ease-soft); }
+.pair__o { transition: transform var(--dur) var(--ease-soft); }
+.pair__arrow { align-self: center; justify-self: center; font-size: 22px; color: var(--c-text-muted); transition: transform var(--dur) var(--ease-soft), color var(--dur) var(--ease-soft); }
+.pairs.has-focus .pair:not(.is-focus) { opacity: 0.35; }
+.pair.is-focus .pair__c { color: var(--c-text); }
+.pair.is-focus .pair__arrow { transform: translateX(8px); color: var(--c-text); }
+.pair.is-focus .pair__o { transform: translateX(8px); }
+@media (max-width: 720px) {
+  .pairs__head { display: none; }
+  .pair { grid-template-columns: minmax(0, 1fr); gap: var(--space-1); }
+  .pair__arrow { justify-self: start; transform: rotate(90deg); }
+  .pair.is-focus .pair__arrow { transform: rotate(90deg) translateX(8px); }
+}
+
+.faq { max-width: 880px; }
+
+/* ---- Airtable: exploded architecture ------------------------------------- */
+.astack { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--block-gap); align-items: center; --explode: 1; }
+.astack__scene { perspective: 1600px; height: 600px; position: relative; }
+.astack__plane {
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 380px;
+  height: 230px;
+  margin: -115px 0 0 -190px;
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(-38deg);
+}
+.astack__layer {
+  position: absolute;
+  inset: 0;
+  padding: 14px 16px;
+  background: var(--c-secondary);
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--radius);
+  transform: translateZ(calc(var(--i) * (10px + var(--explode) * 56px)));
+  transition: border-color var(--dur-fast) var(--ease-soft), background-color var(--dur-fast) var(--ease-soft);
+}
+.astack__layer span { position: absolute; left: 16px; bottom: 12px; font-size: 12px; font-weight: var(--fw-medium); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--c-text-muted); }
+.astack__layer.is-on { border-color: var(--c-signal); background: var(--c-primary); box-shadow: 0 0 40px var(--c-signal-glow); }
+.astack__layer.is-on span { color: var(--c-text); }
+
+.astack__list { list-style: none; padding: 0; border-top: 1px solid var(--c-line); }
+.astack__item { border-bottom: 1px solid var(--c-line); }
+.astack__btn { display: grid; grid-template-columns: 2.5rem 1fr; align-items: baseline; width: 100%; min-height: var(--tap-min); padding: var(--space-3) 0; text-align: left; font-family: var(--font-head); font-weight: var(--fw-semi); font-size: 22px; letter-spacing: var(--ls-head); color: var(--c-text-muted); transition: color var(--dur) var(--ease-soft); }
+.astack__n { font-family: var(--font-body); font-weight: var(--fw-regular); font-size: 13px; letter-spacing: 0; }
+.astack__item.is-on .astack__btn, .astack__btn:hover { color: var(--c-text); }
+.astack__more { padding: 0 0 var(--space-3) 2.5rem; }
+.astack__more[hidden] { display: none; }
+.astack__more:not([hidden]) li { animation: svc-line 0.7s var(--ease-soft) both; }
+.astack__more li:nth-child(2) { animation-delay: 0.08s; } .astack__more li:nth-child(3) { animation-delay: 0.16s; }
+@keyframes svc-line { from { opacity: 0; transform: translateX(-10px); } }
+@media (max-width: 960px) {
+  .astack { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  .astack__scene { height: 420px; }
+  .astack__plane { transform: rotateX(58deg) rotateZ(-38deg) scale(0.8); }
+}
+
+/* Where Airtable should not be used */
+.notuse { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.notuse__item { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-2); padding: var(--space-4); background: var(--c-secondary); border-radius: var(--radius); }
+.notuse__x { font-size: 20px; color: var(--c-text-muted); transition: transform var(--dur) var(--ease-soft); }
+.notuse__item:hover .notuse__x { transform: rotate(90deg); }
+@media (max-width: 720px) { .notuse { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- Industries ---------------------------------------------------------- */
+.ind-tabs { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-5); }
+.js .ind:not(.is-active) { display: none; }
+.ind > .lead { margin-bottom: var(--space-5); }
+.ind__cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
+.ind__col { padding-top: var(--space-3); border-top: 1px solid var(--c-line-strong); }
+.ind__col .kicker { margin-bottom: var(--space-3); color: var(--c-text); }
+.js .ind.is-active .ind__col { animation: ind-in 0.9s var(--ease-soft) both; animation-delay: calc(var(--k) * 0.12s); }
+@keyframes ind-in { from { opacity: 0; transform: translateY(24px); } }
+@media (max-width: 960px) { .ind__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .ind__cols { grid-template-columns: minmax(0, 1fr); } }
