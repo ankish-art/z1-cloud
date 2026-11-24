@@ -1,1 +1,105 @@
-/* Insights | Zi Cloud: page-specific styles only. Use tokens from global-css/01-tokens.css. */
+/* ==========================================================================
+   Insights: a bento of twelve short pieces.
+   Hero carries a category panel that also filters the grid (bars fill in as
+   it arrives). Cards are slate tiles like the rest of the site: teal glow
+   follows the cursor, a teal line draws across on hover, and "Key point"
+   opens one short paragraph in place. Cards drift at slightly different
+   speeds as you scroll (parallax). Amber is only the link underline.
+   Teal is motion only.
+   ========================================================================== */
+
+/* ---- Hero ----------------------------------------------------------------- */
+.in-hero { --gx: 80%; --gy: 40%; --gs: 60vw; padding-block: var(--space-6) var(--section-pad); overflow: hidden; }
+.in-hero__bg { position: absolute; inset: -12% 0; z-index: -2; background: radial-gradient(circle at 7px 7px, var(--c-dot) 1px, transparent 1.6px) 0 0 / 22px 22px; -webkit-mask-image: radial-gradient(ellipse 70% 70% at 70% 35%, #000, transparent 80%); mask-image: radial-gradient(ellipse 70% 70% at 70% 35%, #000, transparent 80%); transform: translateY(calc(var(--hy, 0) * 0.28px)); }
+.in-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--block-gap); align-items: center; }
+.in-hero__title { margin: var(--space-2) 0 var(--space-4); font-size: clamp(64px, 6.6vw, 96px); line-height: var(--lh-h1); max-width: 9em; text-wrap: balance; }
+.in-hero .lead { max-width: 34ch; }
+.in-hero__grid > :first-child { transform: translateY(calc(var(--hy, 0) * -0.08px)); }
+.split-heading .word { padding-bottom: 0.14em; margin-bottom: -0.14em; }
+
+/* category panel: filter + a small chart of how many pieces sit under each topic */
+.icats { padding: var(--space-5); background: linear-gradient(155deg, color-mix(in srgb, var(--c-secondary) 86%, var(--c-text)) 0%, var(--c-secondary) 55%, color-mix(in srgb, var(--c-secondary) 82%, var(--c-primary)) 100%); border-radius: var(--radius); box-shadow: inset 0 1px 0 rgba(255,255,255,.10), inset 0 0 0 1px rgba(255,255,255,.06), 0 28px 40px -28px rgba(0,0,0,.9); transform: translateY(calc(var(--hy, 0) * 0.05px)); }
+.icats__k { max-width: none; margin-bottom: var(--space-3); font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--c-text-muted); }
+.icats__list { list-style: none; padding: 0; display: grid; gap: 4px; }
+.icat { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-2); row-gap: 8px; width: 100%; min-height: var(--tap-min); padding: 10px 0 10px var(--space-4); background: none; border: 0; font: inherit; text-align: left; color: var(--c-text-muted); cursor: pointer; transition: color var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-out); }
+.icat::before { content: ""; position: absolute; left: 0; top: 19px; width: 14px; height: 14px; border: 1px solid var(--c-text-muted); background: transparent; transition: background-color var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-out); }
+.icat:hover { color: var(--c-text); transform: translateX(6px); }
+.icat:hover::before { border-color: var(--c-text); }
+.icat.is-on { color: var(--c-text); }
+.icat.is-on::before { background: var(--c-signal); border-color: var(--c-signal); transform: rotate(45deg) scale(0.8); }
+.icat__n { font-family: var(--font-head); font-weight: var(--fw-semi); font-size: 20px; letter-spacing: var(--ls-head); }
+.icat__c { font-size: var(--fs-small); align-self: center; }
+.icat__bar { grid-column: 1 / -1; height: 2px; background: var(--c-line); overflow: hidden; }
+.icat__bar i { display: block; height: 100%; background: var(--c-signal); transform-origin: 0 50%; transform: scaleX(0); }
+.js .icats.is-visible .icat__bar i { transform: scaleX(var(--w, 1)); transition: transform var(--dur-slow) var(--ease-out); transition-delay: calc(0.3s + var(--i, 0) * 0.1s); }
+html:not(.js) .icat__bar i { transform: scaleX(var(--w, 1)); }
+.icat:focus-visible, .ic__btn:focus-visible { outline: 2px solid var(--c-signal); outline-offset: 3px; }
+
+/* ---- Bento grid ----------------------------------------------------------- */
+.in-list { padding-bottom: var(--section-pad); }
+.ig { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--tile-gap); }
+.ic.s4 { grid-column: span 4; }
+.ic.s6 { grid-column: span 6; }
+.ic.s8 { grid-column: span 8; }
+.ig.is-filtered .ic { grid-column: span 4; }
+.ig.is-filtered[data-n="1"] .ic, .ig.is-filtered[data-n="2"] .ic { grid-column: span 6; }
+
+.ic { position: relative; display: flex; flex-direction: column; gap: var(--space-3); min-height: 380px; padding: var(--card-pad); background: var(--c-secondary); border-radius: var(--radius); overflow: hidden; scroll-margin-top: calc(var(--header-h) + var(--space-3)); translate: 0 calc(var(--cp, 0) * var(--sp, 0) * 1px); transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), opacity var(--dur) var(--ease-out); }
+.js .ic.reveal { transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); transition-delay: calc(var(--k, 0) * 0.12s); }
+.ic:hover, .ic.is-open { box-shadow: var(--shadow-hover); }
+.js .ic.reveal.is-visible:hover { transform: translateY(var(--lift)); transition-delay: 0s; }
+.ic[hidden] { display: none; }
+.ic.is-out { opacity: 0 !important; transform: scale(0.97) !important; transition: opacity 0.35s var(--ease-soft), transform 0.35s var(--ease-soft) !important; }
+.ic.is-in { animation: ic-in var(--dur) var(--ease-out) both; animation-delay: calc(var(--k, 0) * 0.1s); }
+@keyframes ic-in { from { opacity: 0; transform: translateY(28px) scale(0.98); } }
+
+/* a teal line draws across the top on hover or when open */
+.ic::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--c-signal); transform: scaleX(0); transform-origin: 0 50%; transition: transform var(--dur) var(--ease-out); pointer-events: none; }
+.ic:hover::after, .ic.is-open::after { transform: scaleX(1); }
+
+.ic__top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-2); }
+.ic__n { font-family: var(--font-head); font-weight: var(--fw-head); font-size: 56px; line-height: 0.9; color: transparent; -webkit-text-stroke: 1px var(--c-text-muted); transition: color var(--dur) var(--ease-out), -webkit-text-stroke-color var(--dur) var(--ease-out), transform var(--dur) var(--ease-out); }
+.ic:hover .ic__n, .ic.is-open .ic__n { color: var(--c-text); -webkit-text-stroke-color: var(--c-text); transform: translateX(6px); }
+.ic__meta { max-width: none; font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--c-text-muted); text-align: right; }
+.ic__t { font-size: clamp(24px, 2vw, 28px); line-height: 1.15; letter-spacing: var(--ls-head); text-wrap: balance; overflow-wrap: break-word; }
+.ic.s6 .ic__t { font-size: clamp(28px, 2.4vw, 34px); }
+.ic.s8 .ic__t { font-size: clamp(32px, 3vw, 44px); max-width: 20ch; }
+.ic__p { max-width: 44ch; font-size: 15px; line-height: var(--lh-body); color: var(--c-text-muted); text-wrap: pretty; }
+
+.ic__body { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows var(--dur) var(--ease-soft), visibility 0s linear var(--dur); }
+.ic.is-open .ic__body { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows var(--dur) var(--ease-soft), visibility 0s; }
+.ic__clip { min-height: 0; overflow: hidden; }
+.ic__more { max-width: 54ch; padding-top: var(--space-1); font-size: 15px; line-height: var(--lh-body); color: var(--c-text); opacity: 0; transform: translateY(18px); transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out); }
+.ic.is-open .ic__more { opacity: 1; transform: none; transition-delay: 0.25s; }
+
+.ic__btn { align-self: flex-start; margin-top: auto; display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--tap-min); padding: 0; background: none; border: 0; border-bottom: 1px solid var(--c-accent); font: inherit; font-size: 15px; color: var(--c-text); cursor: pointer; transition: transform var(--dur-fast) var(--ease-out); }
+.ic__btn:hover { transform: translateY(var(--lift)); }
+.ic__btn-i { position: relative; width: 12px; height: 12px; }
+.ic__btn-i::before, .ic__btn-i::after { content: ""; position: absolute; left: 0; right: 0; top: 5px; height: 1px; background: currentColor; transition: transform var(--dur-fast) var(--ease-out); }
+.ic__btn-i::after { transform: rotate(90deg); }
+.ic.is-open .ic__btn-i::after { transform: rotate(0); }
+
+/* ---- Without JavaScript: key points are simply readable -------------------- */
+html:not(.js) .ic__body { grid-template-rows: 1fr; visibility: visible; }
+html:not(.js) .ic__more { opacity: 1; transform: none; }
+html:not(.js) .ic__btn, html:not(.js) .icats { display: none; }
+
+/* ---- Small screens ----------------------------------------------------------- */
+@media (max-width: 960px) {
+  .in-hero__grid { grid-template-columns: minmax(0, 1fr); }
+  .ig { grid-template-columns: minmax(0, 1fr); }
+  .ic.s4, .ic.s6, .ic.s8, .ig.is-filtered .ic, .ig.is-filtered[data-n="1"] .ic, .ig.is-filtered[data-n="2"] .ic { grid-column: 1; }
+  .ic { min-height: 0; translate: none; }
+  .ic.s8 .ic__t, .ic.s6 .ic__t { font-size: clamp(26px, 6vw, 34px); }
+}
+@media (max-width: 720px) {
+  .in-hero__title { font-size: clamp(40px, 11vw, 64px); overflow-wrap: anywhere; }
+  .icats { padding: var(--space-3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .in-hero__bg, .in-hero__grid > :first-child, .icats, .ic { transform: none; translate: none; }
+  .ic, .ic::after, .ic__n, .ic__body, .ic__more, .ic__btn, .icat, .icat::before { transition: none; }
+  .ic__more { opacity: 1; transform: none; }
+  .icat__bar i { transform: scaleX(var(--w, 1)); transition: none; }
+  .ic.is-in { animation: none; }
+}

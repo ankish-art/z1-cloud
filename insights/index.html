@@ -3,8 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Insights | Zi Cloud</title>
-  <meta name="description" content="">
+  <title>Insights: AI Governance, Audit-Ready Automation and Financial Crime Operations | Zi Cloud Ltd</title>
+  <meta name="description" content="Short articles on human-in-the-loop AI, audit-ready automation, AI governance, workflow design, manual compliance cost and financial crime operations.">
+  <meta property="og:title" content="Insights: AI Governance, Audit-Ready Automation and Financial Crime Operations | Zi Cloud Ltd">
+  <meta property="og:description" content="Short articles on human-in-the-loop AI, audit-ready automation, AI governance, workflow design, manual compliance cost and financial crime operations.">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:type" content="website">
 
   <!-- Fonts: Clash Display (headings) + IBM Plex Mono (body) -->
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
@@ -16,11 +20,195 @@
   <!-- Global styles, then page styles -->
   <link rel="stylesheet" href="../global-css/main.css">
   <link rel="stylesheet" href="insights.css">
+
+  <!-- Marks the page as JS-enabled before paint, so motion start states never flash -->
+  <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
-  <!-- Page content goes here (next step) -->
-  <main id="main"></main>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="logo" href="../index.html" aria-label="Zi Cloud, home">
+        <span class="logo__word" aria-hidden="true">Zi Cloud</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <ul class="nav__list" role="list">
+          <li><a class="nav__link" href="../services/index.html">Services</a></li>
+          <li><a class="nav__link" href="../solutions/index.html">Solutions</a></li>
+          <li><a class="nav__link" href="../ai-governance/index.html">AI Governance</a></li>
+          <li><a class="nav__link" href="../case-studies/index.html">Case Studies</a></li>
+          <li><a class="nav__link" href="../insights/index.html" aria-current="page">Insights</a></li>
+          <li><a class="nav__link" href="../about/index.html">About</a></li>
+        </ul>
+        <a class="btn btn--primary" href="../contact/index.html#discovery">Book Discovery Call</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="in-hero glow" aria-labelledby="page-title">
+      <div class="in-hero__bg" aria-hidden="true"></div>
+      <div class="container in-hero__grid">
+        <div class="hero-enter">
+          <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><span aria-current="page">Insights</span></li></ol></nav>
+          <p class="eyebrow">Insights</p>
+          <h1 class="in-hero__title split-heading" id="page-title">Practical writing on controlled operations</h1>
+          <p class="lead text-muted">Short pieces for risk, compliance, financial crime and operations leaders.</p>
+        </div>
+        <div class="icats reveal spotlight" role="group" aria-label="Filter by category">
+          <p class="icats__k">12 pieces · choose a topic</p>
+          <ul class="icats__list" role="list"><li><button type="button" class="icat is-on" data-filter="all" aria-pressed="true" style="--i:0;--w:1"><span class="icat__n">All</span><span class="icat__c">12</span><span class="icat__bar" aria-hidden="true"><i></i></span></button></li><li><button type="button" class="icat" data-filter="AI Governance" aria-pressed="false" style="--i:1;--w:1.00"><span class="icat__n">AI Governance</span><span class="icat__c">5</span><span class="icat__bar" aria-hidden="true"><i></i></span></button></li><li><button type="button" class="icat" data-filter="Automation" aria-pressed="false" style="--i:2;--w:0.20"><span class="icat__n">Automation</span><span class="icat__c">1</span><span class="icat__bar" aria-hidden="true"><i></i></span></button></li><li><button type="button" class="icat" data-filter="Operations" aria-pressed="false" style="--i:3;--w:0.40"><span class="icat__n">Operations</span><span class="icat__c">2</span><span class="icat__bar" aria-hidden="true"><i></i></span></button></li><li><button type="button" class="icat" data-filter="Compliance" aria-pressed="false" style="--i:4;--w:0.40"><span class="icat__n">Compliance</span><span class="icat__c">2</span><span class="icat__bar" aria-hidden="true"><i></i></span></button></li><li><button type="button" class="icat" data-filter="Financial Crime" aria-pressed="false" style="--i:5;--w:0.20"><span class="icat__n">Financial Crime</span><span class="icat__c">1</span><span class="icat__bar" aria-hidden="true"><i></i></span></button></li><li><button type="button" class="icat" data-filter="Airtable" aria-pressed="false" style="--i:6;--w:0.20"><span class="icat__n">Airtable</span><span class="icat__c">1</span><span class="icat__bar" aria-hidden="true"><i></i></span></button></li></ul>
+          <span class="visually-hidden" aria-live="polite" data-live></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="in-list" aria-label="Articles">
+      <div class="container">
+        <div class="ig" data-grid>
+          <article class="ic s8 reveal spotlight" id="human-in-the-loop-ai" data-cat="AI Governance" style="--k:0;--sp:0.05" aria-labelledby="human-in-the-loop-ai-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">01</span><span class="ic__meta">AI Governance · 6 min</span></div>
+            <h2 class="ic__t" id="human-in-the-loop-ai-t">Human-in-the-Loop AI: Where Oversight Adds Value and Where It Becomes Theatre</h2>
+            <p class="ic__p">Human review is the most common control proposed for AI and often the least well designed.</p>
+            <div class="ic__body" id="human-in-the-loop-ai-body"><div class="ic__clip"><p class="ic__more">Human-in-the-loop is usually presented as the answer to AI risk. In practice it is a design choice with its own failure modes. A reviewer who has time, information and authority to change an output provides real assurance. A reviewer who sees two hundred outputs an hour and clicks accept on each one provides a signature, not a control.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="human-in-the-loop-ai-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s4 reveal spotlight" id="design-audit-ready-automation" data-cat="Automation" style="--k:1;--sp:-0.04" aria-labelledby="design-audit-ready-automation-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">02</span><span class="ic__meta">Automation · 5 min</span></div>
+            <h2 class="ic__t" id="design-audit-ready-automation-t">How to Design Audit-Ready Automation</h2>
+            <p class="ic__p">An automated process is only as defensible as its record.</p>
+            <div class="ic__body" id="design-audit-ready-automation-body"><div class="ic__clip"><p class="ic__more">Start with the question an auditor will ask: show me what happened to this item, who approved it, and whether the rule that applied was the rule you said applied. If the automation cannot answer that for a single item, it is not audit-ready regardless of how well it performs.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="design-audit-ready-automation-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s4 reveal spotlight" id="future-of-ai-governance" data-cat="AI Governance" style="--k:2;--sp:0.03" aria-labelledby="future-of-ai-governance-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">03</span><span class="ic__meta">AI Governance · 6 min</span></div>
+            <h2 class="ic__t" id="future-of-ai-governance-t">The Future of AI Governance</h2>
+            <p class="ic__p">Governance is moving from policy documents to operating mechanisms.</p>
+            <div class="ic__body" id="future-of-ai-governance-body"><div class="ic__clip"><p class="ic__more">The first generation of AI governance was largely a policy exercise. Organisations wrote principles, set up committees and published statements. Supervisors are now asking a different question: how do you know the principles are operating?</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="future-of-ai-governance-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s4 reveal spotlight" id="workflow-design-over-technology" data-cat="Operations" style="--k:0;--sp:0.05" aria-labelledby="workflow-design-over-technology-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">04</span><span class="ic__meta">Operations · 4 min</span></div>
+            <h2 class="ic__t" id="workflow-design-over-technology-t">Why Workflow Design Matters More Than Technology</h2>
+            <p class="ic__p">Tools change every few years.</p>
+            <div class="ic__body" id="workflow-design-over-technology-body"><div class="ic__clip"><p class="ic__more">Technology selection is the most visible decision in an automation programme, so it attracts the most attention. It is rarely the reason programmes succeed or fail. The usual cause is a process nobody redesigned: the same steps, the same handoffs and the same workarounds, now running faster.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="workflow-design-over-technology-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s4 reveal spotlight" id="hidden-cost-manual-compliance" data-cat="Compliance" style="--k:1;--sp:-0.04" aria-labelledby="hidden-cost-manual-compliance-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">05</span><span class="ic__meta">Compliance · 5 min</span></div>
+            <h2 class="ic__t" id="hidden-cost-manual-compliance-t">The Hidden Cost of Manual Compliance Processes</h2>
+            <p class="ic__p">Manual compliance work looks cheap because its cost is spread across many salaries.</p>
+            <div class="ic__body" id="hidden-cost-manual-compliance-body"><div class="ic__clip"><p class="ic__more">Manual compliance processes rarely appear as a line in the budget. Their cost is distributed across analysts re-keying data, managers chasing evidence, and senior staff reviewing work that should have been controlled upstream. Because the cost is diffuse, the process looks cheap.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="hidden-cost-manual-compliance-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s4 reveal spotlight" id="financial-crime-lessons-from-modern-operations" data-cat="Financial Crime" style="--k:2;--sp:0.03" aria-labelledby="financial-crime-lessons-from-modern-operations-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">06</span><span class="ic__meta">Financial Crime · 6 min</span></div>
+            <h2 class="ic__t" id="financial-crime-lessons-from-modern-operations-t">What Financial Crime Teams Can Learn From Modern Operations</h2>
+            <p class="ic__p">Operations teams in manufacturing and logistics solved queueing, quality and flow problems decades ago.</p>
+            <div class="ic__body" id="financial-crime-lessons-from-modern-operations-body"><div class="ic__clip"><p class="ic__more">Financial crime teams are operations teams. They receive work in variable volumes, route it by complexity, apply standards, and measure quality. Yet many still run on queues without flow measurement and quality checks that happen after the fact.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="financial-crime-lessons-from-modern-operations-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s8 reveal spotlight" id="decision-traceability-regulators-ask" data-cat="AI Governance" style="--k:0;--sp:0.05" aria-labelledby="decision-traceability-regulators-ask-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">07</span><span class="ic__meta">AI Governance · 5 min</span></div>
+            <h2 class="ic__t" id="decision-traceability-regulators-ask-t">Decision Traceability: What a Regulator Will Actually Ask For</h2>
+            <p class="ic__p">Supervisory requests on automated and AI-assisted decisions follow a predictable pattern.</p>
+            <div class="ic__body" id="decision-traceability-regulators-ask-body"><div class="ic__clip"><p class="ic__more">When supervisors examine a decision, they ask for the inputs, the rule or model applied, the person who approved it and the reason it was taken. They ask for a sample, not every decision, and they expect to see the same answer for similar cases.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="decision-traceability-regulators-ask-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s6 reveal spotlight" id="airtable-is-not-a-database" data-cat="Airtable" style="--k:1;--sp:-0.04" aria-labelledby="airtable-is-not-a-database-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">08</span><span class="ic__meta">Airtable · 5 min</span></div>
+            <h2 class="ic__t" id="airtable-is-not-a-database-t">Airtable Is Not a Database: Designing Controls Into Operational Platforms</h2>
+            <p class="ic__p">Describing Airtable as a database leads to weak designs in regulated work.</p>
+            <div class="ic__body" id="airtable-is-not-a-database-body"><div class="ic__clip"><p class="ic__more">Airtable stores structured data, but its value in regulated operations comes from what sits around the data: stages, permissions, validation, automations and views. Treating it as a database leads teams to model data well but leave the control logic undefined.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="airtable-is-not-a-database-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s6 reveal spotlight" id="escalation-paths-survive-audit" data-cat="Operations" style="--k:2;--sp:0.03" aria-labelledby="escalation-paths-survive-audit-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">09</span><span class="ic__meta">Operations · 4 min</span></div>
+            <h2 class="ic__t" id="escalation-paths-survive-audit-t">Escalation Paths That Survive an Audit</h2>
+            <p class="ic__p">Most escalation routes exist in someone&#x27;s head or in an email thread.</p>
+            <div class="ic__body" id="escalation-paths-survive-audit-body"><div class="ic__clip"><p class="ic__more">An escalation path is a control. It determines whether an issue reaches someone with authority in time to act. Yet many escalation routes are informal, and their operation cannot be evidenced after the event.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="escalation-paths-survive-audit-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s4 reveal spotlight" id="risk-tiering-ai-operations" data-cat="AI Governance" style="--k:0;--sp:0.05" aria-labelledby="risk-tiering-ai-operations-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">10</span><span class="ic__meta">AI Governance · 5 min</span></div>
+            <h2 class="ic__t" id="risk-tiering-ai-operations-t">Risk-Tiering AI Use Cases in Operations</h2>
+            <p class="ic__p">A tiering model turns a long list of AI use cases into proportionate controls.</p>
+            <div class="ic__body" id="risk-tiering-ai-operations-body"><div class="ic__clip"><p class="ic__more">Without tiering, every AI use case receives the same scrutiny or none. Both outcomes are poor. Tiering allocates oversight in proportion to the consequences of error and the reversibility of the action.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="risk-tiering-ai-operations-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s4 reveal spotlight" id="vendor-governance-automation-tools" data-cat="Compliance" style="--k:1;--sp:-0.04" aria-labelledby="vendor-governance-automation-tools-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">11</span><span class="ic__meta">Compliance · 4 min</span></div>
+            <h2 class="ic__t" id="vendor-governance-automation-tools-t">Vendor Governance for Automation Tools</h2>
+            <p class="ic__p">Automation platforms hold operational data and run critical logic.</p>
+            <div class="ic__body" id="vendor-governance-automation-tools-body"><div class="ic__clip"><p class="ic__more">Automation platforms and AI services process regulated data and run logic that affects customers. Yet they are often adopted by business teams through standard subscriptions, outside the vendor management process applied to other suppliers.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="vendor-governance-automation-tools-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+          <article class="ic s4 reveal spotlight" id="ai-use-case-register" data-cat="AI Governance" style="--k:2;--sp:0.03" aria-labelledby="ai-use-case-register-t">
+            <div class="ic__top"><span class="ic__n" aria-hidden="true">12</span><span class="ic__meta">AI Governance · 4 min</span></div>
+            <h2 class="ic__t" id="ai-use-case-register-t">Maintaining an AI Use-Case Register Regulators Recognise</h2>
+            <p class="ic__p">The use-case register is the first thing a supervisor will request on AI.</p>
+            <div class="ic__body" id="ai-use-case-register-body"><div class="ic__clip"><p class="ic__more">A use-case register lists every AI use in the organisation, including tools adopted by individual teams. It records the purpose, the owner, the data used, the risk tier, the approval status and the monitoring arrangements.</p></div></div>
+            <button type="button" class="ic__btn" aria-expanded="false" aria-controls="ai-use-case-register-body"><span class="ic__btn-t">Key point</span><span class="ic__btn-i" aria-hidden="true"></span></button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="site-footer__about">
+          <a class="logo" href="../index.html" aria-label="Zi Cloud, home"><span class="logo__word" aria-hidden="true">Zi Cloud</span></a>
+          <p class="site-footer__line">We build controlled AI and workflow systems for regulated operations.</p>
+          <p>Zi Cloud Ltd is a UK-registered specialist consultancy for regulated operations.</p>
+        </div>
+
+        <nav aria-label="Footer">
+          <h4>Explore</h4>
+          <ul class="site-footer__list" role="list">
+            <li><a href="../services/index.html">Services</a></li>
+            <li><a href="../solutions/index.html">Solutions</a></li>
+            <li><a href="../ai-governance/index.html">AI Governance</a></li>
+            <li><a href="../case-studies/index.html">Case Studies</a></li>
+            <li><a href="../insights/index.html">Insights</a></li>
+            <li><a href="../about/index.html">About</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h4>Get in touch</h4>
+          <ul class="site-footer__list" role="list">
+            <li><a href="mailto:hello@zicloud.uk">hello@zicloud.uk</a></li>
+            <li><a href="../contact/index.html#discovery">Book a discovery call</a></li>
+            <li><a href="../contact/index.html#partner">Partner with us</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__legal">
+        <p>© 2026 Zi Cloud Ltd. All rights reserved.</p>
+        <p class="cluster"><a href="../privacy/index.html">Privacy notice</a> <a href="../cookies/index.html">Cookie policy</a> <a href="../contact/index.html">Contact</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie-banner" role="region" aria-label="Cookie consent" hidden>
+    <p>We use essential cookies to run this site. With your permission we also use analytics cookies to understand how the site is used. You can read more in our <a class="text-link" href="../cookies/index.html">cookie policy</a>.</p>
+    <div class="cluster">
+      <button class="btn btn--outline" type="button" data-cookie="essential">Essential only</button>
+      <button class="btn btn--primary" type="button" data-cookie="all">Accept all</button>
+    </div>
+  </div>
 
   <script src="../js/main.js" defer></script>
+  <script src="../js/insights.js" defer></script>
 </body>
 </html>
