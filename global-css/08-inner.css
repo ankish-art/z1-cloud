@@ -12,7 +12,7 @@
 .page-hero__title {
   margin-top: var(--space-2);
   margin-bottom: var(--space-5);
-  font-size: clamp(64px, 7.2vw, 100px);
+  font-size: calc(clamp(64px, 7.2vw, 100px) * var(--ui));
   line-height: var(--lh-h1);
   max-width: 13em;
 }
@@ -20,7 +20,7 @@
 @media (max-width: 720px) {
   /* BRAND CONFLICT: the 64px H1 minimum cannot fit long words on a 390px phone.
      Scaled with the viewport here; needs sign-off (same as the home page). */
-  .page-hero__title { font-size: clamp(40px, 11vw, 64px); overflow-wrap: anywhere; }
+  .page-hero__title { font-size: calc(clamp(40px, 11vw, 64px) * var(--ui)); overflow-wrap: anywhere; }
 }
 
 /* Pills: jump links and filters */
@@ -65,7 +65,7 @@
   list-style: none;
   font-family: var(--font-head);
   font-weight: var(--fw-semi);
-  font-size: clamp(20px, 2vw, 26px);
+  font-size: calc(clamp(20px, 2vw, 26px) * var(--ui));
   letter-spacing: var(--ls-head);
   line-height: 1.25;
 }

@@ -129,7 +129,7 @@
   padding-bottom: 6px;
   font-family: var(--font-head);
   font-weight: var(--fw-head);
-  font-size: 26px;
+  font-size: calc(26px * var(--ui));
   line-height: 1;
   letter-spacing: var(--ls-head);
   color: var(--c-text);
@@ -244,7 +244,7 @@
   padding-block: calc(var(--section-pad) + var(--space-5)) var(--section-pad);
   overflow: hidden;
 }
-.hero__inner { position: relative; z-index: 1; max-width: 1040px; }
+.hero__inner { position: relative; z-index: 1; max-width: calc(1040px * var(--ui)); }
 .hero__title { margin-bottom: var(--space-5); }
 .hero__lead  { margin-bottom: var(--space-6); }
 .hero .breadcrumb { margin-bottom: var(--space-6); }
@@ -390,7 +390,7 @@ a.card:hover,
   list-style: none;
 }
 .accordion__summary::-webkit-details-marker { display: none; }
-.accordion__title { font-family: var(--font-head); font-weight: var(--fw-head); font-size: clamp(24px, 3vw, 36px); letter-spacing: var(--ls-head); line-height: 1.15; }
+.accordion__title { font-family: var(--font-head); font-weight: var(--fw-head); font-size: calc(clamp(24px, 3vw, 36px) * var(--ui)); letter-spacing: var(--ls-head); line-height: 1.15; }
 .accordion__icon {
   flex-shrink: 0;
   width: 24px;
@@ -440,7 +440,7 @@ a.card:hover,
 }
 .field__input:hover { border-color: var(--c-text-muted); }
 .field__input:focus-visible { border-color: var(--c-text); }
-textarea.field__input { min-height: 160px; resize: vertical; }
+textarea.field__input { min-height: calc(160px * var(--ui)); resize: vertical; }
 .field__error {
   font-size: var(--fs-small);
   color: var(--c-text);
@@ -496,7 +496,7 @@ textarea.field__input { min-height: 160px; resize: vertical; }
   max-width: 24ch;
   font-family: var(--font-head);
   font-weight: var(--fw-medium);
-  font-size: 24px;
+  font-size: calc(24px * var(--ui));
   line-height: 1.3;
   letter-spacing: var(--ls-head);
 }
@@ -530,7 +530,7 @@ textarea.field__input { min-height: 160px; resize: vertical; }
   right: var(--gutter);
   bottom: var(--gutter);
   z-index: var(--z-banner);
-  max-width: 560px;
+  max-width: calc(560px * var(--ui));
   padding: var(--space-4);
   background: var(--c-secondary);
   border-radius: var(--radius);
@@ -583,7 +583,7 @@ textarea.field__input { min-height: 160px; resize: vertical; }
 /* Kicker: mono label used inside diagrams */
 .kicker {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: calc(12px * var(--ui));
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
@@ -609,7 +609,7 @@ textarea.field__input { min-height: 160px; resize: vertical; }
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  min-height: 260px;
+  min-height: calc(260px * var(--ui));
   padding: var(--space-5) var(--space-4);
   border-right: 1px solid var(--c-line);
   border-bottom: 1px solid var(--c-line);

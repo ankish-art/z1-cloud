@@ -22,7 +22,7 @@
 
 /* Section heading block: eyebrow + H2 + lead */
 .section-head {
-  max-width: 880px;
+  max-width: calc(880px * var(--ui));
   margin-bottom: var(--block-gap);
 }
 .section-head > .lead { margin-top: var(--space-4); }
